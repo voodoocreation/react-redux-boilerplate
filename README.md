@@ -26,5 +26,5 @@ The following scripts can be used:
 - `start`: Start prod environment (requires `build` script to have been run first)
 - `lint:js`: Run JS linter, rules defined in [`/.eslintrc`](./.eslintrc)
 - `lint:scss`: Run SCSS linter, rules defined in [`/.stylelintrc`](./.stylelintrc)
-- `lint`: Run `lint:js` and 'lint:scss' consecutively
+- `lint`: Run `lint:js` and `lint:scss` consecutively
 - `test`: Run unit tests for project (using [Jest](https://facebook.github.io/jest/))
