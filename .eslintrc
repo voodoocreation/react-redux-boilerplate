@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "plugin:jest/recommended"],
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true,
+    "browser": true
+  },
+  "globals": {
+    "document": true,
+    "window": true,
+    "process": true
+  },
+  "rules": {
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
+    "react/jsx-filename-extension": 0,
+    "no-underscore-dangle": 0,
+    "linebreak-style": 0,
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "quote-props": [2, "consistent-as-needed"]
+  }
+}

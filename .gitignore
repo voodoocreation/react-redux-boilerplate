@@ -1,0 +1,29 @@
+# Logs
+logs
+*.log
+
+#project
+dist
+coverage
+
+#node
+node_modules
+npm-debug.log
+
+#bower
+bower_components
+
+#IDEs
+.idea
+*.sublime-*
+.tern-project
+
+#Mac OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+#git hooks
+pre-commit.sh
