@@ -1,6 +1,8 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, global-require, import/no-dynamic-require */
 
 const path = require('path');
+const glob = require('glob');
+const accepts = require('accepts');
 const express = require('express');
 const nextJS = require('next');
 const compression = require('compression');
@@ -10,9 +12,12 @@ const jsonServer = require('json-server');
 const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 5000;
 const app = nextJS({ dev });
-const handle = app.getRequestHandler();
 const customRoutesHandler = customRoutes.getRequestHandler(app);
 const jsonRouter = jsonServer.router('./src/services/apiMocks.json');
+
+const languages = glob.sync('./locales/*.json').map(f => path.basename(f, '.json'));
+
+const getMessages = locale => require(`./locales/${locale}.json`);
 
 app.prepare()
   .then(() => {
@@ -31,9 +36,15 @@ app.prepare()
 
     server.use('/assets', express.static(path.join(__dirname, 'dist/assets')));
 
-    server.use(customRoutesHandler);
+    server.use((req, res) => {
+      const accept = accepts(req);
+      const locale = accept.language(languages);
 
-    server.get('*', (req, res) => handle(req, res));
+      req.locale = locale;
+      req.intlMessages = getMessages(locale);
+
+      customRoutesHandler(req, res);
+    });
 
     server.listen(port, (err) => {
       if (err) throw err;

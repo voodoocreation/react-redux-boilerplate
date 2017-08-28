@@ -4,9 +4,21 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import css from '../src/scss/index.scss';
 
 export default class extends Document {
-  static getInitialProps({ renderPage }) {
-    const { html, head, errorHtml, chunks } = renderPage();
-    return { html, head, errorHtml, chunks };
+  static async getInitialProps(context) {
+    const props = await super.getInitialProps(context);
+    const { req } = context;
+
+    const { html, head, errorHtml, chunks } = context.renderPage();
+
+    return {
+      ...props,
+      html,
+      head,
+      errorHtml,
+      chunks,
+      locale: req.locale,
+      intlMessages: req.intlMessages,
+    };
   }
 
   render() {
@@ -20,7 +32,7 @@ export default class extends Document {
       );
 
     return (
-      <html lang="en-NZ">
+      <html lang={this.props.locale}>
         <Head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />

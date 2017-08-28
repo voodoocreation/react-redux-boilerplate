@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
 import Head from 'next/head';
+import { FormattedMessage, intlShape } from 'react-intl';
 
+import connectIntl from '../src/helpers/connectIntl';
 import store from '../src/store/root.store';
 import * as actions from '../src/actions/root.actions';
 import * as selectors from '../src/selectors/root.selectors';
@@ -27,29 +29,31 @@ class Index extends Component {
   };
 
   render() {
-    const title = 'Welcome to the React Redux Boilerplate';
-
     return (
       <article>
         <Head>
-          <title>{title}</title>
+          <title>{this.props.intl.formatMessage({ id: 'INDEX_TITLE' })}</title>
+          <meta
+            name="description"
+            content={this.props.intl.formatMessage({ id: 'INDEX_DESCRIPTION' })}
+          />
         </Head>
 
-        <h1>{title}</h1>
-        <p>Some basic examples of user interaction are shown below</p>
+        <h1><FormattedMessage id="INDEX_TITLE" /></h1>
+        <p><FormattedMessage id="INDEX_DESCRIPTION" /></p>
 
         <div className="row">
           <section className="col-sm-6">
-            <h2>API data</h2>
+            <h2><FormattedMessage id="API_DATA" /></h2>
             <pre>{JSON.stringify(this.props.apiData, null, '  ')}</pre>
 
             <button className="btn btn-primary" onClick={this.onAPIDataButtonClick}>
-              Fetch API data
+              <FormattedMessage id="FETCH_API_DATA" />
             </button>
           </section>
 
           <section className="col-sm-6">
-            <h2>Local data</h2>
+            <h2><FormattedMessage id="LOCAL_DATA" /></h2>
             <pre>{JSON.stringify(this.props.localData, null, '  ')}</pre>
 
             <div className="input-group">
@@ -61,7 +65,7 @@ class Index extends Component {
               />
               <span className="input-group-btn">
                 <button className="btn btn-primary" onClick={this.onLocalDataButtonClick}>
-                  Update local data
+                  <FormattedMessage id="UPDATE_LOCAL_DATA" />
                 </button>
               </span>
             </div>
@@ -73,6 +77,7 @@ class Index extends Component {
 }
 
 Index.propTypes = {
+  intl: intlShape.isRequired,
   apiData: PropTypes.shape({}),
   localData: PropTypes.shape({
     inputValue: PropTypes.string,
@@ -98,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   setLocalData: bindActionCreators(actions.setLocalData, dispatch),
 });
 
-export default withRedux(store, mapStateToProps, mapDispatchToProps)(Index);
+export default withRedux(store, mapStateToProps, mapDispatchToProps)(connectIntl(Index));

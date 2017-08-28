@@ -1,0 +1,8 @@
+{
+  "INDEX_TITLE": "Welcome to the React Redux Boilerplate",
+  "INDEX_DESCRIPTION": "Some basic examples of user interaction are shown below.",
+  "API_DATA": "API data",
+  "FETCH_API_DATA": "Fetch API data",
+  "LOCAL_DATA": "Local data",
+  "UPDATE_LOCAL_DATA": "Update local data"
+}
