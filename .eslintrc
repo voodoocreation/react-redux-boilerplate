@@ -1,8 +1,8 @@
 {
   "root": true,
   "parser": "babel-eslint",
-  "extends": ["airbnb", "plugin:jest/recommended"],
-  "plugins": ["jest"],
+  "extends": ["airbnb", "plugin:jest/recommended", "prettier", "prettier/react"],
+  "plugins": ["filenames", "jest", "prettier"],
   "env": {
     "jest/globals": true,
     "browser": true
@@ -16,10 +16,30 @@
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 0,
-    "react/jsx-filename-extension": 0,
-    "no-underscore-dangle": 0,
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "components": ["label"],
+        "allowChildren": true
+      }
+    ],
     "linebreak-style": 0,
     "no-constant-condition": ["error", { "checkLoops": false }],
-    "quote-props": [2, "consistent-as-needed"]
+    "no-underscore-dangle": 0,
+    "prettier/prettier": "error",
+    "react/jsx-sort-props": ["error", { "reservedFirst": false }],
+    //
+    // temporary disabling until is fixed in `eslint-plugin-react`
+    // https://github.com/yannickcr/eslint-plugin-react/issues/1389
+    "react/no-typos": "off",
+    "react/jsx-filename-extension": 0
   }
 }

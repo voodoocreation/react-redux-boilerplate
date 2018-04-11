@@ -1,0 +1,1 @@
+type PLSetLocalData = any;

@@ -1,0 +1,13 @@
+{
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "no-submodule-imports": [
+      true,
+      "next",
+      "browser-metrics",
+      "core-js",
+      "promise",
+      "redux-saga"
+    ]
+  }
+}
