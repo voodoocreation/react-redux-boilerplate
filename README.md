@@ -24,7 +24,9 @@ The following scripts can be used:
 - `dev`: Runs dev environment with hot module reloading
 - `build`: Builds prod bundle ready for deployment
 - `start`: Start prod environment (requires `build` script to have been run first)
+- `fmt`: Run `prettier` code formatting
 - `lint:js`: Run JS linter, rules defined in [`/.eslintrc`](./.eslintrc)
+- `lint:ts`: Run TS linter, rules defined in [`/tslint.json`](./tslint.json)
 - `lint:scss`: Run SCSS linter, rules defined in [`/.stylelintrc`](./.stylelintrc)
-- `lint`: Run `lint:js` and `lint:scss` consecutively
+- `lint`: Run `lint:js`, `lint:ts`, and `lint:scss` consecutively
 - `test`: Run unit tests for project (using [Jest](https://facebook.github.io/jest/))
