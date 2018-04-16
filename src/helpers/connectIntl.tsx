@@ -30,9 +30,10 @@ export default (Page: NextPageComponent<any>) => {
         props = await Page.getInitialProps(context);
       }
 
-      const { req } = context;
-      const { locale, intlMessages } = req || window.__NEXT_DATA__.props;
-
+      const requestProps = (typeof window === "undefined")
+        ? context.req
+        : window.__NEXT_DATA__.props.initialProps;
+      const { locale, intlMessages } = requestProps;
       const now = Date.now();
 
       return { ...props, locale, intlMessages, now };

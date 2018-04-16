@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import * as React from "react";
 import { FormattedMessage, InjectedIntl } from "react-intl";
 import { bindActionCreators, Dispatch } from "redux";
@@ -51,7 +52,11 @@ class Index extends React.Component<IProps, IState> {
         </Head>
 
         <h1>
-          <FormattedMessage id="INDEX_TITLE" />
+          <Link href="/">
+            <a>
+              <FormattedMessage id="INDEX_TITLE" />
+            </a>
+          </Link>
         </h1>
         <p>
           <FormattedMessage id="INDEX_DESCRIPTION" />

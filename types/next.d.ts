@@ -1,17 +1,22 @@
 declare module "next" {
   export interface IContext {
+    asPath: string;
+    err?: {
+      statusCode: string | number;
+    };
     pathname: string;
     query: string;
-    asPath: string;
+    renderPage: () => { html: any; head: any; errorHtml: any; chunks: any };
     req: {
+      antdLocale: {};
+      intlMessages: {};
       locale: string;
       localeDataScript: string;
       messages: {};
-      antdLocale: {};
-      intlMessages: {};
     };
-    res?: object;
-    renderPage: () => { html: any; head: any; errorHtml: any; chunks: any };
+    res?: {
+      statusCode: string | number;
+    };
   }
 }
 
