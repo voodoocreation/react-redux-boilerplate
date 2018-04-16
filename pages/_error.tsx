@@ -1,11 +1,12 @@
 import { IContext } from "next";
 import * as React from "react";
+import connectIntl from "../src/helpers/connectIntl";
 
 interface IProps {
   statusCode: string | number;
 }
 
-export default class Error extends React.Component<IProps> {
+class Error extends React.Component<IProps> {
   public static getInitialProps({ res, err }: IContext) {
     const statusCode = res
       ? res.statusCode
@@ -27,3 +28,5 @@ export default class Error extends React.Component<IProps> {
     )
   }
 }
+
+export default connectIntl(Error);

@@ -14,7 +14,7 @@ interface IProps {
   now: number;
 }
 
-export default (Page: NextPageComponent<any>) => {
+export default (Page: any) => {
   const IntlPage = injectIntl(Page);
 
   class PageWithIntl extends React.Component<IProps> {
