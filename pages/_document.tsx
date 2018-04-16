@@ -10,14 +10,8 @@ export default class extends Document {
     const props = await context.renderPage();
     const { req } = context;
 
-    const { html, head, errorHtml, chunks } = context.renderPage();
-
     return {
       ...props,
-      chunks,
-      errorHtml,
-      head,
-      html,
       intlMessages: req.intlMessages,
       locale: req.locale
     };
