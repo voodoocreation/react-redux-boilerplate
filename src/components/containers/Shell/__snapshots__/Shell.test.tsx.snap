@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Shell /> renders correctly 1`] = `
+<article
+  class="Page"
+>
+  <main
+    class="Page-body container"
+    role="main"
+  />
+</article>
+`;

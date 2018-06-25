@@ -10,13 +10,6 @@ try {
   LOCAL_STORAGE_INFO = err.toString();
   // tslint:disable-next-line no-console
   console.log(LOCAL_STORAGE_INFO);
-
-  if (window.ga) {
-    window.ga("send", "exception", {
-      exDescription: LOCAL_STORAGE_INFO,
-      exFatal: false
-    });
-  }
 }
 
 export function setLocalStorage(keyName: string, data: string) {

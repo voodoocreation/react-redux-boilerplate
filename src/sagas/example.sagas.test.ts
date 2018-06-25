@@ -6,7 +6,7 @@ describe(`${actions.fetchApiData.started}`, () => {
   it(`with ${actions.fetchApiData.done}`, async () => {
     const testData = { serverTest: true };
 
-    const { dispatch, store } = setupSagas(
+    const { dispatch, findAction } = setupSagas(
       {},
       {
         fetchApiData: () => ({
@@ -18,9 +18,8 @@ describe(`${actions.fetchApiData.started}`, () => {
 
     dispatch(actions.fetchApiData.started({}));
 
-    const storeResult = store().example.apiData;
-
-    expect(storeResult).toEqual(testData);
+    const doneAction = findAction(actions.fetchApiData.done);
+    expect(doneAction.payload.result).toEqual(testData);
   });
 
   it(`with ${actions.fetchApiData.failed}`, async () => {
@@ -37,7 +36,6 @@ describe(`${actions.fetchApiData.started}`, () => {
     dispatch(actions.fetchApiData.started({}));
 
     const failureAction = findAction(actions.fetchApiData.failed);
-
     expect(failureAction.payload.error).toBe("Bad Request");
   });
 });

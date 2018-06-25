@@ -7,8 +7,9 @@ import rootSaga from "../sagas/root.sagas";
 export default (fromTestStore = {}, fromTestPorts = {}) => {
   const initialState = merge({}, fromTestStore);
   const ports = {
-    analytics: (_: any) => _,
-    api: merge({}, fromTestPorts)
+    api: merge({}, fromTestPorts),
+    dataLayer: [],
+    maps: {}
   };
 
   const sagaTester = new SagaTester({
@@ -34,4 +35,4 @@ export default (fromTestStore = {}, fromTestPorts = {}) => {
     waitFor: (action: any) => sagaTester.waitFor(action),
     wasCalled: (action: any) => sagaTester.wasCalled(action)
   };
-}
+};

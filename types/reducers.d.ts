@@ -1,5 +1,6 @@
 interface IRootReducers {
   example: IExampleReducers;
+  page: IPageReducers;
 }
 
 interface IExampleReducers {
@@ -7,4 +8,10 @@ interface IExampleReducers {
   localData: {
     inputValue: string;
   };
+}
+
+interface IPageReducers {
+  error?: IError;
+  isLoading: boolean;
+  transitioningTo?: string;
 }

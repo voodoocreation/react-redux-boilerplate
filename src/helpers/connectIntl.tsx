@@ -1,4 +1,4 @@
-import { IContext } from "next";
+import { NextDocumentContext as Context } from "next/document";
 import * as React from "react";
 import { addLocaleData, injectIntl, IntlProvider } from "react-intl";
 
@@ -9,13 +9,24 @@ import * as en from "react-intl/locale-data/en";
 addLocaleData([...en]);
 
 interface IProps {
-  intlMessages: {};
-  locale: string;
-  now: number;
+  intlMessages?: {};
+  locale?: string;
+  now?: number;
 }
 
 export default (Page: any) => {
   const IntlPage = injectIntl(Page);
+
+  const getIntlProps = ({ ctx }: { ctx: Context }) => {
+    const requestProps =
+      typeof window === "undefined"
+        ? ctx.req
+        : window.__NEXT_DATA__.props.initialProps;
+    const { locale, intlMessages } = requestProps;
+    const now = Date.now();
+
+    return { locale, intlMessages, now };
+  };
 
   class PageWithIntl extends React.Component<IProps> {
     public static defaultProps = {
@@ -23,20 +34,16 @@ export default (Page: any) => {
       now: Date.now()
     };
 
-    public static async getInitialProps(context: IContext) {
+    public static async getInitialProps(pageProps: any) {
       let props;
 
       if (typeof Page.getInitialProps === "function") {
-        props = await Page.getInitialProps(context);
+        props = await Page.getInitialProps(pageProps);
       }
 
-      const requestProps = (typeof window === "undefined")
-        ? context.req
-        : window.__NEXT_DATA__.props.initialProps;
-      const { locale, intlMessages } = requestProps;
-      const now = Date.now();
+      const intlProps = getIntlProps(pageProps);
 
-      return { ...props, locale, intlMessages, now };
+      return { ...props, ...intlProps };
     }
 
     public render() {

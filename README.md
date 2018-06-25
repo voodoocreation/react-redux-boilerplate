@@ -1,4 +1,4 @@
-React Redux Boilerplate with server rendering
+React Redux boilerplate with server rendering
 =============================================
 
 A project boilerplate for applications that require [React](https://facebook.github.io/react/),

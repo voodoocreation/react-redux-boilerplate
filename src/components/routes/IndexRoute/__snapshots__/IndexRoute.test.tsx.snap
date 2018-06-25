@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IndexRoute /> renders correctly 1`] = `
+<article>
+  <h1>
+    <a
+      href="/"
+    >
+      <span>
+        Welcome to the React Redux Boilerplate
+      </span>
+    </a>
+  </h1>
+  <p>
+    <span>
+      Some basic examples of user interaction are shown below.
+    </span>
+  </p>
+  <div
+    class="row"
+  >
+    <section
+      class="col-sm-6"
+    >
+      <h2>
+        <span>
+          API data
+        </span>
+      </h2>
+      <pre>
+        {}
+      </pre>
+      <button
+        class="btn btn-primary"
+      >
+        <span>
+          Fetch API data
+        </span>
+      </button>
+    </section>
+    <section
+      class="col-sm-6"
+    >
+      <h2>
+        <span>
+          Local data
+        </span>
+      </h2>
+      <pre>
+        {
+  "inputValue": ""
+}
+      </pre>
+      <div
+        class="input-group"
+      >
+        <input
+          class="form-control"
+          type="text"
+          value=""
+        />
+      </div>
+    </section>
+  </div>
+</article>
+`;
+
+exports[`<IndexRoute /> renders correctly with data 1`] = `
+<article>
+  <h1>
+    <a
+      href="/"
+    >
+      <span>
+        Welcome to the React Redux Boilerplate
+      </span>
+    </a>
+  </h1>
+  <p>
+    <span>
+      Some basic examples of user interaction are shown below.
+    </span>
+  </p>
+  <div
+    class="row"
+  >
+    <section
+      class="col-sm-6"
+    >
+      <h2>
+        <span>
+          API data
+        </span>
+      </h2>
+      <pre>
+        {
+  "test": "Test"
+}
+      </pre>
+      <button
+        class="btn btn-primary"
+      >
+        <span>
+          Fetch API data
+        </span>
+      </button>
+    </section>
+    <section
+      class="col-sm-6"
+    >
+      <h2>
+        <span>
+          Local data
+        </span>
+      </h2>
+      <pre>
+        {
+  "inputValue": "Test"
+}
+      </pre>
+      <div
+        class="input-group"
+      >
+        <input
+          class="form-control"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </section>
+  </div>
+</article>
+`;

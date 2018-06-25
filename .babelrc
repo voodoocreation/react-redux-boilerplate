@@ -14,22 +14,22 @@
 
   "env": {
     "development": {
-      "presets": "next/babel"
+      "presets": ["next/babel", "@zeit/next-typescript/babel"]
     },
     "production": {
-      "presets": "next/babel"
+      "presets": ["next/babel", "@zeit/next-typescript/babel"]
     },
     "test": {
       "presets": [
-        "env",
-        "react"
-      ],
-      "plugins": [
-        "react-require",
-        "transform-object-rest-spread",
-        "transform-class-properties",
-        ["transform-runtime", { "polyfill": false }],
-        "styled-jsx/babel"
+        [
+          "next/babel",
+          {
+            "preset-env": {
+              "modules": "commonjs"
+            }
+          }
+        ],
+        "@zeit/next-typescript/babel"
       ]
     }
   }

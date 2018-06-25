@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorPage /> renders 404 correctly 1`] = `
+Array [
+  <h1>
+    Page not found
+  </h1>,
+  <p>
+    This page does not exist.
+  </p>,
+]
+`;
+
+exports[`<ErrorPage /> renders 500 correctly 1`] = `
+Array [
+  <h1>
+    An error has occurred
+  </h1>,
+  <p>
+    An error has occurred, please try again.
+  </p>,
+]
+`;

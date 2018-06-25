@@ -6,15 +6,18 @@ const accepts = require("accepts");
 const express = require("express");
 const nextJS = require("next");
 const compression = require("compression");
-const customRoutes = require("./next.routes");
 const jsonServer = require("json-server");
 
+const customRoutes = require("./next.routes");
+
+const isMockApiEnabled = true;
 const dev = process.env.NODE_ENV !== "production";
 const port = process.env.PORT || 5000;
+const apiPath = "/mock-api";
+const apiURL = `http://localhost${port}${apiPath}`;
 const app = nextJS({ dev });
 const customRoutesHandler = customRoutes.getRequestHandler(app);
-const jsonRouter = jsonServer.router(require("./server/mocks/routes.js"));
-
+console.log(port);
 const languages = glob
   .sync("./locales/*.json")
   .map(f => path.basename(f, ".json"));
@@ -24,25 +27,34 @@ const getMessages = locale => require(`./locales/${locale}.json`);
 app.prepare().then(() => {
   const server = express();
 
-  server.use(compression());
+  if (isMockApiEnabled) {
+    if (process.env.API_DELAY) {
+      server.use(apiURL, (req, res, next) => {
+        setTimeout(() => {
+          next();
+        }, process.env.API_DELAY);
+      });
+    }
 
-  if (process.env.API_DELAY) {
-    server.use("/api", (req, res, next) => {
-      setTimeout(() => {
-        next();
-      }, process.env.API_DELAY);
-    });
+    server.use(apiPath, jsonServer.rewriter(require("./server/routes")));
+    server.use(apiPath, jsonServer.router(require("./server/db")));
   }
-  server.use("/api", jsonRouter);
 
-  server.use("/assets", express.static(path.join(__dirname, "dist/dist/assets")));
+  if (!dev) {
+    server.use(compression());
+  }
+
+  server.use(
+    "/assets",
+    express.static(path.join(__dirname, "dist/dist/assets"))
+  );
 
   server.use((req, res) => {
     const accept = accepts(req);
     const locale = accept.language(languages);
 
-    req.locale = locale;
-    req.intlMessages = getMessages(locale);
+    req.locale = locale || "en-NZ";
+    req.intlMessages = getMessages(locale || "en-NZ");
 
     customRoutesHandler(req, res);
   });

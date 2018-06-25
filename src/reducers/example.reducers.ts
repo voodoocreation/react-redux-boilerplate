@@ -10,10 +10,11 @@ export const initialState: IExampleReducers = {
 };
 
 export default reducerWithInitialState(initialState)
-  .case(actions.fetchApiData.done, (state, payload) => ({
+  .case(actions.fetchApiData.done, (state, { result }) => ({
     ...state,
-    apiData: payload
+    apiData: result
   }))
+
   .case(actions.setLocalData, (state, payload) => ({
     ...state,
     localData: payload

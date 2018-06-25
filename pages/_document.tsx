@@ -1,14 +1,31 @@
-import { IContext } from "next";
-import Document, { Head, Main, NextScript } from "next/document";
+import { IncomingMessage } from "http";
+import Document, {
+  Head,
+  Main,
+  NextDocumentContext as Context,
+  NextScript
+} from "next/document";
 import * as React from "react";
 
 // tslint:disable-next-line
 const css = require("../src/scss/index.scss");
 
+const Meta: React.SFC<{}> = () => (
+  <React.Fragment>
+    <meta charSet="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <link rel="manifest" href="/static/manifest.json" />
+  </React.Fragment>
+);
+
 export default class extends Document {
-  public static async getInitialProps(context: IContext) {
+  public static async getInitialProps(context: Context) {
     const props = await context.renderPage();
-    const { req } = context;
+    const req = context.req as IncomingMessage & {
+      intlMessages: {};
+      locale: string;
+    };
 
     return {
       ...props,
@@ -20,7 +37,7 @@ export default class extends Document {
   public render() {
     const styles =
       process.env.NODE_ENV !== "production" ? (
-        <style>{css}</style>
+        <style dangerouslySetInnerHTML={{ __html: css }} />
       ) : (
         <link
           href={`/assets/main.css?${this.props.__NEXT_DATA__.buildId}`}
@@ -31,21 +48,22 @@ export default class extends Document {
     return (
       <html lang={this.props.locale}>
         <Head>
-          <meta charSet="UTF-8" />
-          <meta
-            content="width=device-width, initial-scale=1.0"
-            name="viewport"
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `document.documentElement.classList.add("isClientRendered");`
+            }}
           />
           <link
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
             rel="stylesheet"
           />
+
+          <Meta />
+
           {styles}
         </Head>
         <body>
-          <main className="container" role="main">
-            <Main />
-          </main>
+          <Main />
           <NextScript />
         </body>
       </html>

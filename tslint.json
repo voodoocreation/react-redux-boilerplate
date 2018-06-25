@@ -1,12 +1,14 @@
 {
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "rules": {
+    "no-empty-interface": false,
     "no-submodule-imports": [
       true,
       "next",
       "browser-metrics",
       "core-js",
       "promise",
+      "react-icons",
       "redux-saga"
     ]
   }

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorRoute /> renders correctly 1`] = `
+Array [
+  <h1>
+    An error has occurred
+  </h1>,
+  <p>
+    An error has occurred, please try again.
+  </p>,
+]
+`;

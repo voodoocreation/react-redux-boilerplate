@@ -23,4 +23,6 @@ declare module "next" {
 interface INextPageComponentMethods {
   getInitialProps?(props: any): Promise<any>;
 }
-type NextPageComponent<P> = React.ComponentClass<P> & INextPageComponentMethods | React.StatelessComponent<P> & INextPageComponentMethods;
+type NextPageComponent<P> =
+  | React.ComponentClass<P> & INextPageComponentMethods
+  | React.StatelessComponent<P> & INextPageComponentMethods;
