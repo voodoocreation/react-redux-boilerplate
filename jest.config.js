@@ -7,7 +7,7 @@ module.exports = {
     "\\.(scss)$": "<rootDir>/src/__mocks__/dummyMock.js",
     "\\.(jpg|jpeg|gif|png|svg)$": "<rootDir>/src/__mocks__/dummyMock.js"
   },
-  roots: ["<rootDir>/src", "<rootDir>/pages"],
+  roots: ["<rootDir>/src"],
   setupTestFrameworkScriptFile: "<rootDir>/jest.setup.js",
   snapshotSerializers: ["enzyme-to-json/serializer"],
   testURL: "http://localhost",
