@@ -19,12 +19,13 @@ interface Window {
     page?: string;
   };
   __NEXT_REDUX_STORE__: any;
-  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: () => any;
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: (...args: any[]) => any;
   dataLayer: Array<{}>;
   google: {
     maps: any;
     [index: string]: any;
   };
+  isServer?: boolean;
   Promise: any;
 }
 

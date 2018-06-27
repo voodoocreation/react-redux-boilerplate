@@ -1,6 +1,6 @@
 module.exports = {
   bail: true,
-  collectCoverageFrom: ["./**/*.{js,jsx,ts,tsx}", "!**/node_modules/**"],
+  collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!**/node_modules/**"],
   moduleDirectories: ["node_modules"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   moduleNameMapper: {

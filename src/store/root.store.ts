@@ -15,7 +15,7 @@ const isUsingLocalApi = true;
 
 export default (initialState = {}) => {
   // Environment
-  const isSSR = typeof window === "undefined";
+  const isSSR = typeof window === "undefined" || window.isServer;
   const hasGA = !isSSR && typeof window.dataLayer !== "undefined";
   const hasMaps =
     !isSSR &&
