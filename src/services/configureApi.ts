@@ -8,19 +8,21 @@ export const createApiWith = (ports: any) => ({
 });
 
 export const createPortsWith = (config: any) => ({
-  url,
+  body,
   method = "GET",
-  body
+  params,
+  url
 }: {
+  body?: string;
+  method?: string;
+  params?: {};
   url: string;
-  method: string;
-  body: string;
 }) =>
   axios({
     baseURL: config.apiUrl,
     data: body,
-    headers: {},
     method,
+    params,
     url
   })
     .then(res => camelizeKeys(res.data))
@@ -28,7 +30,14 @@ export const createPortsWith = (config: any) => ({
       if (err.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        throw new Error(JSON.stringify(camelizeKeys(err.response.data)));
+        throw new Error(
+          JSON.stringify(
+            camelizeKeys({
+              ...err.response.data,
+              status: err.response.status
+            })
+          )
+        );
       } else if (err.request) {
         // The request was made but no response was received
         // `err.request` is an instance of XMLHttpRequest in the browser

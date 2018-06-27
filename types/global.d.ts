@@ -4,6 +4,7 @@ declare module "*.jpeg";
 declare module "*.png";
 declare module "*.svg";
 
+declare module "jest-mock-axios";
 declare module "lodash.merge";
 declare module "next-redux-saga";
 declare module "react-relative-time";
