@@ -1,43 +1,36 @@
-let LOCAL_STORAGE_INFO = "none";
+export const isLocalStorageAvailable = () => {
+  const { localStorage } = window;
 
-const { localStorage } = window;
+  try {
+    const value = "__storage_test__";
+    localStorage.setItem(value, value);
+    localStorage.removeItem(value);
 
-try {
-  localStorage.setItem("__has_offline_storage", "it works");
-  localStorage.removeItem("__has_offline_storage");
-  LOCAL_STORAGE_INFO = "localStorage";
-} catch (err) {
-  LOCAL_STORAGE_INFO = err.toString();
-  // tslint:disable-next-line no-console
-  console.log(LOCAL_STORAGE_INFO);
-}
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 
-export function setLocalStorage(keyName: string, data: string) {
-  if (getLocalStorageInfo() === "localStorage") {
-    try {
-      localStorage.setItem(keyName, data);
-      return { ok: true, data };
-    } catch (err) {
-      return { ok: false, message: err.toString() };
-    }
+export const setLocalStorage = (key: string, data: string) => {
+  if (isLocalStorageAvailable()) {
+    window.localStorage.setItem(key, data);
+    return { ok: true, data };
   }
 
-  return { ok: false, message: LOCAL_STORAGE_INFO };
-}
+  return { ok: false, message: "unavailable" };
+};
 
-export function getLocalStorage(keyName: string) {
-  if (getLocalStorageInfo() === "localStorage") {
-    try {
-      const res = localStorage.getItem(keyName);
-      return { ok: true, data: res };
-    } catch (err) {
-      return { ok: false, message: err.toString() };
-    }
+export const getLocalStorage = (key: string) =>
+  isLocalStorageAvailable()
+    ? { ok: true, data: window.localStorage.getItem(key) }
+    : { ok: false, message: "unavailable" };
+
+export const removeLocalStorage = (key: string) => {
+  if (isLocalStorageAvailable()) {
+    window.localStorage.removeItem(key);
+    return { ok: true, data: key };
   }
 
-  return { ok: false, message: LOCAL_STORAGE_INFO };
-}
-
-export function getLocalStorageInfo(): "none" | "localStorage" | string {
-  return LOCAL_STORAGE_INFO;
-}
+  return { ok: false, message: "unavailable" };
+};

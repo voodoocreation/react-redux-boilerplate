@@ -30,6 +30,11 @@ interface Window {
   Promise: any;
 }
 
+type TPromiseExecutor = (
+  resolve: (value?: T | PromiseLike<T>) => void,
+  reject: (reason?: any) => void
+) => void;
+
 interface IStorePorts {
   dataLayer: Array<{}>;
   api: {

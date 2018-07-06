@@ -7,8 +7,8 @@ export default (internet: any) => {
         data: res,
         ok: true
       };
-    } catch (err) {
-      return { ok: false, message: err.toString() };
+    } catch (error) {
+      return { message: error.message, ok: false };
     }
   };
 };
