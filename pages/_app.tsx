@@ -45,6 +45,13 @@ class Application extends App {
     routes.Router.onRouteChangeError = this.onRouteChangeError;
   }
 
+  public componentDidMount() {
+    if (typeof window !== "undefined") {
+      const { store } = this.props as IProps;
+      store.dispatch(actions.setCurrentRoute(routes.Router.route));
+    }
+  }
+
   public render() {
     const { Component, pageProps, store } = this.props as IProps;
 

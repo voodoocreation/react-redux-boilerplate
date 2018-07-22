@@ -11,6 +11,7 @@ interface IExampleReducers {
 }
 
 interface IPageReducers {
+  currentRoute?: string;
   error?: IError;
   isLoading: boolean;
   transitioningTo?: string;

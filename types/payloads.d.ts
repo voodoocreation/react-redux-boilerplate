@@ -1,5 +1,6 @@
 /* tslint:disable:interface-over-type-literal */
 
+type PLSetCurrentRoute = string;
 type PLChangeRouteStarted = string;
 type PLChangeRouteDone = undefined;
 type PLChangeRouteFailed = IError;
