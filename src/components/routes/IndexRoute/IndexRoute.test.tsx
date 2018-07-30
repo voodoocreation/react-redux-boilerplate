@@ -7,14 +7,7 @@ import createStore from "../../../store/root.store";
 import IndexRoute from "./IndexRoute";
 
 const setup = (fn: any, fromTestStore = {}, fromTestApi?: {}) => {
-  const store = createStore(
-    merge(
-      {},
-      fromTestStore
-    ),
-    {},
-    fromTestApi
-  );
+  const store = createStore(merge({}, fromTestStore), {}, fromTestApi);
 
   return {
     actual: fn(
@@ -59,9 +52,13 @@ describe("<IndexRoute />", () => {
 
   it("handles API data button click event correctly", () => {
     const data = { apiValue: "Test" };
-    const { actual, store } = setup(mount, {}, {
-      fetchApiData: () => ({ ok: true, data })
-    });
+    const { actual, store } = setup(
+      mount,
+      {},
+      {
+        fetchApiData: () => ({ ok: true, data })
+      }
+    );
 
     actual.find("button").simulate("click");
 

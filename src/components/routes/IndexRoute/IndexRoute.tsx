@@ -63,7 +63,9 @@ class IndexRoute extends React.Component<IProps> {
 
         <div className="row">
           <section className="col-sm-12">
-            <h2><FormattedMessage id="CURRENT_ROUTE" /></h2>
+            <h2>
+              <FormattedMessage id="CURRENT_ROUTE" />
+            </h2>
             <pre>{currentRoute}</pre>
           </section>
 

@@ -1,4 +1,5 @@
-export const getCurrentRoute = (state: IRootReducers) => state.page.currentRoute;
+export const getCurrentRoute = (state: IRootReducers) =>
+  state.page.currentRoute;
 
 export const getPageError = (state: IRootReducers) => state.page.error;
 

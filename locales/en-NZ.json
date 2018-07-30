@@ -8,8 +8,7 @@
   "ERROR_404_MESSAGE": "This page does not exist.",
   "FETCH_API_DATA": "Fetch API data",
   "INDEX_TITLE": "Welcome to the React Redux Boilerplate",
-  "INDEX_DESCRIPTION":
-    "Some basic examples of user interaction are shown below.",
+  "INDEX_DESCRIPTION": "Some basic examples of user interaction are shown below.",
   "LOCAL_DATA": "Local data",
   "UPDATE_LOCAL_DATA": "Update local data"
 }
