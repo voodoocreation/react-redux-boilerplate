@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[helpers] injectIntl injects intl into next.js page component correctly when \`getInitialProps\` is defined 1`] = `
+<div>
+  From getInitialProps()
+</div>
+`;
+
+exports[`[helpers] injectIntl injects intl into next.js page component correctly when \`getInitialProps\` isn't defined 1`] = `
+<div>
+  From defaultProps
+</div>
+`;

@@ -6,13 +6,14 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { ActionCreator } from "typescript-fsa";
 
-import injectIntl from "../../../helpers/injectIntl";
+import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 
 import * as actions from "../../../actions/root.actions";
 import * as selectors from "../../../selectors/root.selectors";
 
 interface IStoreProps {
   apiData: {};
+  currentRoute?: string;
   localData: {
     inputValue: string;
   };
@@ -36,12 +37,15 @@ class IndexRoute extends React.Component<IProps> {
   };
 
   public render() {
+    const { apiData, currentRoute, localData } = this.props;
+    const { formatMessage } = this.props.intl;
+
     return (
       <article>
         <Head>
-          <title>{this.props.intl.formatMessage({ id: "INDEX_TITLE" })}</title>
+          <title>{formatMessage({ id: "INDEX_TITLE" })}</title>
           <meta
-            content={this.props.intl.formatMessage({ id: "INDEX_DESCRIPTION" })}
+            content={formatMessage({ id: "INDEX_DESCRIPTION" })}
             name="description"
           />
         </Head>
@@ -58,11 +62,16 @@ class IndexRoute extends React.Component<IProps> {
         </p>
 
         <div className="row">
+          <section className="col-sm-12">
+            <h2><FormattedMessage id="CURRENT_ROUTE" /></h2>
+            <pre>{currentRoute}</pre>
+          </section>
+
           <section className="col-sm-6">
             <h2>
               <FormattedMessage id="API_DATA" />
             </h2>
-            <pre>{JSON.stringify(this.props.apiData, null, "  ")}</pre>
+            <pre>{JSON.stringify(apiData, null, "  ")}</pre>
 
             <button
               className="btn btn-primary"
@@ -76,12 +85,12 @@ class IndexRoute extends React.Component<IProps> {
             <h2>
               <FormattedMessage id="LOCAL_DATA" />
             </h2>
-            <pre>{JSON.stringify(this.props.localData, null, "  ")}</pre>
+            <pre>{JSON.stringify(localData, null, "  ")}</pre>
 
             <div className="input-group">
               <input
                 className="form-control"
-                value={this.props.localData.inputValue}
+                value={localData.inputValue}
                 onChange={this.onInputChange}
                 type="text"
               />
@@ -105,6 +114,7 @@ class IndexRoute extends React.Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
   apiData: selectors.getApiData(state),
+  currentRoute: selectors.getCurrentRoute(state),
   localData: selectors.getLocalData(state)
 });
 
@@ -117,7 +127,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch
   );
 
-export default injectIntl(
+export default injectIntlIntoPage(
   connect<IStoreProps, IDispatchProps>(
     mapStateToProps,
     mapDispatchToProps

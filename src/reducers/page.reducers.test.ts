@@ -1,43 +1,44 @@
-import page, { initialState as pageModel } from "./page.reducers";
+import reducer, { initialState as model } from "./page.reducers";
 
 import * as actions from "../actions/root.actions";
 
-describe("[Reducers] Page", () => {
-  it("actions.changeRoute.started", () => {
-    const testValue = "/";
+describe("[reducers] Page", () => {
+  it("actions.setCurrentRoute is handled", () => {
+    const params = "/";
+    const state = reducer(model, actions.setCurrentRoute(params));
 
-    const state = page(pageModel, actions.changeRoute.started(testValue));
-
-    expect(state.isLoading).toBe(true);
-    expect(state.transitioningTo).toEqual(testValue);
+    expect(state.currentRoute).toEqual(params);
   });
 
-  it("actions.changeRoute.done", () => {
-    const testValue = "/";
+  describe("actions.changeRoute", () => {
+    it("started is handled", () => {
+      const params = "/";
+      const state = reducer(model, actions.changeRoute.started(params));
 
-    const state = page(
-      pageModel,
-      actions.changeRoute.done({ params: testValue })
-    );
+      expect(state.isLoading).toBe(true);
+      expect(state.transitioningTo).toEqual(params);
+    });
 
-    expect(state.isLoading).toBe(false);
-    expect(state.transitioningTo).toBeUndefined();
-  });
+    it("done is handled", () => {
+      const params = "/";
+      const state = reducer(model, actions.changeRoute.done({ params }));
 
-  it("actions.changeRoute.failed", () => {
-    const error = { message: "Error", status: 500 };
-    const testValue = "/";
+      expect(state.isLoading).toBe(false);
+      expect(state.transitioningTo).toBeUndefined();
+    });
 
-    const state = page(
-      pageModel,
-      actions.changeRoute.failed({
-        error,
-        params: testValue
-      })
-    );
+    it("failed is handled", () => {
+      const params = "/";
+      const error = { message: "Error", status: 500 };
 
-    expect(state.isLoading).toBe(false);
-    expect(state.error).toEqual(error);
-    expect(state.transitioningTo).toBeUndefined();
+      const state = reducer(
+        model,
+        actions.changeRoute.failed({ error, params })
+      );
+
+      expect(state.error).toEqual(error);
+      expect(state.isLoading).toBe(false);
+      expect(state.transitioningTo).toBeUndefined();
+    });
   });
 });

@@ -1,6 +1,7 @@
 {
   "API_DATA": "API data",
   "BRAND_NAME": "React Redux Boilerplate",
+  "CURRENT_ROUTE": "Current route",
   "ERROR_TITLE": "An error has occurred",
   "ERROR_MESSAGE": "An error has occurred, please try again.",
   "ERROR_404_TITLE": "Page not found",

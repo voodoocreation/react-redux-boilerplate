@@ -2,8 +2,15 @@ import cn from "classnames";
 import Head from "next/head";
 import * as React from "react";
 import { InjectedIntl, injectIntl } from "react-intl";
+import { connect } from "react-redux";
 
-interface IProps {
+import * as selectors from "../../../selectors/root.selectors";
+
+interface IStoreProps {
+  isLoading: boolean;
+}
+
+interface IProps extends IStoreProps {
   className?: string;
   intl: InjectedIntl;
 }
@@ -19,11 +26,11 @@ class Shell extends React.Component<IProps> {
   }
 
   public render() {
-    const { children, className } = this.props;
+    const { children, className, isLoading } = this.props;
     const { formatMessage } = this.props.intl;
 
     return (
-      <article className={cn("Page", className)}>
+      <article className={cn("Page", { isLoading }, className)}>
         <Head>
           <meta
             property="og:site_name"
@@ -39,4 +46,8 @@ class Shell extends React.Component<IProps> {
   }
 }
 
-export default injectIntl<any>(Shell);
+const mapStateToProps = (state: any) => ({
+  isLoading: selectors.getPageIsLoading(state)
+});
+
+export default injectIntl<any>(connect<IStoreProps>(mapStateToProps)(Shell));

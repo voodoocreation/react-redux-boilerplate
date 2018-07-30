@@ -1,3 +1,5 @@
+export const isServer = () => typeof window === "undefined" || window.isServer;
+
 export const isInViewport = (element?: HTMLElement | null) => {
   if (!element) {
     return false;

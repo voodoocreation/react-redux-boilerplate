@@ -46,7 +46,7 @@ app.prepare().then(() => {
 
   server.use(
     "/assets",
-    express.static(path.join(__dirname, "dist/dist/assets"))
+    express.static(path.join(__dirname, "dist/server/assets"))
   );
 
   server.use((req, res) => {

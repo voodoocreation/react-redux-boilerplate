@@ -3,24 +3,49 @@ import withRedux from "next-redux-wrapper";
 import App, { AppComponentProps, Container } from "next/app";
 import { NextDocumentContext as Context } from "next/document";
 import * as React from "react";
+import { addLocaleData, IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 
 import routes from "../next.routes";
 import * as actions from "../src/actions/root.actions";
-import connectIntl from "../src/helpers/connectIntl";
 import createStore from "../src/store/root.store";
 
 import Shell from "../src/components/containers/Shell/Shell";
+import { isServer } from "../src/helpers/dom";
+
+// tslint:disable:no-submodule-imports
+import en from "react-intl/locale-data/en";
+// tslint:enable:no-submodule-imports
+
+addLocaleData([...en]);
 
 interface IProps extends AppComponentProps {
   Component: any;
   ctx: Context & { store: any };
+  intlProps: {
+    locale: string;
+    intlMessages: {};
+    initialNow: Date;
+  };
   store: Store<any>;
 }
 
+const getIntlProps = (ctx: Context) => {
+  const requestProps = isServer()
+    ? ctx.req
+    : window.__NEXT_DATA__.props.initialProps.intlProps;
+  const { locale, intlMessages } = requestProps;
+
+  return {
+    initialNow: Date.now(),
+    intlMessages: intlMessages || {},
+    locale: locale || "en-NZ"
+  };
+};
+
 class Application extends App {
-  public static async getInitialProps({ Component, ctx }: IProps) {
+  public static async getInitialProps({ ctx, Component }: IProps) {
     let pageProps = {};
 
     const unsubscribe = ctx.store.subscribe(() => {
@@ -36,7 +61,9 @@ class Application extends App {
       pageProps = await Component.getInitialProps({ ctx });
     }
 
-    return { pageProps };
+    const intlProps = getIntlProps(ctx);
+
+    return { pageProps, intlProps };
   }
 
   public componentWillMount() {
@@ -46,21 +73,27 @@ class Application extends App {
   }
 
   public componentDidMount() {
-    if (typeof window !== "undefined") {
+    if (!isServer()) {
       const { store } = this.props as IProps;
       store.dispatch(actions.setCurrentRoute(routes.Router.route));
     }
   }
 
   public render() {
-    const { Component, pageProps, store } = this.props as IProps;
+    const { Component, intlProps, pageProps, store } = this.props as IProps;
 
     return (
       <Container>
         <Provider store={store}>
-          <Shell>
-            <Component {...pageProps} />
-          </Shell>
+          <IntlProvider
+            initialNow={intlProps.initialNow}
+            messages={intlProps.intlMessages}
+            locale={intlProps.locale}
+          >
+            <Shell>
+              <Component {...pageProps} />
+            </Shell>
+          </IntlProvider>
         </Provider>
       </Container>
     );
@@ -94,5 +127,5 @@ class Application extends App {
 }
 
 export default withRedux(createStore)(
-  withReduxSaga({ async: true })(connectIntl(Application))
+  withReduxSaga({ async: true })(Application)
 );

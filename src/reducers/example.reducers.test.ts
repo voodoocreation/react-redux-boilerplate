@@ -2,8 +2,8 @@ import example, { initialState as exampleModel } from "./example.reducers";
 
 import * as actions from "../actions/root.actions";
 
-describe("[Reducers] Example", () => {
-  it("actions.setLocalData", () => {
+describe("[reducers] Example", () => {
+  it("actions.setLocalData is handled", () => {
     const testValue = {
       inputValue: "Test"
     };
@@ -13,16 +13,18 @@ describe("[Reducers] Example", () => {
     expect(state.localData).toEqual(testValue);
   });
 
-  it("actions.fetchApiData.done", () => {
-    const testValue = {
-      apiValue: "Test"
-    };
+  describe("actions.fetchApiData", () => {
+    it("done is handled", () => {
+      const testValue = {
+        apiValue: "Test"
+      };
 
-    const state = example(
-      exampleModel,
-      actions.fetchApiData.done({ params: {}, result: testValue })
-    );
+      const state = example(
+        exampleModel,
+        actions.fetchApiData.done({ params: {}, result: testValue })
+      );
 
-    expect(state.apiData).toEqual(testValue);
+      expect(state.apiData).toEqual(testValue);
+    });
   });
 });

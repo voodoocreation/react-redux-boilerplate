@@ -20,6 +20,16 @@ exports[`<IndexRoute /> renders correctly 1`] = `
     class="row"
   >
     <section
+      class="col-sm-12"
+    >
+      <h2>
+        <span>
+          Current route
+        </span>
+      </h2>
+      <pre />
+    </section>
+    <section
       class="col-sm-6"
     >
       <h2>
@@ -84,6 +94,16 @@ exports[`<IndexRoute /> renders correctly with data 1`] = `
   <div
     class="row"
   >
+    <section
+      class="col-sm-12"
+    >
+      <h2>
+        <span>
+          Current route
+        </span>
+      </h2>
+      <pre />
+    </section>
     <section
       class="col-sm-6"
     >

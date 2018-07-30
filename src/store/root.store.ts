@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore, Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 
+import { isServer } from "../helpers/dom";
 import rootReducer from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 import { createApiWith, createPortsWith } from "../services/configureApi";
@@ -11,12 +12,11 @@ type TStore = Store & {
   runSagaTask?: () => void;
 };
 
-export default (initialState = {}) => {
+export default (initialState = {}, _?: any, api?: {}) => {
   // Environment
-  const isSSR = typeof window === "undefined" || window.isServer;
-  const hasGA = !isSSR && typeof window.dataLayer !== "undefined";
+  const hasGA = !isServer() && typeof window.dataLayer !== "undefined";
   const hasMaps =
-    !isSSR &&
+    !isServer() &&
     typeof window.google !== "undefined" &&
     typeof window.google.maps !== "undefined";
   const isDev = process.env.NODE_ENV === "development";
@@ -28,7 +28,7 @@ export default (initialState = {}) => {
   // Redux devtools
   let composeEnhancers = compose;
   if (
-    !isSSR &&
+    !isServer() &&
     isDev &&
     typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === "function"
   ) {
@@ -38,7 +38,7 @@ export default (initialState = {}) => {
   // Redux store
   // const offlineStorage = createOfflineStorage();
   const ports = createPortsWith({
-    apiUrl: `http://localhost:${process.env.PORT}/mock-api`
+    apiUrl: `http://localhost:5000/mock-api`
   });
   const store: TStore = createStore(
     rootReducer,
@@ -46,7 +46,7 @@ export default (initialState = {}) => {
     composeEnhancers(applyMiddleware(...middleware))
   );
   const saga = rootSaga({
-    api: createApiWith(ports),
+    api: api ? api : createApiWith(ports),
     dataLayer: hasGA ? window.dataLayer : [],
     maps: hasMaps ? window.google.maps : undefined
   });

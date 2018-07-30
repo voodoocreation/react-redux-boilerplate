@@ -1,8 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Shell /> renders correctly 1`] = `
+exports[`[containers] <Shell /> renders correctly 1`] = `
 <article
-  class="Page"
+  class="Page TestClassName"
+>
+  <main
+    class="Page-body container"
+    role="main"
+  />
+</article>
+`;
+
+exports[`[containers] <Shell /> renders correctly when loading 1`] = `
+<article
+  class="Page isLoading TestClassName"
 >
   <main
     class="Page-body container"

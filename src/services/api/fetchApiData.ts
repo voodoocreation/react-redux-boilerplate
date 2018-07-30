@@ -1,14 +1,12 @@
-export default (internet: any) => {
-  return async () => {
-    try {
-      const res = await internet({ url: `/example` });
+export default (internet: any) => async () => {
+  try {
+    const res = await internet({ url: "/example" });
 
-      return {
-        data: res,
-        ok: true
-      };
-    } catch (error) {
-      return { message: error.message, ok: false };
-    }
-  };
+    return {
+      data: res,
+      ok: true
+    };
+  } catch (error) {
+    return { message: error.message, ok: false };
+  }
 };
