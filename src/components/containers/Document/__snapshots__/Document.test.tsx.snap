@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[containers] <Document /> renders correctly when NODE_ENV=development 1`] = `
+Array [
+  <link
+    as="script"
+    href="/assets/_next/buildId/pagepathname.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/buildId/page/_app.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/buildId/page/_error.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/webpack/chunks/main.js"
+    rel="preload"
+  />,
+  null,
+  <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"
+  />,
+  <meta
+    charset="UTF-8"
+  />,
+  <meta
+    content="width=device-width, initial-scale=1.0"
+    name="viewport"
+  />,
+  <link
+    href="/static/manifest.json"
+    rel="manifest"
+  />,
+  null,
+  <div
+    id="__next"
+  />,
+  <div
+    id="__next-error"
+  />,
+  null,
+  null,
+  null,
+  null,
+  null,
+]
+`;
+
+exports[`[containers] <Document /> renders currectly when NODE_ENV=production 1`] = `
+Array [
+  <link
+    as="script"
+    href="/assets/_next/buildId/pagepathname.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/buildId/page/_app.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/buildId/page/_error.js"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assets/_next/webpack/chunks/main.js"
+    rel="preload"
+  />,
+  null,
+  <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"
+  />,
+  <meta
+    charset="UTF-8"
+  />,
+  <meta
+    content="width=device-width, initial-scale=1.0"
+    name="viewport"
+  />,
+  <link
+    href="/static/manifest.json"
+    rel="manifest"
+  />,
+  <link
+    href="/assets/main.css?buildId"
+    rel="stylesheet"
+  />,
+  <div
+    id="__next"
+  />,
+  <div
+    id="__next-error"
+  />,
+  null,
+  null,
+  null,
+  null,
+  null,
+]
+`;
