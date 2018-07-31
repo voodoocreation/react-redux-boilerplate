@@ -14,7 +14,8 @@ import routes from "../../../../next.routes";
 
 const setup = async (fn: any, fromTestProps?: any) => {
   const Component = () => <div className="PageComponent" />;
-  const appProps = merge({
+  const appProps = merge(
+    {
       Component,
       asPath: "",
       ctx: {
@@ -25,7 +26,7 @@ const setup = async (fn: any, fromTestProps?: any) => {
           intlMessages: {},
           locale: "en-NZ"
         },
-        res: {},
+        res: {}
       },
       router: {
         pathname: ""
@@ -36,13 +37,13 @@ const setup = async (fn: any, fromTestProps?: any) => {
   const initialProps = await App.getInitialProps(appProps);
   const props = {
     ...appProps,
-    ...initialProps,
+    ...initialProps
   };
 
   return {
     actual: fn(<App {...props} />),
     props
-  }
+  };
 };
 
 const g: any = global;
@@ -84,7 +85,7 @@ describe("[app] App root", () => {
     Component.getInitialProps = async () => ({ test });
     const { props } = await setup(mount, { Component });
 
-    expect(props.initialProps.pageProps).toEqual({ test })
+    expect(props.initialProps.pageProps).toEqual({ test });
   });
 
   describe("router events", async () => {
