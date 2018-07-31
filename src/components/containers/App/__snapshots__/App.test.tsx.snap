@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[app] App root mounts application correctly on the client 1`] = `
+<article
+  class="Page"
+>
+  <main
+    class="Page-body container"
+    role="main"
+  >
+    <div
+      class="PageComponent"
+    />
+  </main>
+</article>
+`;
+
+exports[`[app] App root mounts application correctly on the server 1`] = `
+<article
+  class="Page"
+>
+  <main
+    class="Page-body container"
+    role="main"
+  >
+    <div
+      class="PageComponent"
+    />
+  </main>
+</article>
+`;
