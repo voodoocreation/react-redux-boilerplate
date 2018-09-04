@@ -10,14 +10,16 @@ import * as React from "react";
 // tslint:disable-next-line
 const css = require("../../../scss/index.scss");
 
-const Meta: React.SFC<{}> = () => (
-  <React.Fragment>
-    <meta charSet="UTF-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <link rel="manifest" href="/static/manifest.json" />
-  </React.Fragment>
-);
+const Meta: React.SFC<{}> = () =>
+  (
+    <React.Fragment>
+      <meta charSet="UTF-8" />
+      <meta
+        content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+        name="viewport"
+      />
+    </React.Fragment>
+  ) as React.ReactElement<any>;
 
 export default class extends Document {
   public static async getInitialProps(context: Context) {

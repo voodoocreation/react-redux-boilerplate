@@ -13,14 +13,6 @@ const setup = async (fn: any, fromTestProps?: any) => {
         page: "/",
         pathname: "pathname"
       },
-      asPath: "",
-      buildManifest: {
-        "main.js": []
-      },
-      chunks: {
-        filenames: ["main.js"],
-        names: ["main.js"]
-      },
       ctx: {
         isServer: true,
         renderPage: async () => ({}),
@@ -29,6 +21,7 @@ const setup = async (fn: any, fromTestProps?: any) => {
           locale: "en-NZ"
         }
       },
+      dynamicImports: [],
       files: []
     },
     fromTestProps

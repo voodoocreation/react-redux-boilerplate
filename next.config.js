@@ -2,6 +2,8 @@ const path = require("path");
 const glob = require("glob");
 const PluginExtractText = require("extract-text-webpack-plugin");
 const withTypescript = require("@zeit/next-typescript");
+const PluginLodashModuleReplacement = require("lodash-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const configCSSLoaders = env => {
   let cssLoader = { loader: "css-loader" };
@@ -16,13 +18,6 @@ const configCSSLoaders = env => {
     }
   };
 
-  const mediaQueryLoader = {
-    loader: "group-css-media-queries-loader",
-    options: {
-      sourceMap: false
-    }
-  };
-
   if (env === "production") {
     cssLoader = {
       loader: "css-loader",
@@ -32,12 +27,12 @@ const configCSSLoaders = env => {
     };
   }
 
-  return [cssLoader, mediaQueryLoader, postcssLoader, sassLoader];
+  return [cssLoader, postcssLoader, sassLoader];
 };
 
 module.exports = withTypescript({
   distDir: "dist",
-  webpack: config => {
+  webpack: (config, { dev }) => {
     config.module.rules.push(
       {
         test: /\.(css|scss)/,
@@ -60,7 +55,9 @@ module.exports = withTypescript({
       }
     );
 
-    if (process.env.NODE_ENV === "production") {
+    config.plugins.push(new PluginLodashModuleReplacement());
+
+    if (!dev) {
       config.module.rules.push({
         test: /\.s(a|c)ss$/,
         use: PluginExtractText.extract({
@@ -73,7 +70,9 @@ module.exports = withTypescript({
         new PluginExtractText({
           filename: "/assets/main.css",
           allChunks: true
-        })
+        }),
+
+        new OptimizeCSSAssetsPlugin({})
       );
     } else {
       config.module.rules.push({
@@ -81,10 +80,6 @@ module.exports = withTypescript({
         use: [
           "babel-loader",
           "raw-loader",
-          {
-            loader: "group-css-media-queries-loader",
-            options: { sourceMap: false }
-          },
           "postcss-loader",
           {
             loader: "sass-loader",
