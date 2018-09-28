@@ -32,6 +32,7 @@ interface IProps extends AppComponentProps {
     intlMessages: {};
     initialNow: Date;
   };
+  pageProps: {};
   store: Store<any>;
 }
 

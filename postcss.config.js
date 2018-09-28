@@ -5,7 +5,7 @@ const postcssMqpacker = require("css-mqpacker");
 module.exports = {
   plugins: [
     postcssMqpacker({
-      sort: false
+      sort: true
     }),
     poscssEasyImport({ prefix: "_" }),
     autoprefixer({

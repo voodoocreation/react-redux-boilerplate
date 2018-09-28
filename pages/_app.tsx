@@ -1,3 +1,3 @@
-import App from "../src/components/containers/App/App";
+import App from "../src/components/connected/App/App";
 
 export default App;

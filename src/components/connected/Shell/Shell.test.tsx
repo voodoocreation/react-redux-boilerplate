@@ -30,7 +30,13 @@ const setup = (fn: any, fromTestProps?: any, fromTestStore?: any) => {
 };
 
 describe("[containers] <Shell />", () => {
-  it("renders correctly", () => {
+  it("renders correctly on the client", () => {
+    const { actual } = setup(render);
+    expect(actual).toMatchSnapshot();
+  });
+
+  it("renders correctly on the server", () => {
+    window.isServer = true;
     const { actual } = setup(render);
     expect(actual).toMatchSnapshot();
   });

@@ -1,3 +1,3 @@
-import Document from "../src/components/containers/Document/Document";
+import Document from "../src/components/connected/Document/Document";
 
 export default Document;
