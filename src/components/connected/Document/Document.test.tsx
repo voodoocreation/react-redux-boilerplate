@@ -8,11 +8,11 @@ const setup = async (fn: any, fromTestProps?: any) => {
   const documentProps = merge(
     {
       __NEXT_DATA__: {
-        assetPrefix: "/assets",
         buildId: "buildId",
         page: "/",
         pathname: "pathname"
       },
+      assetPrefix: "/assetPrefix",
       ctx: {
         isServer: true,
         renderPage: async () => ({}),
