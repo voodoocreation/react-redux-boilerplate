@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[app] App root mounts application correctly on the client 1`] = `
+exports[`[connected] <App /> mounts application correctly on the client 1`] = `
 <article
   class="Page"
 >
@@ -15,7 +15,7 @@ exports[`[app] App root mounts application correctly on the client 1`] = `
 </article>
 `;
 
-exports[`[app] App root mounts application correctly on the server 1`] = `
+exports[`[connected] <App /> mounts application correctly on the server 1`] = `
 <article
   class="Page"
 >

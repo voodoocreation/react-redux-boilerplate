@@ -40,7 +40,7 @@ const setup = async (fn: any, fromTestProps?: any) => {
 
 const g: any = global;
 
-describe("[containers] <Document />", () => {
+describe("[connected] <Document />", () => {
   beforeEach(() => {
     process.env.NODE_ENV = "test";
     g.isServer = true;

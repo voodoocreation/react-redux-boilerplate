@@ -48,7 +48,15 @@ const setup = async (fn: any, fromTestProps?: any) => {
 
 const g: any = global;
 
-describe("[app] App root", () => {
+describe("[connected] <App />", () => {
+  const addEventListener = g.addEventListener;
+  const removeEventListener = g.removeEventListener;
+
+  beforeAll(() => {
+    g.addEventListener = jest.fn((...args) => addEventListener(...args));
+    g.removeEventListener = jest.fn((...args) => removeEventListener(...args));
+  });
+
   beforeEach(() => {
     g.isServer = false;
     g.__NEXT_DATA__ = {
@@ -62,60 +70,92 @@ describe("[app] App root", () => {
 
   afterEach(() => {
     g.__NEXT_DATA__ = undefined;
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    g.addEventListener = addEventListener;
+    g.removeEventListener = removeEventListener;
   });
 
   it("mounts application correctly on the server", async () => {
     g.isServer = true;
-    const { actual } = await setup(mount, {
-      ctx: { isServer: g.isServer }
-    });
+    let isPassing = true;
 
-    expect(actual.render()).toMatchSnapshot();
+    try {
+      const { actual } = await setup(mount, {
+        ctx: { isServer: g.isServer }
+      });
+
+      expect(actual.render()).toMatchSnapshot();
+      actual.unmount();
+    } catch (error) {
+      isPassing = false;
+    }
+
+    expect(isPassing).toBe(true);
   });
 
   it("mounts application correctly on the client", async () => {
-    const { actual } = await setup(mount);
+    let isPassing = true;
 
-    expect(actual.render()).toMatchSnapshot();
+    try {
+      const { actual } = await setup(mount);
+
+      expect(actual.render()).toMatchSnapshot();
+      actual.unmount();
+    } catch (error) {
+      isPassing = false;
+    }
+
+    expect(isPassing).toBe(true);
   });
 
   it("gets `initialProps` from component correctly", async () => {
     const test = "Test";
     const Component: any = () => <div className="PageComponent" />;
     Component.getInitialProps = async () => ({ test });
-    const { props } = await setup(mount, { Component });
+    const { actual, props } = await setup(mount, { Component });
 
     expect(props.initialProps.pageProps).toEqual({ test });
+
+    actual.unmount();
   });
 
-  describe("router events", async () => {
+  describe("router events", () => {
     it("onRouteChangeStart is handled correctly", async () => {
-      const { props } = await setup(mount);
+      const { actual, props } = await setup(mount);
 
       routes.Router.onRouteChangeStart("/");
 
-      expect(props.store.getState().page.transitioningTo).toBe("/");
+      expect(props.ctx.store.getState().page.transitioningTo).toBe("/");
+
+      actual.unmount();
     });
 
     it("onRouteChangeComplete is handled correctly", async () => {
-      const { props } = await setup(mount);
+      const { actual, props } = await setup(mount);
 
       routes.Router.onRouteChangeComplete("/");
 
-      expect(props.store.getState().page.transitioningTo).toBeUndefined();
-      expect(props.store.getState().page.currentRoute).toBe("/");
+      expect(props.ctx.store.getState().page.transitioningTo).toBeUndefined();
+      expect(props.ctx.store.getState().page.currentRoute).toBe("/");
+
+      actual.unmount();
     });
 
     it("onRouteChangeStart is handled correctly", async () => {
-      const { props } = await setup(mount);
+      const { actual, props } = await setup(mount);
 
       routes.Router.onRouteChangeError(new Error("Server error"), "/");
 
-      expect(props.store.getState().page.transitioningTo).toBeUndefined();
-      expect(props.store.getState().page.error).toEqual({
+      expect(props.ctx.store.getState().page.transitioningTo).toBeUndefined();
+      expect(props.ctx.store.getState().page.error).toEqual({
         message: "Error: Server error",
         status: 500
       });
+
+      actual.unmount();
     });
   });
 });

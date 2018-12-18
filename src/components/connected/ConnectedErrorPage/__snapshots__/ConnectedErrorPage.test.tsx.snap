@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[containers] <ConnectedErrorPage /> renders correctly 1`] = `
+exports[`[connected] <ConnectedErrorPage /> renders correctly 1`] = `
 Array [
   <h1>
     Page not found

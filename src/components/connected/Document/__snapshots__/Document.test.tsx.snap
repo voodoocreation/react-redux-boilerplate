@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[containers] <Document /> renders correctly when NODE_ENV=development 1`] = `
+exports[`[connected] <Document /> renders correctly when NODE_ENV=development 1`] = `
 Array [
   <link
     as="script"
@@ -40,7 +40,7 @@ Array [
 ]
 `;
 
-exports[`[containers] <Document /> renders currectly when NODE_ENV=production 1`] = `
+exports[`[connected] <Document /> renders currectly when NODE_ENV=production 1`] = `
 Array [
   <link
     as="script"

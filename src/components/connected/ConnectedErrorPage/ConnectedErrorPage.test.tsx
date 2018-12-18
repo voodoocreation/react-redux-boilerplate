@@ -25,7 +25,7 @@ const setup = (fn: any) => {
   };
 };
 
-describe("[containers] <ConnectedErrorPage />", () => {
+describe("[connected] <ConnectedErrorPage />", () => {
   it("renders correctly", () => {
     const { actual } = setup(render);
     expect(actual).toMatchSnapshot();
