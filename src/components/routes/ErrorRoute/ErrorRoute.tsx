@@ -1,20 +1,25 @@
+import { NextContext } from "next";
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps } from "react-intl";
 
 import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
+
 import ErrorPage from "../../presentation/ErrorPage/ErrorPage";
 
-interface IProps {
-  err: {};
-  intl: InjectedIntl;
+interface IResError extends Error {
+  statusCode: number;
+}
+
+interface IProps extends InjectedIntlProps {
+  err: IResError;
   message?: string;
-  statusCode: number | string;
+  statusCode: number;
 }
 
 class ErrorRoute extends React.Component<IProps> {
-  public static getInitialProps({ ctx }: any) {
-    const res = ctx.res;
-    const err = ctx.err as Error & { statusCode: string };
+  public static getInitialProps(context: NextContext) {
+    const res = context.res;
+    const err = context.err as IResError;
     const statusCode = res ? res.statusCode : err.statusCode;
     const message = err && err.message ? err.message : undefined;
 
@@ -28,4 +33,6 @@ class ErrorRoute extends React.Component<IProps> {
   }
 }
 
-export default injectIntlIntoPage(ErrorRoute);
+const ErrorRouteWrapped = injectIntlIntoPage(ErrorRoute);
+
+export default ErrorRouteWrapped;

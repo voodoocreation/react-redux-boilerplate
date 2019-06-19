@@ -3,7 +3,7 @@
     "allowJs": true,
     "jsx": "react",
     "lib": ["dom", "esnext"],
-    "target": "es6",
+    "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -17,5 +17,11 @@
     "baseUrl": ".",
     "outDir": "dist"
   },
-  "exclude": ["**/dist/*", "**/locales/*", "**/node_modules/*"]
+  "exclude": [
+    "**/coverage/*",
+    "**/dist/*",
+    "**/out/*",
+    "**/locales/*",
+    "**/node_modules/*"
+  ]
 }

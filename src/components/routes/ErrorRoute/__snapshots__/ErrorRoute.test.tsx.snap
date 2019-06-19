@@ -1,23 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`[routes] <ErrorRoute /> renders correctly 1`] = `
-Array [
+<article
+  class="ErrorPage"
+>
   <h1>
     An error has occurred
-  </h1>,
-  <p>
-    An error has occurred, please try again.
-  </p>,
-]
-`;
-
-exports[`[routes] <ErrorRoute /> renders correctly with custom error message 1`] = `
-Array [
-  <h1>
-    An error has occurred
-  </h1>,
-  <p>
-    Test
-  </p>,
-]
+  </h1>
+  <div
+    class="ErrorPage--content container"
+  >
+    <p>
+      An error has occurred, please try again.
+    </p>
+  </div>
+</article>
 `;

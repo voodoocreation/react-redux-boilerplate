@@ -1,11 +1,10 @@
 import Head from "next/head";
 import * as React from "react";
-import { InjectedIntl, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
-interface IProps {
-  intl: InjectedIntl;
+interface IProps extends InjectedIntlProps {
   message?: string;
-  status: number;
+  status?: number;
 }
 
 class ErrorPage extends React.Component<IProps> {
@@ -16,19 +15,27 @@ class ErrorPage extends React.Component<IProps> {
   public render() {
     const { formatMessage } = this.props.intl;
 
+    const pageTitle = `${this.getTitle()} · ${formatMessage({
+      id: "BRAND_NAME"
+    })}`;
+    const pageDescription = this.getMessage();
+
     return (
       <React.Fragment>
         <Head>
-          <title>
-            {`${this.getTitle()} · ${formatMessage({
-              id: "BRAND_NAME"
-            })}`}
-          </title>
+          <title>{pageTitle}</title>
+          <meta content={pageDescription} name="description" />
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDescription} />
         </Head>
 
-        <h1>{this.getTitle()}</h1>
+        <article className="ErrorPage">
+          <h1>{this.getTitle()}</h1>
 
-        <p>{this.getMessage()}</p>
+          <div className="ErrorPage--content container">
+            <p>{this.getMessage()}</p>
+          </div>
+        </article>
       </React.Fragment>
     );
   }
@@ -60,4 +67,6 @@ class ErrorPage extends React.Component<IProps> {
   }
 }
 
-export default injectIntl<any>(ErrorPage);
+const ErrorPageWrapped = injectIntl(ErrorPage);
+
+export default ErrorPageWrapped;

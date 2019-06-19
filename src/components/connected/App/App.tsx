@@ -1,18 +1,22 @@
+import { NextContext } from "next";
 import withReduxSaga from "next-redux-saga";
 import withRedux from "next-redux-wrapper";
-import App, { AppComponentProps, Container } from "next/app";
-import { NextDocumentContext as Context } from "next/document";
+import { DefaultQuery } from "next-server/router";
+import NextApp, {
+  AppProps,
+  Container,
+  DefaultAppIProps,
+  NextAppContext
+} from "next/app";
 import * as React from "react";
 import { addLocaleData, IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
-import { Store } from "redux";
 
 import routes from "../../../../next.routes";
 import * as actions from "../../../actions/root.actions";
-import createStore from "../../../store/root.store";
-
 import { isServer } from "../../../helpers/dom";
-import Shell from "../Shell/Shell";
+import { createStore, TStore } from "../../../store/root.store";
+import Page from "../Page/Page";
 
 // tslint:disable:no-submodule-imports
 import en from "react-intl/locale-data/en";
@@ -20,23 +24,25 @@ import en from "react-intl/locale-data/en";
 
 addLocaleData([...en]);
 
-type NextPageComponent = React.ComponentType<any> & {
-  getInitialProps: (props: any) => any;
+export type TContext<Q extends DefaultQuery> = NextContext<Q> & {
+  store: TStore;
 };
 
-interface IProps extends AppComponentProps {
-  Component: NextPageComponent;
-  ctx: Context & { store: any };
+export type TAppContext<Q extends DefaultQuery> = NextAppContext & {
+  ctx: TContext<Q>;
+  store: TStore;
+};
+
+interface IProps extends DefaultAppIProps, AppProps {
   intlProps: {
     locale: string;
     intlMessages: {};
     initialNow: Date;
   };
-  pageProps: {};
-  store: Store<any>;
+  store: TStore;
 }
 
-const getIntlProps = (ctx: Context) => {
+const getIntlProps = (ctx: NextContext) => {
   const requestProps = isServer()
     ? ctx.req
     : window.__NEXT_DATA__.props.initialProps.intlProps;
@@ -44,26 +50,26 @@ const getIntlProps = (ctx: Context) => {
 
   return {
     initialNow: Date.now(),
-    intlMessages: intlMessages || {},
+    intlMessages: intlMessages || require("../../../locales/en-NZ.json"),
     locale: locale || "en-NZ"
   };
 };
 
-class Application extends App {
-  public static async getInitialProps({ ctx, Component }: IProps) {
+class App<P extends IProps> extends NextApp<P> {
+  public static async getInitialProps({ ctx, Component }: TAppContext<any>) {
     let pageProps = {};
 
     const unsubscribe = ctx.store.subscribe(() => {
       const state = ctx.store.getState();
 
-      if (state.page.error && ctx.res) {
-        ctx.res.statusCode = state.page.error.status;
+      if (state.app.error && ctx.res) {
+        ctx.res.statusCode = state.app.error.status;
         unsubscribe();
       }
     });
 
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps({ ctx });
+      pageProps = await Component.getInitialProps(ctx);
     }
 
     const intlProps = getIntlProps(ctx);
@@ -71,21 +77,22 @@ class Application extends App {
     return { pageProps, intlProps };
   }
 
-  public componentWillMount() {
+  constructor(props: P) {
+    super(props);
+
     routes.Router.onRouteChangeStart = this.onRouteChangeStart;
     routes.Router.onRouteChangeComplete = this.onRouteChangeComplete;
     routes.Router.onRouteChangeError = this.onRouteChangeError;
   }
 
   public componentDidMount() {
-    if (!isServer()) {
-      const { store } = this.props as IProps;
-      store.dispatch(actions.setCurrentRoute(routes.Router.route));
-    }
+    const { store } = this.props;
+
+    store.dispatch(actions.setCurrentRoute(routes.Router.route));
   }
 
   public render() {
-    const { Component, intlProps, pageProps, store } = this.props as IProps;
+    const { Component, intlProps, pageProps, store } = this.props;
 
     return (
       <Container>
@@ -94,10 +101,11 @@ class Application extends App {
             initialNow={intlProps.initialNow}
             messages={intlProps.intlMessages}
             locale={intlProps.locale}
+            textComponent={React.Fragment}
           >
-            <Shell>
+            <Page>
               <Component {...pageProps} />
-            </Shell>
+            </Page>
           </IntlProvider>
         </Provider>
       </Container>
@@ -105,19 +113,19 @@ class Application extends App {
   }
 
   private onRouteChangeStart = (path: string) => {
-    const { store } = this.props as IProps;
+    const { store } = this.props;
 
     store.dispatch(actions.changeRoute.started(path));
   };
 
   private onRouteChangeComplete = (path: string) => {
-    const { store } = this.props as IProps;
+    const { store } = this.props;
 
-    store.dispatch(actions.changeRoute.done({ params: path }));
+    store.dispatch(actions.changeRoute.done({ params: path, result: null }));
   };
 
   private onRouteChangeError = (error: Error, path: string) => {
-    const { store } = this.props as IProps;
+    const { store } = this.props;
 
     store.dispatch(
       actions.changeRoute.failed({
@@ -131,6 +139,6 @@ class Application extends App {
   };
 }
 
-export default withRedux(createStore)(
-  withReduxSaga({ async: true })(Application)
-);
+const AppWrapped = withRedux(createStore)(withReduxSaga(App));
+
+export default AppWrapped;

@@ -1,52 +1,41 @@
-import axios from "axios";
-import { camelizeKeys } from "humps";
+import { mockWithFailure } from "../utilities/mocks";
+import * as apiMethods from "./api/root.api";
+import { TRequest } from "./configureHttpClient";
 
-import fetchApiData from "./api/fetchApiData";
+export type TApi = ReturnType<typeof configureApi>;
+export type TMockApi = ReturnType<typeof configureMockApi>;
 
-export const createApiWith = (ports: any) => ({
-  fetchApiData: fetchApiData(ports)
-});
+export const configureApi = (request: TRequest) => {
+  const bindMethods = <M>(methods: M) => {
+    const boundMethods: {
+      [key in keyof M]: TCurriedReturn<M[key]>;
+    } = {} as any;
 
-export const createPortsWith = (
-  config: any,
-  client: (config: any) => Promise<any> = axios
-) => ({
-  body,
-  method = "GET",
-  params,
-  url
-}: {
-  body?: string;
-  method?: string;
-  params?: {};
-  url: string;
-}) =>
-  client({
-    baseURL: config.apiUrl,
-    data: body,
-    method,
-    params,
-    url
-  })
-    .then(response => camelizeKeys(response.data))
-    .catch(error => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        throw new Error(
-          JSON.stringify(
-            camelizeKeys({
-              ...error.response.data,
-              status: error.response.status
-            })
-          )
-        );
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `err.request` is an instance of XMLHttpRequest in the browser
-        throw new Error(error.request.statusText);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        throw new Error(error.message);
-      }
-    });
+    for (const index of Object.keys(methods) as Array<keyof M>) {
+      const method: any = methods[index];
+      boundMethods[index] = method(request);
+    }
+
+    return boundMethods;
+  };
+
+  return bindMethods(apiMethods);
+};
+
+export const configureMockApi = () => {
+  const mockApiMethods = <M>(methods: M) => {
+    const mockMethods: {
+      [key in keyof M]: jest.Mock<Promise<any>>;
+    } = {} as any;
+
+    for (const index of Object.keys(methods) as Array<keyof M>) {
+      mockMethods[index] = mockWithFailure(
+        `Mock API method '${index}' not implemented in test.`
+      );
+    }
+
+    return mockMethods;
+  };
+
+  return mockApiMethods(apiMethods);
+};

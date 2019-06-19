@@ -1,28 +1,37 @@
-import { applyMiddleware, compose, createStore, Store } from "redux";
+import {
+  applyMiddleware,
+  compose,
+  createStore as reduxStore,
+  DeepPartial,
+  Middleware,
+  Store
+} from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 
 import { isServer } from "../helpers/dom";
-import rootReducer from "../reducers/root.reducers";
-import rootSaga from "../sagas/root.sagas";
-import { createApiWith, createPortsWith } from "../services/configureApi";
+import { configureApi } from "../services/configureApi";
+import { configureHttpClient } from "../services/configureHttpClient";
+import { configurePorts, IPorts } from "../services/configurePorts";
 
-type TStore = Store & {
+import rootReducer, { IStoreState } from "../reducers/root.reducers";
+import rootSaga from "../sagas/root.sagas";
+
+export type TStore = Store<IStoreState> & {
   sagaTask?: Task;
   runSagaTask?: () => void;
 };
 
-export default (initialState = {}, _?: any, api?: {}) => {
+export const configureStore = (
+  initialState: DeepPartial<IStoreState>,
+  ports: IPorts,
+  extraMiddlewares: Middleware[] = []
+) => {
   // Environment
-  const hasGA = !isServer() && typeof window.dataLayer !== "undefined";
-  const hasMaps =
-    !isServer() &&
-    typeof window.google !== "undefined" &&
-    typeof window.google.maps !== "undefined";
   const isDev = process.env.NODE_ENV === "development";
 
   // Middleware
   const sagaMiddleware = createSagaMiddleware();
-  const middleware = [sagaMiddleware];
+  const middleware = [...extraMiddlewares, sagaMiddleware];
 
   // Redux devtools
   let composeEnhancers = compose;
@@ -35,24 +44,25 @@ export default (initialState = {}, _?: any, api?: {}) => {
   }
 
   // Redux store
-  // const offlineStorage = createOfflineStorage();
-  const ports = createPortsWith({
-    apiUrl: `http://localhost:5000/mock-api`
-  });
-  const store: TStore = createStore(
+  const store: TStore = reduxStore(
     rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middleware))
   );
-  const saga = rootSaga({
-    api: api ? api : createApiWith(ports),
-    dataLayer: hasGA ? window.dataLayer : [],
-    maps: hasMaps ? window.google.maps : undefined
-  });
+
+  // Redux sagas
   store.runSagaTask = () => {
-    store.sagaTask = sagaMiddleware.run(saga);
+    store.sagaTask = sagaMiddleware.run(rootSaga, ports);
   };
   store.runSagaTask();
 
   return store;
+};
+
+export const createStore = (initialState: DeepPartial<IStoreState> = {}) => {
+  const ports = configurePorts({
+    api: configureApi(configureHttpClient())
+  });
+
+  return configureStore(initialState, ports);
 };

@@ -3,13 +3,17 @@ import * as React from "react";
 
 import injectIntlIntoPage from "./injectIntlIntoPage";
 
-describe("[helpers] injectIntl", () => {
-  it("injects intl into next.js page component correctly when `getInitialProps` is defined", async () => {
+describe("[helpers] injectIntlIntoPage", () => {
+  describe("when `getInitialProps` is defined", () => {
+    let actual: any;
+    let initialProps: any;
+    const test = "From getInitialProps()";
+
     class WithInitialProps extends React.Component<{ test: string }> {
       public static defaultProps = { test: "From defaultProps" };
 
       public static async getInitialProps() {
-        return { test: "From getInitialProps()" };
+        return { test };
       }
 
       public render() {
@@ -17,29 +21,53 @@ describe("[helpers] injectIntl", () => {
       }
     }
 
-    const WithInitialPropsWrapped = injectIntlIntoPage(WithInitialProps);
-    const initialProps = await WithInitialPropsWrapped.getInitialProps({});
-    const actual = mount(<WithInitialPropsWrapped {...initialProps} />);
+    it("wraps component correctly", async () => {
+      const WithInitialPropsWrapped = injectIntlIntoPage(WithInitialProps);
 
-    expect(initialProps).toEqual({ test: "From getInitialProps()" });
-    expect(actual.render()).toMatchSnapshot();
+      initialProps = await WithInitialPropsWrapped.getInitialProps({} as any);
+      actual = mount(<WithInitialPropsWrapped {...initialProps} />);
+    });
+
+    it("defines initialProps correctly", () => {
+      expect(initialProps).toEqual({ test });
+    });
+
+    it("renders wrapped component correctly", () => {
+      expect(actual.render().html()).toBe(test);
+    });
   });
 
-  it("injects intl into next.js page component correctly when `getInitialProps` isn't defined", async () => {
+  describe("when `getInitialProps` isn't defined", () => {
+    let actual: any;
+    let initialProps: any;
+    const test = "From getInitialProps()";
+
     // tslint:disable-next-line
     class WithoutInitialProps extends React.Component<{ test: string }> {
-      public static defaultProps = { test: "From defaultProps" };
+      public static defaultProps = { test };
 
       public render() {
         return <div>{this.props.test}</div>;
       }
     }
 
-    const WithoutInitialPropsWrapped = injectIntlIntoPage(WithoutInitialProps);
-    const initialProps = await WithoutInitialPropsWrapped.getInitialProps({});
-    const actual = mount(<WithoutInitialPropsWrapped {...initialProps} />);
+    it("wraps component correctly", async () => {
+      const WithoutInitialPropsWrapped = injectIntlIntoPage(
+        WithoutInitialProps
+      );
 
-    expect(initialProps).toEqual({});
-    expect(actual.render()).toMatchSnapshot();
+      initialProps = await WithoutInitialPropsWrapped.getInitialProps(
+        {} as any
+      );
+      actual = mount(<WithoutInitialPropsWrapped {...initialProps} />);
+    });
+
+    it("defines initialProps correctly", () => {
+      expect(initialProps).toEqual({});
+    });
+
+    it("renders wrapped component correctly", () => {
+      expect(actual.render().html()).toBe(test);
+    });
   });
 });

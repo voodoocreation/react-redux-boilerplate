@@ -4,13 +4,14 @@
 const React = require("react");
 
 const Intl = require.requireActual("react-intl");
-const IntlMessages = require("../../locales/en-NZ.json");
+const IntlMessages = require("../locales/en-NZ.json");
 
 // Initialise the real provider so that we don't
 // need to reimplement any internals
 const defaultProps = {
   locale: "en-NZ",
-  messages: IntlMessages
+  messages: IntlMessages,
+  textComponent: React.Fragment
 };
 const intlProvider = new Intl.IntlProvider(defaultProps, {});
 

@@ -12,7 +12,20 @@ jest.mock("../../../../next.routes", () => ({
 
 import routes from "../../../../next.routes";
 
-const setup = async (fn: any, fromTestProps?: any) => {
+const g: any = global;
+
+const setup = async (fn: any, fromTestProps?: any, isServer = false) => {
+  jest.clearAllMocks();
+
+  g.isServer = isServer;
+  g.__NEXT_DATA__ = {
+    props: {
+      initialProps: {
+        intlProps: {}
+      }
+    }
+  };
+
   const Component = () => <div className="PageComponent" />;
   const appProps = merge(
     {
@@ -46,8 +59,6 @@ const setup = async (fn: any, fromTestProps?: any) => {
   };
 };
 
-const g: any = global;
-
 describe("[connected] <App />", () => {
   const addEventListener = g.addEventListener;
   const removeEventListener = g.removeEventListener;
@@ -57,64 +68,32 @@ describe("[connected] <App />", () => {
     g.removeEventListener = jest.fn((...args) => removeEventListener(...args));
   });
 
-  beforeEach(() => {
-    g.isServer = false;
-    g.__NEXT_DATA__ = {
-      props: {
-        initialProps: {
-          intlProps: {}
-        }
-      }
-    };
-  });
-
-  afterEach(() => {
-    g.__NEXT_DATA__ = undefined;
-    jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    g.addEventListener = addEventListener;
-    g.removeEventListener = removeEventListener;
-  });
-
   it("mounts application correctly on the server", async () => {
-    g.isServer = true;
-    let isPassing = true;
-
-    try {
-      const { actual } = await setup(mount, {
+    const { actual } = await setup(
+      mount,
+      {
         ctx: { isServer: g.isServer }
-      });
+      },
+      true
+    );
 
-      expect(actual.render()).toMatchSnapshot();
-      actual.unmount();
-    } catch (error) {
-      isPassing = false;
-    }
-
-    expect(isPassing).toBe(true);
+    expect(actual.render()).toMatchSnapshot();
+    actual.unmount();
   });
 
   it("mounts application correctly on the client", async () => {
-    let isPassing = true;
+    const { actual } = await setup(mount);
 
-    try {
-      const { actual } = await setup(mount);
-
-      expect(actual.render()).toMatchSnapshot();
-      actual.unmount();
-    } catch (error) {
-      isPassing = false;
-    }
-
-    expect(isPassing).toBe(true);
+    expect(actual.render()).toMatchSnapshot();
+    actual.unmount();
   });
 
   it("gets `initialProps` from component correctly", async () => {
     const test = "Test";
     const Component: any = () => <div className="PageComponent" />;
+
     Component.getInitialProps = async () => ({ test });
+
     const { actual, props } = await setup(mount, { Component });
 
     expect(props.initialProps.pageProps).toEqual({ test });
@@ -122,40 +101,42 @@ describe("[connected] <App />", () => {
     actual.unmount();
   });
 
-  describe("router events", () => {
-    it("onRouteChangeStart is handled correctly", async () => {
-      const { actual, props } = await setup(mount);
+  describe("when navigating within the app", () => {
+    let result: any;
 
+    it("mounts the component", async () => {
+      result = await setup(mount);
+    });
+
+    it("handles the onRouteChangeStart event correctly", async () => {
       routes.Router.onRouteChangeStart("/");
 
-      expect(props.ctx.store.getState().page.transitioningTo).toBe("/");
-
-      actual.unmount();
+      expect(result.props.ctx.store.getState().app.transitioningTo).toBe("/");
     });
 
-    it("onRouteChangeComplete is handled correctly", async () => {
-      const { actual, props } = await setup(mount);
-
+    it("handles the onRouteChangeComplete event correctly", async () => {
       routes.Router.onRouteChangeComplete("/");
 
-      expect(props.ctx.store.getState().page.transitioningTo).toBeUndefined();
-      expect(props.ctx.store.getState().page.currentRoute).toBe("/");
-
-      actual.unmount();
+      expect(
+        result.props.ctx.store.getState().app.transitioningTo
+      ).toBeUndefined();
+      expect(result.props.ctx.store.getState().app.currentRoute).toBe("/");
     });
 
-    it("onRouteChangeStart is handled correctly", async () => {
-      const { actual, props } = await setup(mount);
-
+    it("handles the onRouteChangeError event correctly", async () => {
       routes.Router.onRouteChangeError(new Error("Server error"), "/");
 
-      expect(props.ctx.store.getState().page.transitioningTo).toBeUndefined();
-      expect(props.ctx.store.getState().page.error).toEqual({
+      expect(
+        result.props.ctx.store.getState().app.transitioningTo
+      ).toBeUndefined();
+      expect(result.props.ctx.store.getState().app.error).toEqual({
         message: "Error: Server error",
         status: 500
       });
+    });
 
-      actual.unmount();
+    it("unmounts the component", () => {
+      result.actual.unmount();
     });
   });
 });

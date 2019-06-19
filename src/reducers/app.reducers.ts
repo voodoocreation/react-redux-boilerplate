@@ -1,8 +1,16 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 import * as actions from "../actions/root.actions";
+import { error, IError } from "../models/root.models";
 
-export const initialState: IPageReducers = {
+export interface IState {
+  currentRoute?: string;
+  error?: IError;
+  isLoading: boolean;
+  transitioningTo?: string;
+}
+
+export const initialState: IState = {
   currentRoute: undefined,
   error: undefined,
   isLoading: false,
@@ -29,9 +37,9 @@ export default reducerWithInitialState(initialState)
     transitioningTo: undefined
   }))
 
-  .case(actions.changeRoute.failed, (state, { error }) => ({
+  .case(actions.changeRoute.failed, (state, payload) => ({
     ...state,
-    error,
+    error: error(payload.error),
     isLoading: false,
     transitioningTo: undefined
   }));

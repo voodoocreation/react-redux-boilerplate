@@ -2,38 +2,31 @@
 
 exports[`[connected] <Document /> renders correctly when NODE_ENV=development 1`] = `
 Array [
-  <link
-    as="script"
-    href="/assetPrefix/_next/static/buildId/pages/index.js"
-    rel="preload"
-  />,
-  <link
-    as="script"
-    href="/assetPrefix/_next/static/buildId/pages/_app.js"
-    rel="preload"
-  />,
-  <link
-    as="script"
-    href="/assetPrefix/_next/static/buildId/pages/_error.js"
-    rel="preload"
-  />,
   null,
-  <link
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    rel="stylesheet"
-  />,
   <meta
     charset="UTF-8"
   />,
   <meta
-    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
     name="viewport"
   />,
-  null,
+  <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"
+  />,
+  <link
+    as="script"
+    href="/assetPrefix/_next/static/buildId/pages/index.js?ts=1514718000000"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assetPrefix/_next/static/buildId/pages/_app.js?ts=1514718000000"
+    rel="preload"
+  />,
   <div
     id="__next"
   />,
-  null,
   null,
   null,
   null,
@@ -42,6 +35,18 @@ Array [
 
 exports[`[connected] <Document /> renders currectly when NODE_ENV=production 1`] = `
 Array [
+  null,
+  <meta
+    charset="UTF-8"
+  />,
+  <meta
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    name="viewport"
+  />,
+  <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"
+  />,
   <link
     as="script"
     href="/assetPrefix/_next/static/buildId/pages/index.js"
@@ -52,31 +57,42 @@ Array [
     href="/assetPrefix/_next/static/buildId/pages/_app.js"
     rel="preload"
   />,
-  <link
-    as="script"
-    href="/assetPrefix/_next/static/buildId/pages/_error.js"
-    rel="preload"
-  />,
-  null,
-  <link
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    rel="stylesheet"
-  />,
-  <meta
-    charset="UTF-8"
-  />,
-  <meta
-    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
-    name="viewport"
-  />,
-  <link
-    href="/assets/main.css?buildId"
-    rel="stylesheet"
-  />,
   <div
     id="__next"
   />,
   null,
+  null,
+  null,
+]
+`;
+
+exports[`[connected] <Document /> renders currectly when locale is missing 1`] = `
+Array [
+  null,
+  <meta
+    charset="UTF-8"
+  />,
+  <meta
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    name="viewport"
+  />,
+  <link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"
+  />,
+  <link
+    as="script"
+    href="/assetPrefix/_next/static/buildId/pages/index.js?ts=1514718000000"
+    rel="preload"
+  />,
+  <link
+    as="script"
+    href="/assetPrefix/_next/static/buildId/pages/_app.js?ts=1514718000000"
+    rel="preload"
+  />,
+  <div
+    id="__next"
+  />,
   null,
   null,
   null,

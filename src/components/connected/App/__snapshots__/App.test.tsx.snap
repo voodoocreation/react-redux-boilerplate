@@ -5,7 +5,7 @@ exports[`[connected] <App /> mounts application correctly on the client 1`] = `
   class="Page"
 >
   <main
-    class="Page-body container"
+    class="Page--body container"
     role="main"
   >
     <div
@@ -20,7 +20,7 @@ exports[`[connected] <App /> mounts application correctly on the server 1`] = `
   class="Page"
 >
   <main
-    class="Page-body container"
+    class="Page--body container"
     role="main"
   >
     <div

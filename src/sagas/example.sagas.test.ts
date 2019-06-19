@@ -1,46 +1,58 @@
-import setupSagas from "../helpers/setupSagas";
+import SagaTester from "../utilities/SagaTester";
 
 import * as actions from "../actions/root.actions";
+import { mockWithFailure, mockWithSuccess } from "../utilities/mocks";
 
 describe("[sagas] Example", () => {
   describe("takeLatest(actions.fetchApiData.started)", () => {
-    it("put(actions.fetchApiData.done)", async () => {
+    describe("when fetching API data, with a successful response", () => {
       const testData = { serverTest: true };
 
-      const { dispatch, store } = setupSagas(
+      const saga = new SagaTester(
         {},
         {
           api: {
-            fetchApiData: () => ({
-              data: testData,
-              ok: true
-            })
+            fetchApiData: mockWithSuccess(testData)
           }
         }
       );
 
-      dispatch(actions.fetchApiData.started({}));
+      it("dispatches actions.fetchApiData.started", () => {
+        saga.dispatch(actions.fetchApiData.started());
+      });
 
-      expect(store().example.apiData).toEqual(testData);
+      it("dispatches actions.fetchApiData.done with expected payload", () => {
+        const matchingActions = saga.history.filter(
+          actions.fetchApiData.done.match
+        );
+
+        expect(matchingActions).toHaveLength(1);
+        expect(matchingActions[0].payload.result).toEqual(testData);
+      });
     });
 
-    it("put(actions.fetchApiData.failed)", async () => {
-      const { dispatch, findAction } = setupSagas(
+    describe("when fetching API data, with a failed response", () => {
+      const saga = new SagaTester(
         {},
         {
           api: {
-            fetchApiData: () => ({
-              message: "Bad Request",
-              ok: false
-            })
+            fetchApiData: mockWithFailure("Server error")
           }
         }
       );
 
-      dispatch(actions.fetchApiData.started({}));
+      it("dispatches actions.fetchApiData.started", () => {
+        saga.dispatch(actions.fetchApiData.started());
+      });
 
-      const failureAction = findAction(actions.fetchApiData.failed);
-      expect(failureAction.payload.error).toBe("Bad Request");
+      it("dispatches actions.fetchApiData.failed with expected error", () => {
+        const matchingActions = saga.history.filter(
+          actions.fetchApiData.failed.match
+        );
+
+        expect(matchingActions).toHaveLength(1);
+        expect(matchingActions[0].payload.error).toBe("Server error");
+      });
     });
   });
 });

@@ -21,7 +21,7 @@ describe("[reducers] Example", () => {
 
       const state = example(
         exampleModel,
-        actions.fetchApiData.done({ params: {}, result: testValue })
+        actions.fetchApiData.done({ params: undefined, result: testValue })
       );
 
       expect(state.apiData).toEqual(testValue);

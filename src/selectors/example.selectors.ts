@@ -1,2 +1,5 @@
-export const getApiData = (state: IRootReducers) => state.example.apiData;
-export const getLocalData = (state: IRootReducers) => state.example.localData;
+import { IStoreState } from "../reducers/root.reducers";
+
+export const getApiData = (state: IStoreState) => state.example.apiData;
+
+export const getLocalData = (state: IStoreState) => state.example.localData;

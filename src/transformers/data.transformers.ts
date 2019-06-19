@@ -42,3 +42,24 @@ export const tryParseJson = (json: any) => {
 
   return result;
 };
+
+export const createSlugFromString = (str: string) =>
+  str
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/&/gm, "and")
+    .replace(/\s/gm, "-")
+    .replace(/[^\w_-]/gm, "");
+
+export const absoluteUrl = (path: string) => {
+  if (process.env.NODE_ENV !== "production") {
+    const port =
+      process.env.PORT !== "undefined"
+        ? process.env.PORT
+        : window.location.port;
+
+    return `http://localhost:${port}${path}`;
+  }
+
+  return `http://example.com${path}`;
+};

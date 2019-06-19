@@ -1,11 +1,23 @@
-import { all, fork } from "redux-saga/effects";
+import { all, fork, ForkEffect } from "redux-saga/effects";
 
-import { fetchApiDataSaga } from "./example.sagas";
+import { IPorts } from "../services/configurePorts";
 
-const mapSagas = (ports: any, effect: any) => (arr: any) =>
-  arr.reduce((acc: any, curr: any) => [...acc, effect(curr(ports))], []);
+import * as example from "./example.sagas";
 
-export default (ports: IStorePorts) =>
-  function*() {
-    yield all(mapSagas(ports, fork)([fetchApiDataSaga]));
-  };
+const allSagas = {
+  ...example
+};
+
+const mapSagas = (ports: IPorts) => {
+  const mapped: ForkEffect[] = [];
+
+  for (const saga of Object.values(allSagas)) {
+    mapped.push(fork(saga(ports)));
+  }
+
+  return mapped;
+};
+
+export default function*(ports: IPorts) {
+  yield all(mapSagas(ports));
+}

@@ -1,12 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import ErrorPage from "../../presentation/ErrorPage/ErrorPage";
-
+import { IError } from "../../../models/error.models";
+import { IStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
+import ErrorPage from "../../presentation/ErrorPage/ErrorPage";
+
 interface IProps {
-  error?: IError;
+  error: IError | undefined;
 }
 
 class ConnectedErrorPage extends React.Component<IProps> {
@@ -15,8 +17,10 @@ class ConnectedErrorPage extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  error: selectors.getPageError(state)
+const mapStateToProps = (state: IStoreState) => ({
+  error: selectors.getAppError(state)
 });
 
-export default connect<IProps>(mapStateToProps)(ConnectedErrorPage);
+const ConnectedErrorPageWrapped = connect(mapStateToProps)(ConnectedErrorPage);
+
+export default ConnectedErrorPageWrapped;

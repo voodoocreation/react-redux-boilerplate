@@ -1,8 +1,8 @@
-import createStore from "./root.store";
+import { createStore } from "./root.store";
 
 const nodeEnv = process.env.NODE_ENV;
 
-describe("[store]", () => {
+describe("[store] Redux store", () => {
   afterEach(() => {
     window.isServer = undefined;
     process.env.NODE_ENV = nodeEnv;
@@ -14,6 +14,7 @@ describe("[store]", () => {
       middleware;
     process.env.NODE_ENV = "development";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
@@ -21,6 +22,7 @@ describe("[store]", () => {
     window.isServer = false;
     process.env.NODE_ENV = "development";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
@@ -28,6 +30,7 @@ describe("[store]", () => {
     window.isServer = true;
     process.env.NODE_ENV = "development";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
@@ -35,6 +38,7 @@ describe("[store]", () => {
     window.isServer = false;
     process.env.NODE_ENV = "production";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
@@ -42,31 +46,29 @@ describe("[store]", () => {
     window.isServer = true;
     process.env.NODE_ENV = "production";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
   it("initialises with NODE_ENV=test", () => {
     process.env.NODE_ENV = "test";
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
-  it("initialises when Google Maps API is available", () => {
-    window.google = { maps: {} };
-    const store = createStore();
-    expect(store).toBeDefined();
-  });
-
-  it("initialises when Google Analytics API is available", () => {
+  it("initialises when Google Tag Manager API is available", () => {
     window.dataLayer = [];
     const store = createStore();
+
     expect(store).toBeDefined();
   });
 
   it("merges in initial state correctly", () => {
     const store = createStore({
-      page: { isLoading: true }
+      app: { isLoading: true }
     });
-    expect(store.getState().page.isLoading).toBe(true);
+
+    expect(store.getState().app.isLoading).toBe(true);
   });
 });

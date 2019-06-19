@@ -1,67 +1,53 @@
-import { mount, render } from "enzyme";
-import merge from "lodash.merge";
-import * as React from "react";
-import { Provider } from "react-redux";
+import ComponentTester from "../../../utilities/ComponentTester";
 
-import createStore from "../../../store/root.store";
+import * as actions from "../../../actions/root.actions";
+import { mockWithSuccess } from "../../../utilities/mocks";
 import IndexRoute from "./IndexRoute";
 
-const setup = (fn: any, fromTestStore = {}, fromTestApi?: {}) => {
-  const store = createStore(merge({}, fromTestStore), {}, fromTestApi);
-
-  return {
-    actual: fn(
-      <Provider store={store}>
-        <IndexRoute />
-      </Provider>
-    ),
-    store
-  };
-};
+const component = new ComponentTester(IndexRoute, true).withDefaultPorts({
+  api: {
+    fetchApiData: mockWithSuccess({ apiData: true })
+  }
+});
 
 describe("<IndexRoute />", () => {
-  it("renders correctly", () => {
-    const { actual } = setup(render);
-    expect(actual).toMatchSnapshot();
-  });
+  describe("when interacting with the controls", () => {
+    const { actual } = component.mount();
 
-  it("renders correctly with data", () => {
-    const { actual } = setup(render, {
-      example: {
-        apiData: {
-          test: "Test"
-        },
-        localData: {
-          inputValue: "Test"
-        }
-      }
+    it("renders initial API data section correctly", () => {
+      expect(actual.find(".Index--apiData pre").text()).toBe("{}");
     });
-    expect(actual).toMatchSnapshot();
-  });
 
-  it("handles input change event correctly", () => {
-    const { actual, store } = setup(mount);
-    const value = "Test value";
-    const input = actual.find("input");
+    it("renders initial local data section correctly", () => {
+      expect(actual.find(".Index--localData pre").text()).toContain(
+        `"inputValue": ""`
+      );
+    });
 
-    input.getDOMNode().value = value;
-    input.simulate("change");
+    it("clicks the fetch button", () => {
+      actual.find(".Index--apiData--fetchButton").simulate("click");
+    });
 
-    expect(store.getState().example.localData.inputValue).toBe(value);
-  });
+    it("dispatches actions.fetchApiData.started", () => {
+      expect(
+        component.getReduxHistory().filter(actions.fetchApiData.started.match)
+      ).toHaveLength(1);
+    });
 
-  it("handles API data button click event correctly", () => {
-    const data = { apiValue: "Test" };
-    const { actual, store } = setup(
-      mount,
-      {},
-      {
-        fetchApiData: () => ({ ok: true, data })
-      }
-    );
+    it("renders the fetched data correctly", () => {
+      expect(actual.find(".Index--apiData pre").text()).toContain(
+        `"apiData": true`
+      );
+    });
 
-    actual.find("button").simulate("click");
+    it("inputs a new value into the text input", () => {
+      actual.find("input").simulate("change", { target: { value: "Test" } });
+    });
 
-    expect(store.getState().example.apiData).toEqual(data);
+    it("renders the input data correctly", () => {
+      expect(actual.find(".Index--localData pre").text()).toContain(
+        `"inputValue": "Test"`
+      );
+    });
   });
 });

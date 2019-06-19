@@ -1,3 +1,5 @@
+import { failure, success } from "../models/response.models";
+
 export const isLocalStorageAvailable = () => {
   const { localStorage } = window;
 
@@ -12,25 +14,25 @@ export const isLocalStorageAvailable = () => {
   }
 };
 
-export const setLocalStorage = (key: string, data: string) => {
+export function setLocalStorage(key: string, data: string) {
   if (isLocalStorageAvailable()) {
     window.localStorage.setItem(key, data);
-    return { ok: true, data };
+    return success(data);
   }
 
-  return { ok: false, message: "unavailable" };
-};
+  return failure("unavailable");
+}
 
 export const getLocalStorage = (key: string) =>
   isLocalStorageAvailable()
-    ? { ok: true, data: window.localStorage.getItem(key) }
-    : { ok: false, message: "unavailable" };
+    ? success(window.localStorage.getItem(key))
+    : failure("unavailable");
 
 export const removeLocalStorage = (key: string) => {
   if (isLocalStorageAvailable()) {
     window.localStorage.removeItem(key);
-    return { ok: true, data: key };
+    return success(key);
   }
 
-  return { ok: false, message: "unavailable" };
+  return failure("unavailable");
 };

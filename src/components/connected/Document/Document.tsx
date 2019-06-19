@@ -1,34 +1,30 @@
 import { IncomingMessage } from "http";
 import Document, {
+  DefaultDocumentIProps,
   DocumentProps,
   Head,
   Main,
-  NextDocumentContext as Context,
+  NextDocumentContext,
   NextScript
 } from "next/document";
 import * as React from "react";
 
-// tslint:disable-next-line
-const css = require("../../../scss/index.scss");
+const Meta: React.FC = () => (
+  <React.Fragment>
+    <meta charSet="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+      name="viewport"
+    />
+  </React.Fragment>
+);
 
-const Meta: React.SFC<{}> = () =>
-  (
-    <React.Fragment>
-      <meta charSet="UTF-8" />
-      <meta
-        content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
-        name="viewport"
-      />
-    </React.Fragment>
-  ) as React.ReactElement<any>;
-
-interface IProps extends DocumentProps {
+interface IProps extends DefaultDocumentIProps, DocumentProps {
   locale: string;
 }
 
-// @ts-ignore-next-line
-export default class extends Document<IProps> {
-  public static async getInitialProps(context: Context) {
+export default class<P extends IProps> extends Document<P> {
+  public static async getInitialProps(context: NextDocumentContext) {
     const initialProps = await Document.getInitialProps(context);
     const props = await context.renderPage();
     const req = context.req as IncomingMessage & {
@@ -40,37 +36,26 @@ export default class extends Document<IProps> {
       ...initialProps,
       ...props,
       intlMessages: req.intlMessages,
-      locale: req.locale
+      locale: req.locale || "en-NZ"
     };
   }
 
   public render() {
-    const styles =
-      process.env.NODE_ENV !== "production" ? (
-        <style dangerouslySetInnerHTML={{ __html: css }} />
-      ) : (
-        <link
-          href={`/assets/main.css?${this.props.__NEXT_DATA__.buildId}`}
-          rel="stylesheet"
-        />
-      );
+    const { locale } = this.props as P;
 
     return (
-      <html lang={this.props.locale}>
+      <html lang={locale}>
         <Head>
           <script
             dangerouslySetInnerHTML={{
               __html: `document.documentElement.classList.add("isClientRendered");`
             }}
           />
+          <Meta />
           <link
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
             rel="stylesheet"
           />
-
-          <Meta />
-
-          {styles}
         </Head>
         <body>
           <Main />

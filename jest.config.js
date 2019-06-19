@@ -1,6 +1,21 @@
 module.exports = {
   bail: true,
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!**/node_modules/**"],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    }
+  },
+  globals: {
+    "ts-jest": {
+      tsConfig: {
+        target: "es6"
+      }
+    }
+  },
   moduleDirectories: ["node_modules"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   moduleNameMapper: {
@@ -8,7 +23,7 @@ module.exports = {
     "\\.(jpg|jpeg|gif|png|svg)$": "<rootDir>/src/__mocks__/dummyMock.js"
   },
   roots: ["<rootDir>/src"],
-  setupTestFrameworkScriptFile: "<rootDir>/jest.setup.js",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
   testURL: "http://localhost",
   transform: {

@@ -5,6 +5,7 @@
     "no-submodule-imports": [
       true,
       "next",
+      "next-server",
       "browser-metrics",
       "core-js",
       "promise",

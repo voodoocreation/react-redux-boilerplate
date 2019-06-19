@@ -4,11 +4,11 @@ import * as React from "react";
 import { FormattedMessage, InjectedIntl } from "react-intl";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { ActionCreator } from "typescript-fsa";
 
 import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 
 import * as actions from "../../../actions/root.actions";
+import { IStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
 interface IStoreProps {
@@ -20,8 +20,8 @@ interface IStoreProps {
 }
 
 interface IDispatchProps {
-  fetchApiData: ActionCreator<{}>;
-  setLocalData: ActionCreator<{}>;
+  fetchApiData: typeof actions.fetchApiData.started;
+  setLocalData: typeof actions.setLocalData;
 }
 
 interface IProps extends IStoreProps, IDispatchProps {
@@ -69,21 +69,21 @@ class IndexRoute extends React.Component<IProps> {
             <pre>{currentRoute}</pre>
           </section>
 
-          <section className="col-sm-6">
+          <section className="Index--apiData col-sm-6">
             <h2>
               <FormattedMessage id="API_DATA" />
             </h2>
             <pre>{JSON.stringify(apiData, null, "  ")}</pre>
 
             <button
-              className="btn btn-primary"
-              onClick={this.onAPIDataButtonClick}
+              className="Index--apiData--fetchButton btn btn-primary"
+              onClick={this.onFetchApiDataClick}
             >
               <FormattedMessage id="FETCH_API_DATA" />
             </button>
           </section>
 
-          <section className="col-sm-6">
+          <section className="Index--localData col-sm-6">
             <h2>
               <FormattedMessage id="LOCAL_DATA" />
             </h2>
@@ -103,24 +103,24 @@ class IndexRoute extends React.Component<IProps> {
     );
   }
 
-  private onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+  private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.setLocalData({
-      inputValue: event.currentTarget.value
+      inputValue: event.target.value
     });
   };
 
-  private onAPIDataButtonClick = () => {
-    this.props.fetchApiData({});
+  private onFetchApiDataClick = () => {
+    this.props.fetchApiData();
   };
 }
 
-const mapStateToProps = (state: any) => ({
+const mapState = (state: IStoreState) => ({
   apiData: selectors.getApiData(state),
   currentRoute: selectors.getCurrentRoute(state),
   localData: selectors.getLocalData(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
+const mapDispatch = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       fetchApiData: actions.fetchApiData.started,
@@ -130,8 +130,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   );
 
 export default injectIntlIntoPage(
-  connect<IStoreProps, IDispatchProps>(
-    mapStateToProps,
-    mapDispatchToProps
+  connect(
+    mapState,
+    mapDispatch
   )(IndexRoute)
 );

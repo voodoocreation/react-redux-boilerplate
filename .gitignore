@@ -3,8 +3,9 @@ logs
 *.log
 
 #project
-dist
 coverage
+dist
+out
 
 #node
 node_modules

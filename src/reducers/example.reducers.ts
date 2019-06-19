@@ -2,7 +2,14 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 import * as actions from "../actions/example.actions";
 
-export const initialState: IExampleReducers = {
+export interface IState {
+  apiData: {};
+  localData: {
+    inputValue: string;
+  };
+}
+
+export const initialState: IState = {
   apiData: {},
   localData: {
     inputValue: ""

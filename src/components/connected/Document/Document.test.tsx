@@ -13,20 +13,18 @@ const setup = async (fn: any, fromTestProps?: any) => {
         pathname: "pathname"
       },
       assetPrefix: "/assetPrefix",
-      ctx: {
-        isServer: true,
-        renderPage: async () => ({}),
-        req: {
-          intlMessages: {},
-          locale: "en-NZ"
-        }
-      },
       dynamicImports: [],
-      files: []
+      files: [],
+      isServer: true,
+      renderPage: async () => ({}),
+      req: {
+        intlMessages: {},
+        locale: "en-NZ"
+      }
     },
     fromTestProps
   );
-  const initialProps = await Document.getInitialProps(documentProps.ctx);
+  const initialProps = await Document.getInitialProps(documentProps);
   const props = {
     ...documentProps,
     ...initialProps
@@ -56,6 +54,14 @@ describe("[connected] <Document />", () => {
   it("renders currectly when NODE_ENV=production", async () => {
     process.env.NODE_ENV = "production";
     const { actual } = await setup(render);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  it("renders currectly when locale is missing", async () => {
+    const { actual } = await setup(render, {
+      req: { locale: "" }
+    });
 
     expect(actual).toMatchSnapshot();
   });

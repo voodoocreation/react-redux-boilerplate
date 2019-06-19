@@ -5,15 +5,17 @@ import {
   setLocalStorage
 } from "./configureLocalStorage";
 
+import { failure, success } from "../models/root.models";
+
 const ls = window.localStorage;
 const store: { [index: string]: string | null } = {};
 
 describe("[services] Local storage", () => {
   const testValue = "__localStorageTest__";
 
-  describe("when feature is available", () => {
+  describe("when the local storage feature is available", () => {
     beforeAll(() => {
-      Object.defineProperty(window, "localStorage", {
+      Object.defineProperty(global, "localStorage", {
         value: {
           getItem: jest.fn(key => store[key]),
           removeItem: jest.fn(key => {
@@ -32,12 +34,13 @@ describe("[services] Local storage", () => {
     });
 
     afterAll(() => {
-      Object.defineProperty(window, "localStorage", {
-        value: ls
+      Object.defineProperty(global, "localStorage", {
+        value: ls,
+        writable: true
       });
     });
 
-    it("detects local storage feature correctly when available", () => {
+    it("detects the local storage feature correctly when available", () => {
       expect(isLocalStorageAvailable()).toBe(true);
     });
 
@@ -47,56 +50,57 @@ describe("[services] Local storage", () => {
         testValue,
         testValue
       );
-      expect(result).toEqual({ data: testValue, ok: true });
+      expect(result).toEqual(success(testValue));
     });
 
     it("getLocalStorage() retrieves data correctly", () => {
       setLocalStorage(testValue, testValue);
       const result = getLocalStorage(testValue);
       expect(window.localStorage.getItem).toHaveBeenCalledWith(testValue);
-      expect(result).toEqual({ data: testValue, ok: true });
+      expect(result).toEqual(success(testValue));
     });
 
     it("removeLocalStorage() removes data correctly", () => {
       setLocalStorage(testValue, testValue);
       const result = removeLocalStorage(testValue);
       expect(window.localStorage.removeItem).toHaveBeenCalled();
-      expect(result).toEqual({ data: testValue, ok: true });
-      expect(getLocalStorage(testValue)).toEqual({ data: null, ok: true });
+      expect(result).toEqual(success(testValue));
+      expect(getLocalStorage(testValue)).toEqual(success(null));
     });
   });
 
-  describe("when feature is unavailable", () => {
+  describe("when the local storage feature is unavailable", () => {
     beforeAll(() => {
-      Object.defineProperty(window, "localStorage", {
+      Object.defineProperty(global, "localStorage", {
         value: undefined,
         writable: true
       });
     });
 
     afterAll(() => {
-      Object.defineProperty(window, "localStorage", {
-        value: ls
+      Object.defineProperty(global, "localStorage", {
+        value: ls,
+        writable: true
       });
     });
 
-    it("detects absence of feature correctly", () => {
+    it("detects absence of the feature correctly", () => {
       expect(isLocalStorageAvailable()).toBe(false);
     });
 
-    it("setLocalStorage() returns error correctly", () => {
+    it("setLocalStorage() returns a failure", () => {
       const result = setLocalStorage(testValue, testValue);
-      expect(result).toEqual({ message: "unavailable", ok: false });
+      expect(result).toEqual(failure("unavailable"));
     });
 
-    it("getLocalStorage() returns error correctly", () => {
+    it("getLocalStorage() returns a failure", () => {
       const result = getLocalStorage(testValue);
-      expect(result).toEqual({ message: "unavailable", ok: false });
+      expect(result).toEqual(failure("unavailable"));
     });
 
-    it("removeLocalStorage() returns error correctly", () => {
+    it("removeLocalStorage() returns a failure", () => {
       const result = removeLocalStorage(testValue);
-      expect(result).toEqual({ message: "unavailable", ok: false });
+      expect(result).toEqual(failure("unavailable"));
     });
   });
 });
