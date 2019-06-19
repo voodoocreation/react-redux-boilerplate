@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { IStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
+import "./Page.scss";
+
 interface IProps extends InjectedIntlProps {
   className?: string;
   isLoading: boolean;
@@ -26,7 +28,7 @@ class Page extends React.Component<IProps> {
           />
         </Head>
 
-        <main className="Page--body container" role="main">
+        <main className="Page--body" role="main">
           {isLoading ? null : children}
         </main>
       </article>

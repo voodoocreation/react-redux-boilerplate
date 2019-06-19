@@ -3013,24 +3013,6 @@ css-loader@1.0.0:
     postcss-value-parser "^3.3.0"
     source-list-map "^2.0.0"
 
-css-loader@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-3.0.0.tgz#bdd48a4921eefedf1f0a55266585944d4e5efc63"
-  integrity sha512-WR6KZuCkFbnMhRrGPlkwAA7SSCtwqPwpyXJAPhotYkYsc0mKU9n/fu5wufy4jl2WhBw9Ia8gUQMIp/1w98DuPw==
-  dependencies:
-    camelcase "^5.3.1"
-    cssesc "^3.0.0"
-    icss-utils "^4.1.1"
-    loader-utils "^1.2.3"
-    normalize-path "^3.0.0"
-    postcss "^7.0.17"
-    postcss-modules-extract-imports "^2.0.0"
-    postcss-modules-local-by-default "^3.0.2"
-    postcss-modules-scope "^2.1.0"
-    postcss-modules-values "^3.0.0"
-    postcss-value-parser "^4.0.0"
-    schema-utils "^1.0.0"
-
 css-mqpacker@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/css-mqpacker/-/css-mqpacker-7.0.0.tgz#48f4a0ff45b81ec661c4a33ed80b9db8a026333b"
@@ -4845,13 +4827,6 @@ icss-utils@^2.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-2.1.0.tgz#83f0a0ec378bf3246178b6c2ad9136f135b1c962"
   dependencies:
     postcss "^6.0.1"
-
-icss-utils@^4.0.0, icss-utils@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-4.1.1.tgz#21170b53789ee27447c2f47dd683081403f9a467"
-  integrity sha512-4aFq7wvWyMHKgxsH8QQtGpvbASCf+eM3wPRLI6R+MgAnTCZ6STYsRvttLvRWK0Nfif5piF394St3HeJDaljGPA==
-  dependencies:
-    postcss "^7.0.14"
 
 ieee754@^1.1.4:
   version "1.1.12"
@@ -6950,10 +6925,6 @@ normalize-path@^2.1.1:
   dependencies:
     remove-trailing-separator "^1.0.1"
 
-normalize-path@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
-
 normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
@@ -7810,28 +7781,12 @@ postcss-modules-extract-imports@^1.2.0:
   dependencies:
     postcss "^6.0.1"
 
-postcss-modules-extract-imports@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-modules-extract-imports/-/postcss-modules-extract-imports-2.0.0.tgz#818719a1ae1da325f9832446b01136eeb493cd7e"
-  dependencies:
-    postcss "^7.0.5"
-
 postcss-modules-local-by-default@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/postcss-modules-local-by-default/-/postcss-modules-local-by-default-1.2.0.tgz#f7d80c398c5a393fa7964466bd19500a7d61c069"
   dependencies:
     css-selector-tokenizer "^0.7.0"
     postcss "^6.0.1"
-
-postcss-modules-local-by-default@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/postcss-modules-local-by-default/-/postcss-modules-local-by-default-3.0.2.tgz#e8a6561be914aaf3c052876377524ca90dbb7915"
-  integrity sha512-jM/V8eqM4oJ/22j0gx4jrp63GSvDH6v86OqyTHHUvk4/k1vceipZsaymiZ5PvocqZOl5SFHiFJqjs3la0wnfIQ==
-  dependencies:
-    icss-utils "^4.1.1"
-    postcss "^7.0.16"
-    postcss-selector-parser "^6.0.2"
-    postcss-value-parser "^4.0.0"
 
 postcss-modules-scope@^1.1.0:
   version "1.1.0"
@@ -7840,27 +7795,12 @@ postcss-modules-scope@^1.1.0:
     css-selector-tokenizer "^0.7.0"
     postcss "^6.0.1"
 
-postcss-modules-scope@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/postcss-modules-scope/-/postcss-modules-scope-2.1.0.tgz#ad3f5bf7856114f6fcab901b0502e2a2bc39d4eb"
-  dependencies:
-    postcss "^7.0.6"
-    postcss-selector-parser "^6.0.0"
-
 postcss-modules-values@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/postcss-modules-values/-/postcss-modules-values-1.3.0.tgz#ecffa9d7e192518389f42ad0e83f72aec456ea20"
   dependencies:
     icss-replace-symbols "^1.1.0"
     postcss "^6.0.1"
-
-postcss-modules-values@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-modules-values/-/postcss-modules-values-3.0.0.tgz#5b5000d6ebae29b4255301b4a3a54574423e7f10"
-  integrity sha512-1//E5jCBrZ9DmRX+zCtmQtRSV6PV42Ix7Bzj9GbwJceduuf7IqP8MgeTXuRDHOWj2m0VzZD5+roFWDuU8RQjcg==
-  dependencies:
-    icss-utils "^4.0.0"
-    postcss "^7.0.6"
 
 postcss-normalize-charset@^4.0.1:
   version "4.0.1"
@@ -8008,7 +7948,7 @@ postcss-selector-parser@^5.0.0-rc.4:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss-selector-parser@^6.0.0, postcss-selector-parser@^6.0.2:
+postcss-selector-parser@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.2.tgz#934cf799d016c83411859e09dcecade01286ec5c"
   dependencies:
@@ -8048,11 +7988,6 @@ postcss-value-parser@^3.0.0, postcss-value-parser@^3.2.3, postcss-value-parser@^
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.1.tgz#9ff822547e2893213cf1c30efa51ac5fd1ba8281"
 
-postcss-value-parser@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.0.0.tgz#99a983d365f7b2ad8d0f9b8c3094926eab4b936d"
-  integrity sha512-ESPktioptiSUchCKgggAkzdmkgzKfmp0EU8jXH+5kbIUB+unr0Y4CY9SRMvibuvYUBjNh1ACLbxqYNpdTQOteQ==
-
 postcss@^6.0.1, postcss@^6.0.11, postcss@^6.0.23:
   version "6.0.23"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.23.tgz#61c82cc328ac60e677645f979054eb98bc0e3324"
@@ -8061,7 +7996,7 @@ postcss@^6.0.1, postcss@^6.0.11, postcss@^6.0.23:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
-postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.2, postcss@^7.0.5, postcss@^7.0.6:
+postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.2, postcss@^7.0.5:
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.7.tgz#2754d073f77acb4ef08f1235c36c5721a7201614"
   dependencies:
@@ -8072,15 +8007,6 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.2, postcss@^7.0.5, postcss@^7.0.6:
 postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.7:
   version "7.0.16"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.16.tgz#48f64f1b4b558cb8b52c88987724359acb010da2"
-  dependencies:
-    chalk "^2.4.2"
-    source-map "^0.6.1"
-    supports-color "^6.1.0"
-
-postcss@^7.0.17:
-  version "7.0.17"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.17.tgz#4da1bdff5322d4a0acaab4d87f3e782436bad31f"
-  integrity sha512-546ZowA+KZ3OasvQZHsbuEpysvwTZNGJv9EfyCQdsIDltPSWHAeTQ5fQy/Npi2ZDtLI3zs7Ps/p6wThErhm9fQ==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
@@ -8621,10 +8547,10 @@ redux-devtools-extension@^2.13.8:
   version "2.13.8"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
 
-redux-saga-tester@^1.0.477:
-  version "1.0.477"
-  resolved "https://registry.yarnpkg.com/redux-saga-tester/-/redux-saga-tester-1.0.477.tgz#bb0a6cb537b243d6f0e8df05d88cb402969ff47c"
-  integrity sha512-g2ZSSA47u7jJWoWjhZbm2Jq3hZ9UzCNZZq7RFV/aqLKTby9wX0D3OL87TqyDkTsj1X/MlowkkZYhZmliFdrgNQ==
+redux-saga-tester@^1.0.478:
+  version "1.0.478"
+  resolved "https://registry.yarnpkg.com/redux-saga-tester/-/redux-saga-tester-1.0.478.tgz#9633aa0f0f8d8b57b20e99efe45fd23c639bb5cf"
+  integrity sha512-nsQD9t4jUWNUViixG1oG/V0LYOvzsY1jXA0aIXrjmnjMQZgXOX7dTJu8kn1fF8iQDCspRAYXc5PIxdjWkAzREw==
   dependencies:
     babel-runtime "^6.11.6"
 
