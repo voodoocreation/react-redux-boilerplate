@@ -122,13 +122,13 @@ export default class ComponentTester<
   public render = () => this.renderWithMethod(render);
 
   protected renderWithMethod = <M extends TRenderMethods>(method: M) => {
-    const mergedProps: P = merge(
+    const mergedProps = merge(
       {
         children: this.children || this.defaultChildren
       },
       this.defaultProps,
       this.props
-    );
+    ) as P;
 
     let actual: ReturnType<M>;
     let result: IConnectedReturn<M, P> | IReturn<M, P>;
@@ -174,14 +174,18 @@ export default class ComponentTester<
   protected configureStore = () => {
     this.resetReduxHistory();
 
-    const mergedPorts = merge({}, this.defaultPorts, this.ports);
+    const mergedPorts = merge(
+      {},
+      this.defaultPorts,
+      this.ports
+    ) as ITestPortsParam;
     const mergedReduxState: DeepPartial<IStoreState> = merge(
       {},
       this.defaultReduxState,
       this.reduxState
     );
 
-    const ports = configureTestPorts(mergedPorts);
+    const ports: any = configureTestPorts(mergedPorts);
 
     const middlewares = [this.reduxHistoryMiddleware];
 

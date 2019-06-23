@@ -5,7 +5,6 @@ declare module "*.png";
 declare module "*.svg";
 
 declare module "jest-mock-axios";
-declare module "lodash.merge";
 declare module "react-relative-time";
 
 // tslint:disable-next-line
