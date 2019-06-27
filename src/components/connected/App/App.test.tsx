@@ -54,8 +54,8 @@ const setup = async (fn: any, fromTestProps?: any, isServer = false) => {
   };
 
   return {
-    actual: fn(<App {...props} />),
-    props
+    props,
+    wrapper: fn(<App {...props} />)
   };
 };
 
@@ -69,7 +69,7 @@ describe("[connected] <App />", () => {
   });
 
   it("mounts application correctly on the server", async () => {
-    const { actual } = await setup(
+    const { wrapper } = await setup(
       mount,
       {
         ctx: { isServer: g.isServer }
@@ -77,15 +77,15 @@ describe("[connected] <App />", () => {
       true
     );
 
-    expect(actual.render()).toMatchSnapshot();
-    actual.unmount();
+    expect(wrapper.render()).toMatchSnapshot();
+    wrapper.unmount();
   });
 
   it("mounts application correctly on the client", async () => {
-    const { actual } = await setup(mount);
+    const { wrapper } = await setup(mount);
 
-    expect(actual.render()).toMatchSnapshot();
-    actual.unmount();
+    expect(wrapper.render()).toMatchSnapshot();
+    wrapper.unmount();
   });
 
   it("gets `initialProps` from component correctly", async () => {
@@ -94,11 +94,11 @@ describe("[connected] <App />", () => {
 
     Component.getInitialProps = async () => ({ test });
 
-    const { actual, props } = await setup(mount, { Component });
+    const { wrapper, props } = await setup(mount, { Component });
 
     expect(props.initialProps.pageProps).toEqual({ test });
 
-    actual.unmount();
+    wrapper.unmount();
   });
 
   describe("when navigating within the app", () => {
@@ -136,7 +136,7 @@ describe("[connected] <App />", () => {
     });
 
     it("unmounts the component", () => {
-      result.actual.unmount();
+      result.wrapper.unmount();
     });
   });
 });

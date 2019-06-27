@@ -31,8 +31,8 @@ const setup = async (fn: any, fromTestProps?: any) => {
   };
 
   return {
-    actual: fn(<Document {...props} />),
-    props
+    props,
+    wrapper: fn(<Document {...props} />)
   };
 };
 
@@ -46,23 +46,23 @@ describe("[connected] <Document />", () => {
 
   it("renders correctly when NODE_ENV=development", async () => {
     process.env.NODE_ENV = "development";
-    const { actual } = await setup(render);
+    const { wrapper } = await setup(render);
 
-    expect(actual).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it("renders currectly when NODE_ENV=production", async () => {
     process.env.NODE_ENV = "production";
-    const { actual } = await setup(render);
+    const { wrapper } = await setup(render);
 
-    expect(actual).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it("renders currectly when locale is missing", async () => {
-    const { actual } = await setup(render, {
+    const { wrapper } = await setup(render, {
       req: { locale: "" }
     });
 
-    expect(actual).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 });

@@ -16,9 +16,9 @@ const component = new ComponentTester(
 
 describe("[connected] <ConnectedErrorPage />", () => {
   it("renders ErrorPage correctly with error from the store", () => {
-    const { actual } = component.mount();
+    const { wrapper } = component.mount();
 
-    expect(actual.find("ErrorPage").props()).toMatchObject({
+    expect(wrapper.find("ErrorPage").props()).toMatchObject({
       message: "Not found",
       status: 404
     });

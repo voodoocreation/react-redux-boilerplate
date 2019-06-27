@@ -1,7 +1,9 @@
 import actionCreatorFactory from "typescript-fsa";
 
-const actionCreator = actionCreatorFactory("APP");
+const createAction = actionCreatorFactory("APP");
 
-export const setCurrentRoute = actionCreator<string>("SET_CURRENT_ROUTE");
+export const initApp = createAction.async<{ locale?: string }, {}>("INIT");
 
-export const changeRoute = actionCreator.async<string, null>("CHANGE_ROUTE");
+export const setCurrentRoute = createAction<string>("SET_CURRENT_ROUTE");
+
+export const changeRoute = createAction.async<string, {}>("CHANGE_ROUTE");

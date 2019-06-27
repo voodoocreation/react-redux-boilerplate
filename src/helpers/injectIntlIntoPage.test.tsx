@@ -1,11 +1,13 @@
 import { mount } from "enzyme";
 import * as React from "react";
+import { IntlProvider } from "react-intl";
 
+import messages from "../locales/en-NZ.json";
 import injectIntlIntoPage from "./injectIntlIntoPage";
 
 describe("[helpers] injectIntlIntoPage", () => {
   describe("when `getInitialProps` is defined", () => {
-    let actual: any;
+    let wrapper: any;
     let initialProps: any;
     const test = "From getInitialProps()";
 
@@ -25,7 +27,16 @@ describe("[helpers] injectIntlIntoPage", () => {
       const WithInitialPropsWrapped = injectIntlIntoPage(WithInitialProps);
 
       initialProps = await WithInitialPropsWrapped.getInitialProps({} as any);
-      actual = mount(<WithInitialPropsWrapped {...initialProps} />);
+      wrapper = mount(
+        <IntlProvider
+          defaultLocale="en-NZ"
+          locale="en-NZ"
+          messages={messages}
+          textComponent={React.Fragment}
+        >
+          <WithInitialPropsWrapped {...initialProps} />
+        </IntlProvider>
+      );
     });
 
     it("defines initialProps correctly", () => {
@@ -33,12 +44,12 @@ describe("[helpers] injectIntlIntoPage", () => {
     });
 
     it("renders wrapped component correctly", () => {
-      expect(actual.render().html()).toBe(test);
+      expect(wrapper.render().html()).toBe(test);
     });
   });
 
   describe("when `getInitialProps` isn't defined", () => {
-    let actual: any;
+    let wrapper: any;
     let initialProps: any;
     const test = "From getInitialProps()";
 
@@ -59,7 +70,16 @@ describe("[helpers] injectIntlIntoPage", () => {
       initialProps = await WithoutInitialPropsWrapped.getInitialProps(
         {} as any
       );
-      actual = mount(<WithoutInitialPropsWrapped {...initialProps} />);
+      wrapper = mount(
+        <IntlProvider
+          defaultLocale="en-NZ"
+          locale="en-NZ"
+          messages={messages}
+          textComponent={React.Fragment}
+        >
+          <WithoutInitialPropsWrapped {...initialProps} />
+        </IntlProvider>
+      );
     });
 
     it("defines initialProps correctly", () => {
@@ -67,7 +87,7 @@ describe("[helpers] injectIntlIntoPage", () => {
     });
 
     it("renders wrapped component correctly", () => {
-      expect(actual.render().html()).toBe(test);
+      expect(wrapper.render().html()).toBe(test);
     });
   });
 });

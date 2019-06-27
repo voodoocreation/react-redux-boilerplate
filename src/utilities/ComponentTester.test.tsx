@@ -60,32 +60,32 @@ describe("[utilities] ComponentTester", () => {
     const component = new ComponentTester(TestComponent);
 
     it("returns ShallowWrapper for shallow method", () => {
-      const { actual } = component.shallow();
+      const { wrapper } = component.shallow();
 
-      expect(actual).toBeInstanceOf(ShallowWrapper);
+      expect(wrapper).toBeInstanceOf(ShallowWrapper);
     });
 
     it("returns ReactWrapper for mount method", () => {
-      const { actual } = component.mount();
+      const { wrapper } = component.mount();
 
-      expect(actual).toBeInstanceOf(ReactWrapper);
+      expect(wrapper).toBeInstanceOf(ReactWrapper);
     });
 
     it("returns Cheerio wrapper for render method", () => {
-      const { actual } = component.render();
+      const { wrapper } = component.render();
 
-      expect(actual).not.toHaveProperty("render");
+      expect(wrapper).not.toHaveProperty("render");
     });
 
     it("renders correctly without children", () => {
-      const { actual } = component.render();
+      const { wrapper } = component.render();
 
-      expect(actual.find("#Test--children")).toHaveLength(0);
+      expect(wrapper.find("#Test--children")).toHaveLength(0);
     });
 
     it("renders correctly with children", () => {
-      const { actual } = component.render();
-      expect(actual.find("#Test--children")).toHaveLength(0);
+      const { wrapper } = component.render();
+      expect(wrapper.find("#Test--children")).toHaveLength(0);
     });
   });
 
@@ -95,27 +95,27 @@ describe("[utilities] ComponentTester", () => {
     );
 
     it("renders default children correctly", () => {
-      const { actual } = component.render();
+      const { wrapper } = component.render();
 
-      expect(actual.find("#Test--children").html()).toBe(
+      expect(wrapper.find("#Test--children").html()).toBe(
         "<div>Default children</div>"
       );
     });
 
     it("renders default children correctly", () => {
-      const { actual } = component
+      const { wrapper } = component
         .withChildren(<span>Test children</span>)
         .render();
 
-      expect(actual.find("#Test--children").html()).toBe(
+      expect(wrapper.find("#Test--children").html()).toBe(
         "<span>Test children</span>"
       );
     });
 
     it("clears children after previous test and renders default children again", () => {
-      const { actual } = component.render();
+      const { wrapper } = component.render();
 
-      expect(actual.find("#Test--children").html()).toBe(
+      expect(wrapper.find("#Test--children").html()).toBe(
         "<div>Default children</div>"
       );
     });
@@ -128,21 +128,21 @@ describe("[utilities] ComponentTester", () => {
     });
 
     it("returns the correct result shape", () => {
-      expect(Object.keys(component.shallow())).toEqual(["actual", "props"]);
+      expect(Object.keys(component.shallow())).toEqual(["props", "wrapper"]);
     });
 
     it("renders correctly with default values", () => {
-      const { actual, props } = component.render();
+      const { wrapper, props } = component.render();
 
       expect(props.test1).toBe(default1);
       expect(props.test2).toBe(default2);
 
-      expect(actual.find("#Test--test1").html()).toBe(default1);
-      expect(actual.find("#Test--test2").html()).toBe(`${default2}`);
+      expect(wrapper.find("#Test--test1").html()).toBe(default1);
+      expect(wrapper.find("#Test--test2").html()).toBe(`${default2}`);
     });
 
     it("renders correctly with values from test", () => {
-      const { actual, props } = component
+      const { wrapper, props } = component
         .withProps({
           test1,
           test2
@@ -152,18 +152,18 @@ describe("[utilities] ComponentTester", () => {
       expect(props.test1).toBe(test1);
       expect(props.test2).toBe(test2);
 
-      expect(actual.find("#Test--test1").html()).toBe(test1);
-      expect(actual.find("#Test--test2").html()).toBe(`${test2}`);
+      expect(wrapper.find("#Test--test1").html()).toBe(test1);
+      expect(wrapper.find("#Test--test2").html()).toBe(`${test2}`);
     });
 
     it("clears test values after previous test and renders with defaults again", () => {
-      const { actual, props } = component.render();
+      const { wrapper, props } = component.render();
 
       expect(props.test1).toBe(default1);
       expect(props.test2).toBe(default2);
 
-      expect(actual.find("#Test--test1").html()).toBe(default1);
-      expect(actual.find("#Test--test2").html()).toBe(`${default2}`);
+      expect(wrapper.find("#Test--test1").html()).toBe(default1);
+      expect(wrapper.find("#Test--test2").html()).toBe(`${default2}`);
     });
   });
 
@@ -183,29 +183,29 @@ describe("[utilities] ComponentTester", () => {
 
     it("returns the correct result shape", () => {
       expect(Object.keys(component.shallow())).toEqual([
-        "actual",
         "dispatch",
         "ports",
         "props",
-        "store"
+        "store",
+        "wrapper"
       ]);
     });
 
     it("mounts correctly with default values", () => {
-      const { actual, ports, props, store } = component.mount();
+      const { wrapper, ports, props, store } = component.mount();
 
       expect(ports.features).toEqual([default1]);
       expect(props.test2).toBe(default2);
       expect(selectors.getCurrentRoute(store())).toBe(default1);
 
       expect(
-        actual
+        wrapper
           .find("#Test--test1")
           .render()
           .html()
       ).toBe(default1);
       expect(
-        actual
+        wrapper
           .find("#Test--test2")
           .render()
           .html()
@@ -217,7 +217,7 @@ describe("[utilities] ComponentTester", () => {
     });
 
     it("mounts correctly with values from test", () => {
-      const { actual, ports, props, store } = component
+      const { wrapper, ports, props, store } = component
         .withReduxState({
           app: {
             currentRoute: test1
@@ -236,13 +236,13 @@ describe("[utilities] ComponentTester", () => {
       expect(selectors.getCurrentRoute(store())).toBe(test1);
 
       expect(
-        actual
+        wrapper
           .find("#Test--test1")
           .render()
           .html()
       ).toBe(test1);
       expect(
-        actual
+        wrapper
           .find("#Test--test2")
           .render()
           .html()
@@ -254,20 +254,20 @@ describe("[utilities] ComponentTester", () => {
     });
 
     it("clears test values after previous test and mounts with defaults again", () => {
-      const { actual, ports, props, store } = component.mount();
+      const { wrapper, ports, props, store } = component.mount();
 
       expect(ports.features).toEqual([default1]);
       expect(props.test2).toBe(default2);
       expect(selectors.getCurrentRoute(store())).toBe(default1);
 
       expect(
-        actual
+        wrapper
           .find("#Test--test1")
           .render()
           .html()
       ).toBe(default1);
       expect(
-        actual
+        wrapper
           .find("#Test--test2")
           .render()
           .html()

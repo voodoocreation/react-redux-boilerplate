@@ -9,7 +9,8 @@ import NextApp, {
   NextAppContext
 } from "next/app";
 import * as React from "react";
-import { addLocaleData, IntlProvider } from "react-intl";
+import { addLocaleData } from "react-intl";
+import { IntlProvider } from "react-intl-redux";
 import { Provider } from "react-redux";
 
 import routes from "../../../../next.routes";
@@ -46,11 +47,10 @@ const getIntlProps = (ctx: NextContext) => {
   const requestProps = isServer()
     ? ctx.req
     : window.__NEXT_DATA__.props.initialProps.intlProps;
-  const { locale, intlMessages } = requestProps;
+  const { locale } = requestProps;
 
   return {
     initialNow: Date.now(),
-    intlMessages: intlMessages || require("../../../locales/en-NZ.json"),
     locale: locale || "en-NZ"
   };
 };
@@ -83,6 +83,12 @@ class App<P extends IProps> extends NextApp<P> {
     routes.Router.onRouteChangeStart = this.onRouteChangeStart;
     routes.Router.onRouteChangeComplete = this.onRouteChangeComplete;
     routes.Router.onRouteChangeError = this.onRouteChangeError;
+
+    props.store.dispatch(
+      actions.initApp.started({
+        locale: props.intlProps.locale
+      })
+    );
   }
 
   public componentDidMount() {
@@ -98,9 +104,8 @@ class App<P extends IProps> extends NextApp<P> {
       <Container>
         <Provider store={store}>
           <IntlProvider
+            defaultLocale="en-NZ"
             initialNow={intlProps.initialNow}
-            messages={intlProps.intlMessages}
-            locale={intlProps.locale}
             textComponent={React.Fragment}
           >
             <Page>
@@ -121,7 +126,7 @@ class App<P extends IProps> extends NextApp<P> {
   private onRouteChangeComplete = (path: string) => {
     const { store } = this.props;
 
-    store.dispatch(actions.changeRoute.done({ params: path, result: null }));
+    store.dispatch(actions.changeRoute.done({ params: path, result: {} }));
   };
 
   private onRouteChangeError = (error: Error, path: string) => {

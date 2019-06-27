@@ -1,10 +1,13 @@
 import { mount, render, shallow } from "enzyme";
 import merge from "lodash.merge";
 import * as React from "react";
+import { IntlProvider } from "react-intl";
+import { IntlProvider as ReduxIntlProvider } from "react-intl-redux";
 import { Provider } from "react-redux";
 import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
+import messages from "../locales/en-NZ.json";
 import { IStoreState } from "../reducers/root.reducers";
 import {
   configureTestPorts,
@@ -20,19 +23,19 @@ interface IConnectedReturn<
   M extends TRenderMethods,
   P extends React.ComponentProps<any> = React.ComponentProps<any>
 > {
-  actual: ReturnType<M>;
   dispatch: Dispatch<AnyAction>;
   ports: ITestPorts;
   props: Required<P>;
   store: () => IStoreState;
+  wrapper: ReturnType<M>;
 }
 
 interface IReturn<
   M extends TRenderMethods,
   P extends React.ComponentProps<any> = React.ComponentProps<any>
 > {
-  actual: ReturnType<M>;
   props: Required<P>;
+  wrapper: ReturnType<M>;
 }
 
 export default class ComponentTester<
@@ -130,31 +133,45 @@ export default class ComponentTester<
       this.props
     ) as P;
 
-    let actual: ReturnType<M>;
+    let wrapper: ReturnType<M>;
     let result: IConnectedReturn<M, P> | IReturn<M, P>;
 
     if (this.isConnected) {
       const { ports, store } = this.configureStore();
 
-      actual = method(
+      wrapper = method(
         <Provider store={store}>
-          <this.Component {...mergedProps} />
+          <ReduxIntlProvider
+            defaultLocale="en-NZ"
+            textComponent={React.Fragment}
+          >
+            <this.Component {...mergedProps} />
+          </ReduxIntlProvider>
         </Provider>
       );
 
       result = {
-        actual,
         dispatch: store.dispatch,
         ports,
         props: mergedProps,
-        store: () => store.getState()
+        store: () => store.getState(),
+        wrapper
       };
     } else {
-      actual = method(<this.Component {...mergedProps} />);
+      wrapper = method(
+        <IntlProvider
+          defaultLocale="en-NZ"
+          locale="en-NZ"
+          messages={messages}
+          textComponent={React.Fragment}
+        >
+          <this.Component {...mergedProps} />
+        </IntlProvider>
+      );
 
       result = {
-        actual,
-        props: mergedProps
+        props: mergedProps,
+        wrapper
       };
     }
 

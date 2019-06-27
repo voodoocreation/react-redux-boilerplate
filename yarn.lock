@@ -1218,7 +1218,16 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-intl@^2.3.18":
+"@types/react-intl-redux@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@types/react-intl-redux/-/react-intl-redux-0.1.11.tgz#a9a8b69581ae002314b623e8bee7b5f6848a1a09"
+  integrity sha512-H6TpZjEHPkI34NjZ8v1u3KX30mbb1W8xmBcozJk7eqLvw2tiq5dlTBrUnuUZvGnkpqkC8siv3Smzj2sv/HimWQ==
+  dependencies:
+    "@types/react-intl" "*"
+    "@types/react-redux" "*"
+    redux "^3.6.0"
+
+"@types/react-intl@*", "@types/react-intl@^2.3.18":
   version "2.3.18"
   resolved "https://registry.yarnpkg.com/@types/react-intl/-/react-intl-2.3.18.tgz#fd2d8b7f4d0a1dd05b5f1784ab0d7fe1786a690d"
   integrity sha512-DVNJs49zUxKRZng8VuILE886Yihdsf3yLr5vHk9zJrmF8SyRSK3sxNSvikAKxNkv9hX55XBTJShz6CkJnbNjgg==
@@ -8327,6 +8336,13 @@ react-dom@^16.8.6:
 react-error-overlay@5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.4.tgz#88dfb88857c18ceb3b9f95076f850d7121776991"
+
+react-intl-redux@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-intl-redux/-/react-intl-redux-2.1.1.tgz#5d4ce9ee519130a9b3888fb0a4a1ae11041a3fb6"
+  integrity sha512-wnW6z4wcA5Qybrf36YXX87m+sLJKpPmjJsTqOFdJ2IzkePEGc3D5z1S3ehb66h9fP+z2YNQWlYGhPkUPitWtcg==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-intl@^2.9.0:
   version "2.9.0"

@@ -23,7 +23,7 @@ describe("[reducers] App", () => {
       const params = "/";
       const state = reducer(
         initialState,
-        actions.changeRoute.done({ params, result: null })
+        actions.changeRoute.done({ params, result: {} })
       );
 
       expect(state.isLoading).toBe(false);
