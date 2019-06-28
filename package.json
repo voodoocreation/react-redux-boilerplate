@@ -27,7 +27,7 @@
     "precommit": "lint-staged",
     "test": "cross-env NODE_ENV=test jest --no-cache --config ./jest.config.js",
     "test:all": "npm-run-all format typecheck lint test:coverage",
-    "test:coverage": "cross-env NODE_ENV=test jest --no-cache --env=jsdom --coverage --config ./jest.config.js",
+    "test:coverage": "cross-env NODE_ENV=test jest --no-cache --coverage --config ./jest.config.js",
     "typecheck": "tsc"
   },
   "dependencies": {
