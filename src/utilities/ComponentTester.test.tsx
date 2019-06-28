@@ -11,15 +11,15 @@ import * as selectors from "../selectors/root.selectors";
 
 interface IProps {
   children: React.ReactNode;
-  changeRoute?: typeof actions.changeRoute.started;
+  initApp?: typeof actions.initApp.started;
   test1: string | undefined;
   test2: number;
 }
 
 class TestComponent extends React.Component<IProps> {
   public componentDidMount() {
-    if (this.props.changeRoute) {
-      this.props.changeRoute("/test");
+    if (this.props.initApp) {
+      this.props.initApp({});
     }
   }
 
@@ -43,7 +43,7 @@ const TestConnectedComponent = connect(
   dispatch =>
     bindActionCreators(
       {
-        changeRoute: actions.changeRoute.started
+        initApp: actions.initApp.started
       },
       dispatch
     )
@@ -212,7 +212,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${default2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.changeRoute.started.match)
+        component.getReduxHistory().filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -249,7 +249,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${test2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.changeRoute.started.match)
+        component.getReduxHistory().filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -274,7 +274,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${default2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.changeRoute.started.match)
+        component.getReduxHistory().filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -282,13 +282,13 @@ describe("[utilities] ComponentTester", () => {
       component.mount();
 
       expect(
-        component.getReduxHistory().filter(actions.changeRoute.started.match)
+        component.getReduxHistory().filter(actions.initApp.started.match)
       ).toHaveLength(1);
 
       component.resetReduxHistory();
 
       expect(
-        component.getReduxHistory().filter(actions.changeRoute.started.match)
+        component.getReduxHistory().filter(actions.initApp.started.match)
       ).toHaveLength(0);
     });
 
