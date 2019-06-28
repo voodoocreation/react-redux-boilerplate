@@ -11,40 +11,6 @@ Object.defineProperties(global, {
     value: [],
     writable: true
   },
-  google: {
-    value: {
-      maps: {
-        Geocoder: jest.fn(() => ({
-          geocode: jest.fn((_, callback) =>
-            callback(
-              [
-                {
-                  geometry: {
-                    location: { lat: () => 51.54057, lng: () => -0.14334 }
-                  }
-                }
-              ],
-              "OK"
-            )
-          )
-        })),
-        GeocoderStatus: {
-          OK: "OK",
-          REQUEST_DENIED: "REQUEST_DENIED"
-        },
-        Map: jest.fn(() => ({
-          setCenter: jest.fn(),
-          setOptions: jest.fn(),
-          setZoom: jest.fn()
-        })),
-        Marker: jest.fn(() => ({
-          setMap: jest.fn(),
-          setPosition: jest.fn()
-        }))
-      }
-    },
-    writable: true
-  },
   requestAnimationFrame: {
     value: (callback: () => void) => setTimeout(callback, 0),
     writable: true
