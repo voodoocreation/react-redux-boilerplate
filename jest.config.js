@@ -19,16 +19,17 @@ module.exports = {
   moduleDirectories: ["node_modules"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   moduleNameMapper: {
-    "\\.(scss)$": "<rootDir>/src/__mocks__/dummyMock.js",
-    "\\.(jpg|jpeg|gif|png|svg)$": "<rootDir>/src/__mocks__/dummyMock.js"
+    "\\.(scss)$": "<rootDir>/src/__mocks__/dummyMock.ts",
+    "\\.(jpg|jpeg|gif|png|svg)$": "<rootDir>/src/__mocks__/dummyMock.ts"
   },
   roots: ["<rootDir>/src"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
   testURL: "http://localhost",
+  testEnvironment: "jsdom",
+  testMatch: ["**/*.test.(js|jsx|ts|tsx)"],
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
   },
-  testMatch: ["**/*.test.(js|jsx|ts|tsx)"],
   verbose: true
 };

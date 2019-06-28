@@ -27,7 +27,6 @@ module.exports = withSass(
 
       config.plugins.push(
         new PluginLodashModuleReplacement(),
-
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
       );
 

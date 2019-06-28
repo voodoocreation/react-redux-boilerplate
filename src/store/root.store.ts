@@ -61,7 +61,11 @@ export const configureStore = (
 
 export const createStore = (initialState: DeepPartial<IStoreState> = {}) => {
   const ports = configurePorts({
-    api: configureApi(configureHttpClient())
+    api: configureApi(
+      configureHttpClient({
+        apiUrl: "/mock-api"
+      })
+    )
   });
 
   return configureStore(initialState, ports);

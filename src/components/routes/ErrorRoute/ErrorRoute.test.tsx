@@ -6,9 +6,9 @@ const component = new ComponentTester(ErrorRoute, true);
 
 describe("[routes] <ErrorRoute />", () => {
   it("renders correctly", () => {
-    const { wrapper } = component.render();
+    const { wrapper } = component.mount();
 
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.render()).toMatchSnapshot();
   });
 
   describe("getInitialProps()", () => {
