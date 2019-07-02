@@ -17,7 +17,7 @@ export interface IStoreState {
   intl: IntlState;
 }
 
-export const initialState = {
+export const initialState: IStoreState = {
   app: appInitialState,
   example: exampleInitialState,
   intl: intlInitialState

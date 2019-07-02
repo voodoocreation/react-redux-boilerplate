@@ -4,7 +4,7 @@ import * as actions from "../actions/root.actions";
 import { mockWithFailure, mockWithSuccess } from "../utilities/mocks";
 
 describe("[sagas] Example", () => {
-  describe("takeLatest(actions.fetchApiData.started)", () => {
+  describe("fetchApiDataSaga", () => {
     describe("when fetching API data, with a successful response", () => {
       const testData = { serverTest: true };
 

@@ -1,5 +1,6 @@
 import { ReactWrapper, ShallowWrapper } from "enzyme";
 import * as React from "react";
+import { FormattedDate } from "react-intl";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -164,6 +165,21 @@ describe("[utilities] ComponentTester", () => {
 
       expect(wrapper.find("#Test--test1").html()).toBe(default1);
       expect(wrapper.find("#Test--test2").html()).toBe(`${default2}`);
+    });
+
+    it("references en-NZ as the locale when using react-intl components", () => {
+      const { wrapper } = component
+        .withChildren(
+          <FormattedDate
+            day="numeric"
+            month="numeric"
+            year="numeric"
+            value={new Date("2019-12-20")}
+          />
+        )
+        .render();
+
+      expect(wrapper.find("#Test--children").text()).toBe("20/12/2019");
     });
   });
 

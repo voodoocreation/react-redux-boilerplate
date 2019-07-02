@@ -1,7 +1,7 @@
 import { mount, render, shallow } from "enzyme";
 import merge from "lodash.merge";
 import * as React from "react";
-import { IntlProvider } from "react-intl";
+import { IntlProvider, intlShape } from "react-intl";
 import { IntlProvider as ReduxIntlProvider } from "react-intl-redux";
 import { Provider } from "react-redux";
 import { DeepPartial, Dispatch, Middleware } from "redux";
@@ -158,15 +158,23 @@ export default class ComponentTester<
         wrapper
       };
     } else {
+      const intlProvider = new IntlProvider(
+        {
+          defaultLocale: "en-NZ",
+          locale: "en-NZ",
+          messages,
+          textComponent: React.Fragment
+        },
+        {}
+      );
+      const { intl } = intlProvider.getChildContext();
+
       wrapper = method(
-        <IntlProvider
-          defaultLocale="en-NZ"
-          locale="en-NZ"
-          messages={messages}
-          textComponent={React.Fragment}
-        >
-          <this.Component {...mergedProps} />
-        </IntlProvider>
+        React.cloneElement(<this.Component {...mergedProps} />, { intl }),
+        {
+          childContextTypes: { intl: intlShape },
+          context: { intl }
+        }
       );
 
       result = {

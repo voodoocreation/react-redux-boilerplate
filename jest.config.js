@@ -25,9 +25,9 @@ module.exports = {
   roots: ["<rootDir>/src"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
-  testURL: "http://localhost",
   testEnvironment: "jsdom",
   testMatch: ["**/*.test.(js|jsx|ts|tsx)"],
+  testURL: "http://localhost",
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
   },

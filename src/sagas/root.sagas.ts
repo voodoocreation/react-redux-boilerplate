@@ -1,3 +1,4 @@
+import { SagaIterator } from "redux-saga";
 import { all, fork, ForkEffect } from "redux-saga/effects";
 
 import { IPorts } from "../services/configurePorts";
@@ -18,6 +19,6 @@ const mapSagas = (ports: IPorts) => {
   return mapped;
 };
 
-export default function*(ports: IPorts) {
+export default function*(ports: IPorts): SagaIterator {
   yield all(mapSagas(ports));
 }
