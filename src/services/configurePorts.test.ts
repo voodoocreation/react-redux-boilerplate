@@ -1,13 +1,12 @@
 import { failure } from "../models/response.models";
-import { mockWithFailure } from "../utilities/mocks";
+import { mockWithFailure, mockWithResolvedPromise } from "../utilities/mocks";
 import * as apiMethods from "./api/root.api";
 import { configureApi } from "./configureApi";
-import { TRequest } from "./configureHttpClient";
 import { configurePorts, configureTestPorts } from "./configurePorts";
 
 describe("[services] Ports", () => {
   describe("when creating the ports object, with all ports defined", () => {
-    const mockRequest: TRequest = () => Promise.resolve({});
+    const mockRequest = mockWithResolvedPromise({});
     const ports = configurePorts({
       api: configureApi(mockRequest),
       dataLayer: [],
@@ -33,7 +32,7 @@ describe("[services] Ports", () => {
 
   describe("when creating the ports object, with no dataLayer or features defined", () => {
     const ports = configurePorts({
-      api: configureApi(() => Promise.resolve())
+      api: configureApi(mockWithResolvedPromise({}))
     });
 
     it("has all ports defined", () => {
@@ -106,7 +105,7 @@ describe("[services] Ports", () => {
       const payload = { isSuccessful: true };
 
       expect(await ports.api.fetchApiData(payload)).toEqual(
-        failure("Mock API method 'fetchApiData' not implemented in test.")
+        failure("API method 'fetchApiData' not implemented.")
       );
     });
   });

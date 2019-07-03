@@ -30,7 +30,7 @@ export const configureMockApi = () => {
 
     for (const index of Object.keys(methods) as Array<keyof M>) {
       mockMethods[index] = mockWithFailure(
-        `Mock API method '${index}' not implemented in test.`
+        `API method '${index}' not implemented.`
       );
     }
 
