@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { IError } from "../../../models/error.models";
-import { IStoreState } from "../../../reducers/root.reducers";
+import { TStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
 import ErrorPage from "../../presentation/ErrorPage/ErrorPage";
@@ -17,7 +17,7 @@ class ConnectedErrorPage extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state: IStoreState) => ({
+const mapStateToProps = (state: TStoreState) => ({
   error: selectors.getAppError(state)
 });
 

@@ -1,7 +1,7 @@
-import { IStoreState } from "../reducers/root.reducers";
+import { TStoreState } from "../reducers/root.reducers";
 
-export const getCurrentRoute = (state: IStoreState) => state.app.currentRoute;
+export const getCurrentRoute = (state: TStoreState) => state.app.currentRoute;
 
-export const getAppError = (state: IStoreState) => state.app.error;
+export const getAppError = (state: TStoreState) => state.app.error;
 
-export const isAppLoading = (state: IStoreState) => state.app.isLoading;
+export const isAppLoading = (state: TStoreState) => state.app.isLoading;

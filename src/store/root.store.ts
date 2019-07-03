@@ -13,16 +13,16 @@ import { configureApi } from "../services/configureApi";
 import { configureHttpClient } from "../services/configureHttpClient";
 import { configurePorts, IPorts } from "../services/configurePorts";
 
-import rootReducer, { IStoreState } from "../reducers/root.reducers";
+import rootReducer, { TStoreState } from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 
-export type TStore = Store<IStoreState> & {
+export type TStore = Store<TStoreState> & {
   sagaTask?: Task;
   runSagaTask?: () => void;
 };
 
 export const configureStore = (
-  initialState: DeepPartial<IStoreState>,
+  initialState: DeepPartial<TStoreState>,
   ports: IPorts,
   extraMiddlewares: Middleware[] = []
 ) => {
@@ -59,7 +59,7 @@ export const configureStore = (
   return store;
 };
 
-export const createStore = (initialState: DeepPartial<IStoreState> = {}) => {
+export const createStore = (initialState: DeepPartial<TStoreState> = {}) => {
   const ports = configurePorts({
     api: configureApi(
       configureHttpClient({

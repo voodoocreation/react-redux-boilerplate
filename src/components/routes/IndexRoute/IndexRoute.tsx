@@ -8,7 +8,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 
 import * as actions from "../../../actions/root.actions";
-import { IStoreState } from "../../../reducers/root.reducers";
+import { TStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
 interface IStoreProps {
@@ -114,7 +114,7 @@ class IndexRoute extends React.Component<IProps> {
   };
 }
 
-const mapState = (state: IStoreState) => ({
+const mapState = (state: TStoreState) => ({
   apiData: selectors.getApiData(state),
   currentRoute: selectors.getCurrentRoute(state),
   localData: selectors.getLocalData(state)

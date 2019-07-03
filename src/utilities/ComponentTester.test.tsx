@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import ComponentTester from "./ComponentTester";
 
 import * as actions from "../actions/root.actions";
-import { IStoreState } from "../reducers/root.reducers";
+import { TStoreState } from "../reducers/root.reducers";
 import * as selectors from "../selectors/root.selectors";
 
 interface IProps {
@@ -38,7 +38,7 @@ class TestComponent extends React.Component<IProps> {
 }
 
 const TestConnectedComponent = connect(
-  (state: IStoreState) => ({
+  (state: TStoreState) => ({
     test1: selectors.getCurrentRoute(state)
   }),
   dispatch =>

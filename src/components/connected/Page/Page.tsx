@@ -4,7 +4,7 @@ import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { IStoreState } from "../../../reducers/root.reducers";
+import { TStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
 import "./Page.scss";
@@ -36,7 +36,7 @@ class Page extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state: IStoreState) => ({
+const mapStateToProps = (state: TStoreState) => ({
   isLoading: selectors.isAppLoading(state)
 });
 

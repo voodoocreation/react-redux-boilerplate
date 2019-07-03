@@ -5,7 +5,7 @@ import { ActionCreator } from "typescript-fsa";
 
 import rootReducer, {
   initialState,
-  IStoreState
+  TStoreState
 } from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 import {
@@ -18,10 +18,10 @@ import {
 export default class SagaTester {
   public readonly ports: ITestPorts;
 
-  private readonly tester: ReduxSagaTester<IStoreState>;
+  private readonly tester: ReduxSagaTester<TStoreState>;
 
   constructor(
-    reduxState: DeepPartial<IStoreState> = {},
+    reduxState: DeepPartial<TStoreState> = {},
     ports: ITestPortsParam = {}
   ) {
     this.tester = new ReduxSagaTester({

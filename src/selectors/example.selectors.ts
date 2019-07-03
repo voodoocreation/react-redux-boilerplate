@@ -1,5 +1,5 @@
-import { IStoreState } from "../reducers/root.reducers";
+import { TStoreState } from "../reducers/root.reducers";
 
-export const getApiData = (state: IStoreState) => state.example.apiData;
+export const getApiData = (state: TStoreState) => state.example.apiData;
 
-export const getLocalData = (state: IStoreState) => state.example.localData;
+export const getLocalData = (state: TStoreState) => state.example.localData;

@@ -8,7 +8,7 @@ import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
 import messages from "../locales/en-NZ.json";
-import { IStoreState } from "../reducers/root.reducers";
+import { TStoreState } from "../reducers/root.reducers";
 import {
   configureTestPorts,
   IPorts,
@@ -26,7 +26,7 @@ interface IConnectedReturn<
   dispatch: Dispatch<AnyAction>;
   ports: ITestPorts;
   props: Required<P>;
-  store: () => IStoreState;
+  store: () => TStoreState;
   wrapper: ReturnType<M>;
 }
 
@@ -47,14 +47,14 @@ export default class ComponentTester<
   protected defaultChildren?: React.ReactNode;
   protected defaultPorts: DeepPartial<ITestPorts> = {};
   protected defaultProps: Partial<P> = {};
-  protected defaultReduxState: DeepPartial<IStoreState> = {};
+  protected defaultReduxState: DeepPartial<TStoreState> = {};
 
   // Properties that are cleared whenever shallow/mount/render are called
   protected reduxHistory: AnyAction[] = [];
   protected children?: React.ReactNode;
   protected ports: DeepPartial<ITestPorts> = {};
   protected props: Partial<P> = {};
-  protected reduxState: DeepPartial<IStoreState> = {};
+  protected reduxState: DeepPartial<TStoreState> = {};
 
   constructor(
     protected readonly Component: C,
@@ -82,7 +82,7 @@ export default class ComponentTester<
     return this;
   }
 
-  public withDefaultReduxState(state: DeepPartial<IStoreState>) {
+  public withDefaultReduxState(state: DeepPartial<TStoreState>) {
     this.defaultReduxState = state;
 
     return this;
@@ -106,7 +106,7 @@ export default class ComponentTester<
     return this;
   }
 
-  public withReduxState(reduxState: DeepPartial<IStoreState>) {
+  public withReduxState(reduxState: DeepPartial<TStoreState>) {
     this.reduxState = reduxState;
 
     return this;
@@ -204,7 +204,7 @@ export default class ComponentTester<
       this.defaultPorts,
       this.ports
     ) as ITestPortsParam;
-    const mergedReduxState: DeepPartial<IStoreState> = merge(
+    const mergedReduxState: DeepPartial<TStoreState> = merge(
       {},
       this.defaultReduxState,
       this.reduxState
