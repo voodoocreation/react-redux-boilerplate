@@ -19,9 +19,7 @@ import { isServer } from "../../../helpers/dom";
 import { createStore, TStore } from "../../../store/root.store";
 import Page from "../Page/Page";
 
-// tslint:disable:no-submodule-imports
 import en from "react-intl/locale-data/en";
-// tslint:enable:no-submodule-imports
 
 addLocaleData([...en]);
 

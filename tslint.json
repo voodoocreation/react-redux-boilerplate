@@ -10,6 +10,7 @@
       "core-js",
       "promise",
       "react-icons",
+      "react-intl",
       "redux-saga"
     ]
   }
