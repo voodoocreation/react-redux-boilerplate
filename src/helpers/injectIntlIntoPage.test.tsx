@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import * as React from "react";
 import { IntlProvider } from "react-intl";
 
-import messages from "../locales/en-NZ.json";
+import * as messages from "../locales/en-NZ";
 import injectIntlIntoPage from "./injectIntlIntoPage";
 
 describe("[helpers] injectIntlIntoPage", () => {

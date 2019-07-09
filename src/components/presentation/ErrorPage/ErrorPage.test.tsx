@@ -1,4 +1,4 @@
-import en from "../../../locales/en-NZ.json";
+import * as messages from "../../../locales/en-NZ";
 import ComponentTester from "../../../utilities/ComponentTester";
 
 import ErrorPage from "./ErrorPage";
@@ -10,11 +10,11 @@ describe("[presentation] <ErrorPage />", () => {
     const { wrapper } = component.render();
 
     it("renders 500 title", () => {
-      expect(wrapper.find("h1").html()).toBe(en.ERROR_TITLE);
+      expect(wrapper.find("h1").html()).toBe(messages.ERROR_TITLE);
     });
 
     it("renders 500 message", () => {
-      expect(wrapper.find("p").html()).toBe(en.ERROR_MESSAGE);
+      expect(wrapper.find("p").html()).toBe(messages.ERROR_MESSAGE);
     });
   });
 
@@ -22,11 +22,11 @@ describe("[presentation] <ErrorPage />", () => {
     const { wrapper } = component.withProps({ status: 404 }).render();
 
     it("renders 404 title", () => {
-      expect(wrapper.find("h1").html()).toBe(en.ERROR_404_TITLE);
+      expect(wrapper.find("h1").html()).toBe(messages.ERROR_404_TITLE);
     });
 
     it("renders 404 message", () => {
-      expect(wrapper.find("p").html()).toBe(en.ERROR_404_MESSAGE);
+      expect(wrapper.find("p").html()).toBe(messages.ERROR_404_MESSAGE);
     });
   });
 
@@ -35,7 +35,7 @@ describe("[presentation] <ErrorPage />", () => {
     const { wrapper } = component.withProps({ message }).render();
 
     it("renders 500 title", () => {
-      expect(wrapper.find("h1").html()).toBe(en.ERROR_TITLE);
+      expect(wrapper.find("h1").html()).toBe(messages.ERROR_TITLE);
     });
 
     it("renders custom message", () => {

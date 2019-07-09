@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
-import messages from "../locales/en-NZ.json";
+import * as messages from "../locales/en-NZ";
 import { TStoreState } from "../reducers/root.reducers";
 import {
   configureTestPorts,
