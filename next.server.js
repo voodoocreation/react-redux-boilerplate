@@ -17,8 +17,8 @@ const apiURL = `http://localhost${port}${apiPath}`;
 const app = nextJS({ dev });
 const customRoutesHandler = customRoutes.getRequestHandler(app);
 const languages = glob
-  .sync("./src/locales/*.json")
-  .map(f => path.basename(f, ".json"));
+  .sync("./src/locales/*.ts")
+  .map(f => path.basename(f, ".ts"));
 
 app.prepare().then(() => {
   const server = express();

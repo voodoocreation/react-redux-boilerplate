@@ -37,7 +37,6 @@ export type TAppContext<Q extends DefaultQuery> = NextAppContext & {
 interface IProps extends DefaultAppIProps, AppProps {
   intlProps: {
     locale: string;
-    intlMessages: {};
     initialNow: Date;
   };
   store: TStore;
