@@ -19,6 +19,14 @@ export const arrayToAssoc = (
     {}
   );
 
+export const createSlugFromString = (str: string) =>
+  str
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/&/gm, "and")
+    .replace(/\s/gm, "-")
+    .replace(/[^\w_-]/gm, "");
+
 export const lengthToDuration = (length: string) => {
   const segments = length.split(":");
 
@@ -40,7 +48,7 @@ export const lengthToDuration = (length: string) => {
   }
 };
 
-export const absUrl = (path: string) =>
+export const absoluteUrl = (path: string) =>
   process.env.NODE_ENV !== "production"
     ? `http://localhost:${
         process.env.PORT !== "undefined"
