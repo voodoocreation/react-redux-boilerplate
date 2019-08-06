@@ -30,7 +30,7 @@ describe("<IndexRoute />", () => {
 
     it("dispatches actions.fetchApiData.started", () => {
       expect(
-        component.getReduxHistory().filter(actions.fetchApiData.started.match)
+        component.reduxHistory.filter(actions.fetchApiData.started.match)
       ).toHaveLength(1);
     });
 

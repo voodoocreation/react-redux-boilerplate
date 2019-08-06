@@ -1,13 +1,8 @@
-import { NextContext } from "next";
+import { NextPageContext } from "next";
 import withReduxSaga from "next-redux-saga";
 import withRedux from "next-redux-wrapper";
-import { DefaultQuery } from "next-server/router";
-import NextApp, {
-  AppProps,
-  Container,
-  DefaultAppIProps,
-  NextAppContext
-} from "next/app";
+import NextApp, { AppContext, AppProps, Container } from "next/app";
+
 import * as React from "react";
 import { addLocaleData } from "react-intl";
 import { IntlProvider } from "react-intl-redux";
@@ -16,6 +11,7 @@ import { Provider } from "react-redux";
 import routes from "../../../../next.routes";
 import * as actions from "../../../actions/root.actions";
 import { isServer } from "../../../helpers/dom";
+import * as selectors from "../../../selectors/root.selectors";
 import { createStore, TStore } from "../../../store/root.store";
 import Page from "../Page/Page";
 
@@ -23,16 +19,17 @@ import en from "react-intl/locale-data/en";
 
 addLocaleData([...en]);
 
-export type TContext<Q extends DefaultQuery> = NextContext<Q> & {
+export interface IPageContext extends NextPageContext {
   store: TStore;
-};
+  isServer: boolean;
+}
 
-export type TAppContext<Q extends DefaultQuery> = NextAppContext & {
-  ctx: TContext<Q>;
+export interface IAppContext extends AppContext {
   store: TStore;
-};
+  ctx: IPageContext;
+}
 
-interface IProps extends DefaultAppIProps, AppProps {
+interface IProps extends AppProps {
   intlProps: {
     locale: string;
     initialNow: Date;
@@ -40,7 +37,7 @@ interface IProps extends DefaultAppIProps, AppProps {
   store: TStore;
 }
 
-const getIntlProps = (ctx: NextContext) => {
+const getIntlProps = (ctx: NextPageContext) => {
   const requestProps = isServer()
     ? ctx.req
     : window.__NEXT_DATA__.props.initialProps.intlProps;
@@ -48,19 +45,20 @@ const getIntlProps = (ctx: NextContext) => {
 
   return {
     initialNow: Date.now(),
-    locale: locale || "en-NZ"
+    locale
   };
 };
 
-class App<P extends IProps> extends NextApp<P> {
-  public static async getInitialProps({ ctx, Component }: TAppContext<any>) {
+// @ts-ignore-next-line
+export class App extends NextApp<IProps> {
+  public static async getInitialProps({ ctx, Component }: IAppContext) {
     let pageProps = {};
 
     const unsubscribe = ctx.store.subscribe(() => {
-      const state = ctx.store.getState();
+      const error = selectors.getAppError(ctx.store.getState());
 
-      if (state.app.error && ctx.res) {
-        ctx.res.statusCode = state.app.error.status;
+      if (error && ctx.res) {
+        ctx.res.statusCode = error.status;
         unsubscribe();
       }
     });
@@ -74,7 +72,7 @@ class App<P extends IProps> extends NextApp<P> {
     return { pageProps, intlProps };
   }
 
-  constructor(props: P) {
+  constructor(props: IProps) {
     super(props);
 
     routes.Router.onRouteChangeStart = this.onRouteChangeStart;
@@ -131,16 +129,11 @@ class App<P extends IProps> extends NextApp<P> {
 
     store.dispatch(
       actions.changeRoute.failed({
-        error: {
-          message: error.toString(),
-          status: 500
-        },
+        error: error.message,
         params: path
       })
     );
   };
 }
 
-const AppWrapped = withRedux(createStore)(withReduxSaga(App));
-
-export default AppWrapped;
+export default withRedux(createStore)(withReduxSaga(App));

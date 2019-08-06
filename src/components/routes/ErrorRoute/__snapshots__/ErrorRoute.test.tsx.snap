@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[routes] <ErrorRoute /> renders correctly 1`] = `
+exports[`[routes] <ErrorRoute /> matches snapshot 1`] = `
 <article
   class="ErrorPage"
 >

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[connected] <App /> mounts application correctly on the client 1`] = `
+exports[`[connected] <App /> when mounting on the client matches snapshot 1`] = `
 <article
   class="Page"
 >
@@ -9,13 +9,13 @@ exports[`[connected] <App /> mounts application correctly on the client 1`] = `
     role="main"
   >
     <div
-      class="PageComponent"
+      class="MockPageComponent"
     />
   </main>
 </article>
 `;
 
-exports[`[connected] <App /> mounts application correctly on the server 1`] = `
+exports[`[connected] <App /> when mounting on the server matches snapshot 1`] = `
 <article
   class="Page"
 >
@@ -24,7 +24,22 @@ exports[`[connected] <App /> mounts application correctly on the server 1`] = `
     role="main"
   >
     <div
-      class="PageComponent"
+      class="MockPageComponent"
+    />
+  </main>
+</article>
+`;
+
+exports[`[connected] <App /> when mounting when the page has no getInitialProps method matches snapshot 1`] = `
+<article
+  class="Page"
+>
+  <main
+    class="Page--body"
+    role="main"
+  >
+    <div
+      class="MockPageComponent"
     />
   </main>
 </article>

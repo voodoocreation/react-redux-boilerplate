@@ -49,7 +49,13 @@ app.prepare().then(() => {
     const accept = accepts(req);
     const locale = accept.language(languages);
 
-    req.locale = locale || "en-NZ";
+    if (typeof locale === "string") {
+      req.locale = locale;
+    } else if (Array.isArray(locale)) {
+      req.locale = locale[0];
+    } else {
+      req.locale = "en-NZ";
+    }
 
     customRoutesHandler(req, res);
   });

@@ -12,7 +12,7 @@ Object.defineProperties(global, {
     writable: true
   },
   requestAnimationFrame: {
-    value: (callback: () => void) => setTimeout(callback, 0),
+    value: callback => setTimeout(callback, 0),
     writable: true
   },
   scrollTo: {

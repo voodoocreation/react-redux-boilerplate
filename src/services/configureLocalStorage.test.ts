@@ -8,7 +8,7 @@ import {
 import { failure, success } from "../models/root.models";
 
 const ls = window.localStorage;
-const store: { [index: string]: string | null } = {};
+const store: Record<string, string | null> = {};
 
 describe("[services] Local storage", () => {
   const testValue = "__localStorageTest__";

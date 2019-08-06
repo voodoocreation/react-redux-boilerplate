@@ -228,7 +228,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${default2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.initApp.started.match)
+        component.reduxHistory.filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -265,7 +265,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${test2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.initApp.started.match)
+        component.reduxHistory.filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -290,7 +290,7 @@ describe("[utilities] ComponentTester", () => {
       ).toBe(`${default2}`);
 
       expect(
-        component.getReduxHistory().filter(actions.initApp.started.match)
+        component.reduxHistory.filter(actions.initApp.started.match)
       ).toHaveLength(1);
     });
 
@@ -298,13 +298,13 @@ describe("[utilities] ComponentTester", () => {
       component.mount();
 
       expect(
-        component.getReduxHistory().filter(actions.initApp.started.match)
+        component.reduxHistory.filter(actions.initApp.started.match)
       ).toHaveLength(1);
 
       component.resetReduxHistory();
 
       expect(
-        component.getReduxHistory().filter(actions.initApp.started.match)
+        component.reduxHistory.filter(actions.initApp.started.match)
       ).toHaveLength(0);
     });
 
@@ -312,13 +312,13 @@ describe("[utilities] ComponentTester", () => {
       it("has the expected actions from the first mount", () => {
         component.mount();
 
-        expect(component.getReduxHistory()).toHaveLength(1);
+        expect(component.reduxHistory).toHaveLength(1);
       });
 
       it("resets the actions history and has the expected actions from the second mount", () => {
         component.mount();
 
-        expect(component.getReduxHistory()).toHaveLength(1);
+        expect(component.reduxHistory).toHaveLength(1);
       });
     });
   });

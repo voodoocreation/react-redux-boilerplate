@@ -8,7 +8,10 @@ import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
 import * as messages from "../locales/en-NZ";
-import { TStoreState } from "../reducers/root.reducers";
+import {
+  initialState as rootInitialState,
+  TStoreState
+} from "../reducers/root.reducers";
 import {
   configureTestPorts,
   IPorts,
@@ -50,7 +53,7 @@ export default class ComponentTester<
   protected defaultReduxState: DeepPartial<TStoreState> = {};
 
   // Properties that are cleared whenever shallow/mount/render are called
-  protected reduxHistory: AnyAction[] = [];
+  protected reduxHistoryStore: AnyAction[] = [];
   protected children?: React.ReactNode;
   protected ports: DeepPartial<ITestPorts> = {};
   protected props: Partial<P> = {};
@@ -112,10 +115,12 @@ export default class ComponentTester<
     return this;
   }
 
-  public getReduxHistory = () => this.reduxHistory;
+  get reduxHistory() {
+    return this.reduxHistoryStore;
+  }
 
   public resetReduxHistory = () => {
-    this.reduxHistory = [];
+    this.reduxHistoryStore = [];
   };
 
   public shallow = () => this.renderWithMethod(shallow);
@@ -192,7 +197,7 @@ export default class ComponentTester<
   };
 
   protected reduxHistoryMiddleware: Middleware = () => next => action => {
-    this.reduxHistory.push(action);
+    this.reduxHistoryStore.push(action);
     return next(action);
   };
 
@@ -206,6 +211,7 @@ export default class ComponentTester<
     ) as ITestPortsParam;
     const mergedReduxState: DeepPartial<TStoreState> = merge(
       {},
+      rootInitialState,
       this.defaultReduxState,
       this.reduxState
     );

@@ -4,9 +4,6 @@ declare module "*.jpeg";
 declare module "*.png";
 declare module "*.svg";
 
-declare module "jest-mock-axios";
-declare module "react-relative-time";
-
 // tslint:disable-next-line
 interface Window {
   __NEXT_DATA__: {

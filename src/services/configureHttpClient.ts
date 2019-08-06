@@ -1,18 +1,11 @@
-import axios, { Method } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { camelizeKeys } from "humps";
 
 interface IOptions {
   apiUrl?: string;
 }
 
-interface IRequestOptions {
-  url: string;
-  method?: Method;
-  body?: any;
-  shouldCamelizeKeys?: boolean;
-}
-
-export type TRequest = (options: IRequestOptions) => Promise<any>;
+export type TRequest = (options: AxiosRequestConfig) => Promise<any>;
 
 export class ServerError extends Error {
   public readonly response: Response;
@@ -27,18 +20,20 @@ export class ServerError extends Error {
 }
 
 export const configureHttpClient = (config: IOptions = {}) => async ({
-  url,
+  data,
   method = "GET",
-  body
-}: IRequestOptions) => {
+  params,
+  url
+}: AxiosRequestConfig) => {
   try {
     const response = await axios({
       baseURL: config.apiUrl || "",
-      data: body,
+      data,
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
       method,
+      params,
       url
     });
 
@@ -48,7 +43,7 @@ export const configureHttpClient = (config: IOptions = {}) => async ({
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       throw new ServerError(
-        `Request failed with status code ${error.response.status}`,
+        `Request failed with status code ${error.response.status}.`,
         error.response,
         camelizeKeys(error.response.data)
       );

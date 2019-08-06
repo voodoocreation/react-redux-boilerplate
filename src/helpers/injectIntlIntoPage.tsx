@@ -1,13 +1,16 @@
-import { NextComponentType, NextContext } from "next";
+import { NextComponentType } from "next";
 import * as React from "react";
 import { injectIntl } from "react-intl";
-import { TContext } from "../components/connected/App/App";
 
-export default <T extends NextComponentType<any>>(Component: T) => {
+import { IPageContext } from "../components/connected/App/App";
+
+export default <T extends NextComponentType<IPageContext, any, any>>(
+  Component: T
+) => {
   const IntlPage = injectIntl(Component);
 
   class ComponentWithIntl extends React.Component<{}> {
-    public static async getInitialProps(context: TContext<{}> | NextContext) {
+    public static async getInitialProps(context: IPageContext) {
       let props;
 
       if (typeof Component.getInitialProps === "function") {

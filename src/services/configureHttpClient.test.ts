@@ -1,46 +1,40 @@
 import axios from "axios";
 
-import { configureHttpClient } from "./configureHttpClient";
+import { configureHttpClient, ServerError } from "./configureHttpClient";
 
 jest.mock("axios", () => ({
   __esModule: true,
-  default: jest.fn(
-    (options: any) =>
-      new Promise((resolve, reject) => {
-        switch (options.url) {
-          case "/success":
-            resolve({
-              data: {
-                IsSuccessful: true
-              }
-            });
-            break;
+  default: jest.fn((options: any) => {
+    switch (options.url) {
+      case "/success":
+        return Promise.resolve({
+          data: {
+            IsSuccessful: true
+          }
+        });
 
-          case "/server-error":
-            reject({
-              response: {
-                data: {
-                  IsSuccessful: false
-                },
-                status: 500
-              }
-            });
-            break;
+      case "/server-error":
+        return Promise.reject({
+          response: {
+            data: {
+              IsSuccessful: false
+            },
+            status: 500
+          }
+        });
 
-          case "/no-response":
-            reject({
-              request: {
-                statusText: "No response"
-              }
-            });
-            break;
+      case "/no-response":
+        return Promise.reject({
+          request: {
+            statusText: "No response"
+          }
+        });
 
-          default:
-          case "/client-error":
-            throw new Error("Client error");
-        }
-      })
-  )
+      default:
+      case "/client-error":
+        throw new Error("Client error");
+    }
+  })
 }));
 
 describe("[services] HTTP client", () => {
@@ -85,7 +79,7 @@ describe("[services] HTTP client", () => {
 
     it("makes the request", async () => {
       response = await request({
-        body: data,
+        data,
         method,
         url
       });
@@ -119,12 +113,12 @@ describe("[services] HTTP client", () => {
     it("makes the request", async () => {
       try {
         response = await request({
-          body: data,
+          data,
           method,
           url
         });
       } catch (error) {
-        response = error.data;
+        response = error;
       }
     });
 
@@ -139,9 +133,17 @@ describe("[services] HTTP client", () => {
     });
 
     it("has the expected response", () => {
-      expect(response).toEqual({
-        isSuccessful: false
-      });
+      const mockError = new ServerError(
+        "Request failed with status code 500.",
+        { status: 500 } as any,
+        {
+          isSuccessful: false
+        }
+      );
+
+      expect(response.data).toEqual(mockError.data);
+      expect(response.message).toBe(mockError.message);
+      expect(response.response).toMatchObject(mockError.response);
     });
   });
 
@@ -156,7 +158,7 @@ describe("[services] HTTP client", () => {
     it("makes the request", async () => {
       try {
         response = await request({
-          body: data,
+          data,
           method,
           url
         });
@@ -191,7 +193,7 @@ describe("[services] HTTP client", () => {
     it("makes the request", async () => {
       try {
         response = await request({
-          body: data,
+          data,
           method,
           url
         });

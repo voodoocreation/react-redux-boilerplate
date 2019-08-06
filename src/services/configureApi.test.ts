@@ -14,7 +14,7 @@ describe("[services] API", () => {
     });
 
     it("binds the methods correctly", async () => {
-      for (const method of Object.values(api)) {
+      for (const method of Object.values(api) as any) {
         const response = await method();
 
         expect(response).toHaveProperty("message");

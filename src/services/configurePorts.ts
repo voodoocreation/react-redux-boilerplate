@@ -10,17 +10,6 @@ type TPortsParam = Partial<IPorts> & {
   api: TApi;
 };
 
-export const configurePorts = (ports: TPortsParam): IPorts => {
-  const dataLayer: any[] = ports.dataLayer || [];
-  dataLayer.push = dataLayer.push.bind(dataLayer);
-
-  return {
-    api: ports.api,
-    dataLayer,
-    features: ports.features || []
-  };
-};
-
 export interface ITestPorts {
   api: TMockApi;
   dataLayer: any[];
@@ -32,6 +21,17 @@ export interface ITestPortsParam {
   dataLayer?: any[];
   features?: string[];
 }
+
+export const configurePorts = (ports: TPortsParam): IPorts => {
+  const dataLayer: any[] = ports.dataLayer || [];
+  dataLayer.push = dataLayer.push.bind(dataLayer);
+
+  return {
+    api: ports.api,
+    dataLayer,
+    features: ports.features || []
+  };
+};
 
 export const configureTestPorts = (ports: ITestPortsParam): ITestPorts => {
   const dataLayer: any[] = ports.dataLayer ? ports.dataLayer : [];

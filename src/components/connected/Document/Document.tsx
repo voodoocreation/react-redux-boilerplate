@@ -1,10 +1,9 @@
 import { IncomingMessage } from "http";
 import Document, {
-  DefaultDocumentIProps,
+  DocumentContext,
   DocumentProps,
   Head,
   Main,
-  NextDocumentContext,
   NextScript
 } from "next/document";
 import * as React from "react";
@@ -19,23 +18,21 @@ const Meta: React.FC = () => (
   </React.Fragment>
 );
 
-interface IProps extends DefaultDocumentIProps, DocumentProps {
+interface IProps extends DocumentProps {
   locale: string;
 }
 
 export default class<P extends IProps> extends Document<P> {
-  public static async getInitialProps(context: NextDocumentContext) {
+  public static async getInitialProps(context: DocumentContext) {
     const initialProps = await Document.getInitialProps(context);
     const props = await context.renderPage();
     const req = context.req as IncomingMessage & {
-      intlMessages: {};
       locale: string;
     };
 
     return {
       ...initialProps,
       ...props,
-      intlMessages: req.intlMessages,
       locale: req.locale || "en-NZ"
     };
   }
