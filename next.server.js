@@ -51,8 +51,8 @@ app.prepare().then(() => {
 
     if (typeof locale === "string") {
       req.locale = locale;
-    } else if (Array.isArray(locale)) {
-      req.locale = locale[0];
+    } else if (Array.isArray(locale) && locale.filter(item => item !== "*").length > 0) {
+      req.locale = locale.filter(item => item !== "*")[0];
     } else {
       req.locale = "en-NZ";
     }
