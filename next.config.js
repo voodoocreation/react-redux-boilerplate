@@ -8,6 +8,7 @@ const getPages = () => ({
 
 module.exports = withSass({
   distDir: "dist",
+  exportTrailingSlash: true,
   poweredByHeader: false,
   exportPathMap: async () => getPages(),
   webpack: (config, { dev }) => {
