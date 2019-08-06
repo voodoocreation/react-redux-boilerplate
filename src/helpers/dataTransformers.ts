@@ -51,9 +51,9 @@ export const lengthToDuration = (length: string) => {
 export const absoluteUrl = (path: string) =>
   process.env.NODE_ENV !== "production"
     ? `http://localhost:${
-        process.env.PORT !== "undefined"
-          ? process.env.PORT
-          : window.location.port
+        !process.env.PORT || process.env.PORT === "undefined"
+          ? window.location.port
+          : process.env.PORT
       }${path}`
     : `https://${
         process.env.DOMAIN !== "undefined"
