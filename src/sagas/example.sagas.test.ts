@@ -18,7 +18,7 @@ describe("[sagas] Example", () => {
       );
 
       it("dispatches actions.fetchApiData.started", () => {
-        saga.dispatch(actions.fetchApiData.started());
+        saga.dispatch(actions.fetchApiData.started({}));
       });
 
       it("dispatches actions.fetchApiData.done with expected payload", () => {
@@ -42,7 +42,7 @@ describe("[sagas] Example", () => {
       );
 
       it("dispatches actions.fetchApiData.started", () => {
-        saga.dispatch(actions.fetchApiData.started());
+        saga.dispatch(actions.fetchApiData.started({}));
       });
 
       it("dispatches actions.fetchApiData.failed with expected error", () => {

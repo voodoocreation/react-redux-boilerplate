@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import * as React from "react";
-import { FormattedMessage, InjectedIntl } from "react-intl";
+import { FormattedMessage, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 
@@ -11,25 +11,18 @@ import * as actions from "../../../actions/root.actions";
 import { TStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
 
-interface IStoreProps {
+interface IProps extends WrappedComponentProps {
   apiData: {};
   currentRoute?: string;
+  fetchApiData: typeof actions.fetchApiData.started;
   localData: {
     inputValue: string;
   };
-}
-
-interface IDispatchProps {
-  fetchApiData: typeof actions.fetchApiData.started;
   setLocalData: typeof actions.setLocalData;
 }
 
-interface IProps extends IStoreProps, IDispatchProps {
-  intl: InjectedIntl;
-}
-
 class IndexRoute extends React.Component<IProps> {
-  public static defaultProps = {
+  public static defaultProps: Partial<IProps> = {
     apiData: {},
     localData: {
       inputValue: ""
@@ -110,7 +103,7 @@ class IndexRoute extends React.Component<IProps> {
   };
 
   private onFetchApiDataClick = () => {
-    this.props.fetchApiData();
+    this.props.fetchApiData({});
   };
 }
 
@@ -129,9 +122,4 @@ const mapDispatch = (dispatch: Dispatch) =>
     dispatch
   );
 
-export default injectIntlIntoPage(
-  connect(
-    mapState,
-    mapDispatch
-  )(IndexRoute)
-);
+export default injectIntlIntoPage(connect(mapState, mapDispatch)(IndexRoute));

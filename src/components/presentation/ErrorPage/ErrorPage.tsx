@@ -1,8 +1,8 @@
 import Head from "next/head";
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
-interface IProps extends InjectedIntlProps {
+interface IProps extends WrappedComponentProps {
   message?: string;
   status?: number;
 }

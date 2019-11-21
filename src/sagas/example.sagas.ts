@@ -12,7 +12,7 @@ export const fetchApiDataSaga = (ports: IPorts) =>
       if (response.ok) {
         yield put(
           actions.fetchApiData.done({
-            params: undefined,
+            params: {},
             result: response.data
           })
         );
@@ -20,7 +20,7 @@ export const fetchApiDataSaga = (ports: IPorts) =>
         yield put(
           actions.fetchApiData.failed({
             error: response.message,
-            params: undefined
+            params: []
           })
         );
       }

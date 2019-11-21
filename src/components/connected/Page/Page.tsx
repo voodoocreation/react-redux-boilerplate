@@ -1,7 +1,7 @@
 import cn from "classnames";
 import Head from "next/head";
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
 
 import { TStoreState } from "../../../reducers/root.reducers";
@@ -9,7 +9,8 @@ import * as selectors from "../../../selectors/root.selectors";
 
 import "./Page.scss";
 
-interface IProps extends InjectedIntlProps {
+interface IProps extends WrappedComponentProps {
+  children: React.ReactNode;
   className?: string;
   isLoading: boolean;
 }

@@ -4,6 +4,7 @@
     "no-empty-interface": false,
     "no-submodule-imports": [
       true,
+      "@formatjs",
       "next",
       "next-server",
       "browser-metrics",

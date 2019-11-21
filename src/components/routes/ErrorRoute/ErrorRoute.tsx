@@ -1,11 +1,11 @@
 import * as React from "react";
-import { InjectedIntlProps } from "react-intl";
+import { WrappedComponentProps } from "react-intl";
 
 import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 import { IPageContext } from "../../connected/App/App";
 import ErrorPage from "../../presentation/ErrorPage/ErrorPage";
 
-interface IProps extends InjectedIntlProps {
+interface IProps extends WrappedComponentProps {
   err: {};
   message?: string;
   statusCode: number;

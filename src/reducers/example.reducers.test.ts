@@ -1,4 +1,4 @@
-import example, { initialState as exampleModel } from "./example.reducers";
+import reducer, { initialState } from "./example.reducers";
 
 import * as actions from "../actions/root.actions";
 
@@ -8,7 +8,7 @@ describe("[reducers] Example", () => {
       inputValue: "Test"
     };
 
-    const state = example(exampleModel, actions.setLocalData(testValue));
+    const state = reducer(initialState, actions.setLocalData(testValue));
 
     expect(state.localData).toEqual(testValue);
   });
@@ -19,9 +19,9 @@ describe("[reducers] Example", () => {
         apiValue: "Test"
       };
 
-      const state = example(
-        exampleModel,
-        actions.fetchApiData.done({ params: undefined, result: testValue })
+      const state = reducer(
+        initialState,
+        actions.fetchApiData.done({ params: {}, result: testValue })
       );
 
       expect(state.apiData).toEqual(testValue);

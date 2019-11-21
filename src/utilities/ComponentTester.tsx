@@ -1,13 +1,13 @@
 import { mount, render, shallow } from "enzyme";
 import merge from "lodash.merge";
 import * as React from "react";
-import { IntlProvider, intlShape } from "react-intl";
+import { IntlProvider } from "react-intl";
 import { IntlProvider as ReduxIntlProvider } from "react-intl-redux";
 import { Provider } from "react-redux";
 import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
-import * as messages from "../locales/en-NZ";
+import messages from "../locales/en-NZ";
 import {
   initialState as rootInitialState,
   TStoreState
@@ -146,10 +146,7 @@ export default class ComponentTester<
 
       wrapper = method(
         <Provider store={store}>
-          <ReduxIntlProvider
-            defaultLocale="en-NZ"
-            textComponent={React.Fragment}
-          >
+          <ReduxIntlProvider defaultLocale="en-NZ" locale="en-NZ">
             <this.Component {...mergedProps} />
           </ReduxIntlProvider>
         </Provider>
@@ -163,23 +160,10 @@ export default class ComponentTester<
         wrapper
       };
     } else {
-      const intlProvider = new IntlProvider(
-        {
-          defaultLocale: "en-NZ",
-          locale: "en-NZ",
-          messages,
-          textComponent: React.Fragment
-        },
-        {}
-      );
-      const { intl } = intlProvider.getChildContext();
-
       wrapper = method(
-        React.cloneElement(<this.Component {...mergedProps} />, { intl }),
-        {
-          childContextTypes: { intl: intlShape },
-          context: { intl }
-        }
+        <IntlProvider defaultLocale="en-NZ" locale="en-NZ" messages={messages}>
+          <this.Component {...mergedProps} />
+        </IntlProvider>
       );
 
       result = {
