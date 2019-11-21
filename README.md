@@ -23,6 +23,7 @@ NPM scripts
 The following scripts can be used:
 - `dev`: Runs dev environment with hot module reloading
 - `build`: Builds prod bundle ready for deployment
+- `build:export`: Builds and exports static HTML prod bundle ready for deployment
 - `start`: Start prod environment (requires `build` script to have been run first)
 - `fmt`: Run `prettier` code formatting
 - `lint:js`: Run JS linter, rules defined in [`/.eslintrc`](./.eslintrc)
