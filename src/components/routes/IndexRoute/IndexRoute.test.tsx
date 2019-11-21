@@ -49,5 +49,9 @@ describe("<IndexRoute />", () => {
         `"inputValue": "Test"`
       );
     });
+
+    it("matches snapshot", () => {
+      expect(wrapper.render()).toMatchSnapshot();
+    });
   });
 });

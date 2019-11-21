@@ -21,6 +21,10 @@ Object.defineProperties(global, {
   }
 });
 
+Object.defineProperty(navigator, "language", {
+  value: "en-NZ"
+});
+
 Object.defineProperty(window.location, "assign", {
   value: jest.fn(),
   writable: true

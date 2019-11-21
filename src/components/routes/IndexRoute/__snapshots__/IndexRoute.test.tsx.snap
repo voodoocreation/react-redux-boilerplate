@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IndexRoute /> when interacting with the controls matches snapshot 1`] = `
+<article>
+  <h1>
+    <a
+      href="/"
+    >
+      Welcome to the React Redux Boilerplate
+    </a>
+  </h1>
+  <p>
+    Some basic examples of user interaction are shown below.
+  </p>
+  <div
+    class="row"
+  >
+    <section
+      class="col-sm-12"
+    >
+      <h2>
+        Current route
+      </h2>
+      <pre />
+    </section>
+    <section
+      class="Index--apiData col-sm-6"
+    >
+      <h2>
+        API data
+      </h2>
+      <pre>
+        {
+  "apiData": true
+}
+      </pre>
+      <button
+        class="Index--apiData--fetchButton btn btn-primary"
+      >
+        Fetch API data
+      </button>
+    </section>
+    <section
+      class="Index--localData col-sm-6"
+    >
+      <h2>
+        Local data
+      </h2>
+      <pre>
+        {
+  "inputValue": "Test"
+}
+      </pre>
+      <div
+        class="input-group"
+      >
+        <input
+          class="form-control"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </section>
+  </div>
+</article>
+`;

@@ -140,17 +140,31 @@ export default class ComponentTester<
 
     let wrapper: ReturnType<M>;
     let result: IConnectedReturn<M, P> | IReturn<M, P>;
+    const defaultLocale = "en-NZ";
+    const locale = navigator.language;
 
     if (this.isConnected) {
       const { ports, store } = this.configureStore();
 
-      wrapper = method(
+      const WrappingComponent: React.FC = ({ children }) => (
         <Provider store={store}>
-          <ReduxIntlProvider defaultLocale="en-NZ" locale="en-NZ">
-            <this.Component {...mergedProps} />
+          <ReduxIntlProvider defaultLocale="en-NZ" locale={locale}>
+            {children}
           </ReduxIntlProvider>
         </Provider>
       );
+
+      if (method === mount) {
+        wrapper = method(<this.Component {...mergedProps} />, {
+          wrappingComponent: WrappingComponent
+        });
+      } else {
+        wrapper = method(
+          <WrappingComponent>
+            <this.Component {...mergedProps} />
+          </WrappingComponent>
+        );
+      }
 
       result = {
         dispatch: store.dispatch,
@@ -160,11 +174,27 @@ export default class ComponentTester<
         wrapper
       };
     } else {
-      wrapper = method(
-        <IntlProvider defaultLocale="en-NZ" locale="en-NZ" messages={messages}>
-          <this.Component {...mergedProps} />
+      const WrappingComponent: React.FC = ({ children }) => (
+        <IntlProvider
+          defaultLocale={defaultLocale}
+          locale={locale}
+          messages={messages}
+        >
+          {children}
         </IntlProvider>
       );
+
+      if (method === mount) {
+        wrapper = method(<this.Component {...mergedProps} />, {
+          wrappingComponent: WrappingComponent
+        });
+      } else {
+        wrapper = method(
+          <WrappingComponent>
+            <this.Component {...mergedProps} />
+          </WrappingComponent>
+        );
+      }
 
       result = {
         props: mergedProps,
