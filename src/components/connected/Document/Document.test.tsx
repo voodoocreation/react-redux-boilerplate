@@ -59,7 +59,7 @@ describe("[connected] <Document />", () => {
     }).not.toThrowError();
   });
 
-  it("renders currectly when NODE_ENV=production", async () => {
+  it("renders correctly when NODE_ENV=production", async () => {
     // @ts-ignore-next-line
     process.env.NODE_ENV = "production";
 
@@ -68,7 +68,7 @@ describe("[connected] <Document />", () => {
     }).not.toThrowError();
   });
 
-  it("renders currectly when locale is missing", async () => {
+  it("renders correctly when locale is missing", async () => {
     expect(async () => {
       await setup({
         req: { locale: "" }
