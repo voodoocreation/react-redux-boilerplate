@@ -8,7 +8,7 @@ import { DeepPartial, Dispatch, Middleware } from "redux";
 import { AnyAction } from "typescript-fsa";
 
 import messages from "../locales/en-NZ";
-import { TStoreState } from "../reducers/root.reducers";
+import { initialState, TStoreState } from "../reducers/root.reducers";
 import {
   configureTestPorts,
   IPorts,
@@ -222,6 +222,7 @@ export default class ComponentTester<
     ) as ITestPortsParam;
     const mergedReduxState: DeepPartial<TStoreState> = merge(
       {},
+      initialState,
       this.defaultReduxState,
       this.reduxState
     );
