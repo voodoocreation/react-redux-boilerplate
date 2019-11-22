@@ -1,8 +1,10 @@
+// istanbul ignore file
 import { IncomingMessage } from "http";
 import Document, {
   DocumentContext,
   DocumentProps,
   Head,
+  Html,
   Main,
   NextScript
 } from "next/document";
@@ -31,7 +33,7 @@ export default class<P extends IProps> extends Document<P> {
     const { locale } = this.props as P;
 
     return (
-      <html lang={locale}>
+      <Html lang={locale}>
         <Head>
           <meta charSet="UTF-8" />
           <meta
@@ -53,7 +55,7 @@ export default class<P extends IProps> extends Document<P> {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
