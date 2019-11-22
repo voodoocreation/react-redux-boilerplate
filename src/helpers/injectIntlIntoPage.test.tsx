@@ -28,12 +28,7 @@ describe("[helpers] injectIntlIntoPage", () => {
 
       initialProps = await WithInitialPropsWrapped.getInitialProps({} as any);
       wrapper = mount(
-        <IntlProvider
-          defaultLocale="en-NZ"
-          locale="en-NZ"
-          messages={messages}
-          textComponent={React.Fragment}
-        >
+        <IntlProvider defaultLocale="en-NZ" locale="en-NZ" messages={messages}>
           <WithInitialPropsWrapped {...initialProps} />
         </IntlProvider>
       );
@@ -71,12 +66,7 @@ describe("[helpers] injectIntlIntoPage", () => {
         {} as any
       );
       wrapper = mount(
-        <IntlProvider
-          defaultLocale="en-NZ"
-          locale="en-NZ"
-          messages={messages}
-          textComponent={React.Fragment}
-        >
+        <IntlProvider defaultLocale="en-NZ" locale="en-NZ" messages={messages}>
           <WithoutInitialPropsWrapped {...initialProps} />
         </IntlProvider>
       );
