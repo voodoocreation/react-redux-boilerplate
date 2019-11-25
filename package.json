@@ -26,9 +26,9 @@
     "lint": "npm-run-all --parallel lint:*",
     "lint:scss": "stylelint --config .stylelintrc \"src/**/*.+(css|scss)\"",
     "lint:ts": "tslint \"./{types,src,pages}/**/*.ts?(x)\"",
-    "test": "cross-env NODE_ENV=test NODE_ICU_DATA=node_modules/full-icu jest --no-cache --config ./jest.config.js",
+    "test": "cross-env NODE_ENV=test TZ=Pacific/Auckland NODE_ICU_DATA=node_modules/full-icu jest --no-cache --config ./jest.config.js",
     "test:all": "npm-run-all format typecheck lint test:coverage",
-    "test:coverage": "cross-env NODE_ENV=test NODE_ICU_DATA=node_modules/full-icu jest --no-cache --coverage --config ./jest.config.js",
+    "test:coverage": "cross-env NODE_ENV=test TZ=Pacific/Auckland NODE_ICU_DATA=node_modules/full-icu jest --no-cache --coverage --config ./jest.config.js",
     "typecheck": "tsc"
   },
   "dependencies": {
