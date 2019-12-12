@@ -9586,10 +9586,10 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.8.6"
     scheduler "^0.18.0"
 
-react-test-wrapper@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/react-test-wrapper/-/react-test-wrapper-1.0.6.tgz#32283c4b0c2d2168fe752b8337008ca8a9a4ca37"
-  integrity sha512-bXLmJwtCc+poYXzUt5nsxSJho8z7SRTCpAhYTcNyC5fuot9L8f3YX8gN5552lw9F3R4BvY3HA55fF4DG4NSQvQ==
+react-test-wrapper@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-test-wrapper/-/react-test-wrapper-1.0.7.tgz#26eda8d9cca03f6d88e9e75bed6c87479ca15dcb"
+  integrity sha512-gs9nyJmO9qfF7oYvcfCB2J8dlouXDO3gzyJmXkmwWTNADq6irrGO4rRy2O8HPlJ7gEjSoQ0kFhPqo6IfAYPvPg==
   dependencies:
     ts-deepmerge "^1.0.2"
 
