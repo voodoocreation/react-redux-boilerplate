@@ -1,6 +1,6 @@
-import merge from "lodash.merge";
 import { AnyAction, DeepPartial } from "redux";
 import ReduxSagaTester from "redux-saga-tester";
+import merge from "ts-deepmerge";
 import { ActionCreator } from "typescript-fsa";
 
 import rootReducer, {
@@ -25,7 +25,7 @@ export default class SagaTester {
     ports: ITestPortsParam = {}
   ) {
     this.tester = new ReduxSagaTester({
-      initialState: merge({}, initialState, reduxState),
+      initialState: merge(initialState, reduxState),
       reducers: rootReducer
     });
 

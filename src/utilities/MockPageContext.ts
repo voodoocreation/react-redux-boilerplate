@@ -1,5 +1,5 @@
-import merge from "lodash.merge";
 import { AnyAction, DeepPartial, Middleware } from "redux";
+import merge from "ts-deepmerge";
 
 import {
   initialState as rootInitialState,
@@ -86,12 +86,12 @@ export default class MockPageContext {
   public toObject = (isServer = false) => {
     this.actions = [];
     this.store = configureStore(
-      merge({}, rootInitialState, this.defaultReduxState, this.reduxState),
+      merge(rootInitialState, this.defaultReduxState, this.reduxState),
       configureTestPorts({}),
       [this.reduxHistoryMiddleware]
     );
     const err = this.error || this.defaultError;
-    const query = merge({}, this.defaultQuery, this.query);
+    const query = merge(this.defaultQuery, this.query);
     const res = this.response || this.defaultResponse;
 
     this.error = undefined;

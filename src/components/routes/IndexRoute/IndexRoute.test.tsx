@@ -1,10 +1,9 @@
-import ComponentTester from "../../../utilities/ComponentTester";
-
 import * as actions from "../../../actions/root.actions";
 import { mockWithSuccess } from "../../../utilities/mocks";
+import WrapperWithRedux from "../../../utilities/WrapperWithRedux";
 import IndexRoute from "./IndexRoute";
 
-const component = new ComponentTester(IndexRoute, true).withDefaultPorts({
+const component = new WrapperWithRedux(IndexRoute).withDefaultPorts({
   api: {
     fetchApiData: mockWithSuccess({ apiData: true })
   }
@@ -12,7 +11,7 @@ const component = new ComponentTester(IndexRoute, true).withDefaultPorts({
 
 describe("<IndexRoute />", () => {
   describe("when interacting with the controls", () => {
-    const { wrapper } = component.mount();
+    const wrapper = component.mount();
 
     it("renders initial API data section correctly", () => {
       expect(wrapper.find(".Index--apiData pre").text()).toBe("{}");

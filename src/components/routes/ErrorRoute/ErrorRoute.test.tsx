@@ -1,12 +1,12 @@
-import ComponentTester from "../../../utilities/ComponentTester";
 import MockPageContext from "../../../utilities/MockPageContext";
+import WrapperWithRedux from "../../../utilities/WrapperWithRedux";
 import ErrorRoute from "./ErrorRoute";
 
-const component = new ComponentTester(ErrorRoute, true);
+const component = new WrapperWithRedux(ErrorRoute);
 
 describe("[routes] <ErrorRoute />", () => {
   it("matches snapshot", () => {
-    const { wrapper } = component.mount();
+    const wrapper = component.mount();
 
     expect(wrapper.render()).toMatchSnapshot();
   });

@@ -1,4 +1,4 @@
-import merge from "lodash.merge";
+import merge from "ts-deepmerge";
 
 import { failure, success } from "../models/response.models";
 import { initialState } from "../reducers/root.reducers";
@@ -19,7 +19,7 @@ describe("[utilities] SagaTester", () => {
     });
 
     it("merges the initial state with the full root initial state", () => {
-      expect(saga.state).toEqual(merge({}, initialState, testState));
+      expect(saga.state).toEqual(merge(initialState, testState));
     });
 
     it("merges the ports with the default mocks correctly", async () => {
