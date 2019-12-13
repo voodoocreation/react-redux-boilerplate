@@ -1,5 +1,4 @@
 const withSass = require("@zeit/next-sass");
-const PluginLodashModuleReplacement = require("lodash-webpack-plugin");
 const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 
 const getPages = () => ({
@@ -24,8 +23,6 @@ module.exports = withSass({
     );
 
     config.plugins.push(
-      new PluginLodashModuleReplacement(),
-
       new FilterWarningsPlugin({
         exclude: /Conflicting order between:/
       })
