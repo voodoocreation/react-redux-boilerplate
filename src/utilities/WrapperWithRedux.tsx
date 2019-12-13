@@ -5,7 +5,10 @@ import { WrapperWithRedux as BaseWrapper } from "react-test-wrapper";
 import { DeepPartial, Middleware } from "redux";
 import merge from "ts-deepmerge";
 
-import { TStoreState } from "../reducers/root.reducers";
+import {
+  initialState as rootInitialState,
+  TStoreState
+} from "../reducers/root.reducers";
 import {
   configureTestPorts,
   IPorts,
@@ -61,7 +64,7 @@ export default class WrapperWithRedux<
     );
 
     return configureStore(
-      initialState,
+      merge(rootInitialState, initialState) as TStoreState,
       this.mergedPorts as IPorts,
       middlewares
     );
