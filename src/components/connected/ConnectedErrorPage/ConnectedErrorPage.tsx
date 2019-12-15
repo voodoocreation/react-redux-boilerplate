@@ -17,10 +17,8 @@ class ConnectedErrorPage extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state: TStoreState) => ({
+const mapState = (state: TStoreState) => ({
   error: selectors.getAppError(state)
 });
 
-const ConnectedErrorPageWrapped = connect(mapStateToProps)(ConnectedErrorPage);
-
-export default ConnectedErrorPageWrapped;
+export default connect(mapState)(ConnectedErrorPage);

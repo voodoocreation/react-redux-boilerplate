@@ -3,7 +3,6 @@ import Link from "next/link";
 import * as React from "react";
 import { FormattedMessage, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
 
 import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 
@@ -113,13 +112,9 @@ const mapState = (state: TStoreState) => ({
   localData: selectors.getLocalData(state)
 });
 
-const mapDispatch = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      fetchApiData: actions.fetchApiData.started,
-      setLocalData: actions.setLocalData
-    },
-    dispatch
-  );
+const mapActions = {
+  fetchApiData: actions.fetchApiData.started,
+  setLocalData: actions.setLocalData
+};
 
-export default injectIntlIntoPage(connect(mapState, mapDispatch)(IndexRoute));
+export default injectIntlIntoPage(connect(mapState, mapActions)(IndexRoute));
