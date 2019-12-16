@@ -1,8 +1,6 @@
+import { mockWithRejectedPromise, mockWithResolvedPromise } from "jest-mocks";
+
 import { failure, success } from "../../models/response.models";
-import {
-  mockWithRejectedPromise,
-  mockWithResolvedPromise
-} from "../../utilities/mocks";
 import { fetchApiData } from "./fetchApiData.api";
 
 describe("[api] fetchApiData", () => {

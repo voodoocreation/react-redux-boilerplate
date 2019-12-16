@@ -1,5 +1,7 @@
+import { mockWithResolvedPromise } from "jest-mocks";
+
 import { failure } from "../models/response.models";
-import { mockWithFailure, mockWithResolvedPromise } from "../utilities/mocks";
+import { mockWithFailure } from "../utilities/mocks";
 import * as apiMethods from "./api/root.api";
 import { configureApi } from "./configureApi";
 import { configurePorts, configureTestPorts } from "./configurePorts";

@@ -6131,6 +6131,11 @@ jest-mock@^24.9.0:
   dependencies:
     "@jest/types" "^24.9.0"
 
+jest-mocks@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-mocks/-/jest-mocks-1.0.0.tgz#498af15c1d52e1a9182f81fbf1d7198b8147e5a0"
+  integrity sha512-6I71+Nrq72x0mQ4flmNQBtm/8xSWYOpwgw4dW7TTVkBs+AArDJiFgL2vAppZCL4InZoAC3LwN4DNfju62l47hw==
+
 jest-pnp-resolver@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.1.tgz#ecdae604c077a7fbc70defb6d517c3c1c898923a"

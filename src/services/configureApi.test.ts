@@ -1,4 +1,5 @@
-import { mockWithRejectedPromise } from "../utilities/mocks";
+import { mockWithRejectedPromise } from "jest-mocks";
+
 import * as apiMethods from "./api/root.api";
 import { configureApi, configureMockApi } from "./configureApi";
 import { TRequest } from "./configureHttpClient";

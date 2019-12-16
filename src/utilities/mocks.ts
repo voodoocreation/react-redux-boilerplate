@@ -1,3 +1,5 @@
+import { resolvedPromise } from "jest-mocks";
+
 import { failure, success } from "../models/root.models";
 
 export const createMockElement = (
@@ -13,23 +15,6 @@ export const createMockElement = (
     top
   })
 });
-
-export const findMockCall = (mockFn: any, ...args: any[]) =>
-  mockFn.mock.calls.find((call: any) =>
-    args.reduce((acc, curr, index) => acc && call[index] === curr, true)
-  );
-
-export const resolvedPromise = <T>(data: T) =>
-  new Promise<T>(resolve => resolve(data));
-
-export const rejectedPromise = (message: string) =>
-  new Promise<any>((_, reject) => reject(new Error(message)));
-
-export const mockWithResolvedPromise = <T>(data: T) =>
-  jest.fn(() => resolvedPromise(data));
-
-export const mockWithRejectedPromise = (message: string) =>
-  jest.fn(() => rejectedPromise(message));
 
 export const mockWithSuccess = <T>(data: T) =>
   jest.fn(() => resolvedPromise(success(data)));
