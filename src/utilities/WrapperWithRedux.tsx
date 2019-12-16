@@ -48,7 +48,7 @@ export default class WrapperWithRedux<
   };
 
   protected WrappingComponent: React.FC = ({ children }) => (
-    <Provider store={this.store!}>
+    <Provider store={this.reduxStore!}>
       <ReduxIntlProvider defaultLocale="en-NZ" locale={navigator.language}>
         {children}
       </ReduxIntlProvider>
