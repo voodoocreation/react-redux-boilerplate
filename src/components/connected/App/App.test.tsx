@@ -108,11 +108,23 @@ describe("[connected] <App />", () => {
       };
 
       beforeAll(() => {
+        context.resetReduxHistory();
         defineGlobals(true, locale);
       });
 
       it("calls getInitialProps method", async () => {
         props = await App.getInitialProps(appContext);
+      });
+
+      it("dispatches actions.initApp.started with expected payload", () => {
+        const matchingActions = context.reduxHistory.filter(
+          actions.initApp.started.match
+        );
+
+        expect(matchingActions).toHaveLength(1);
+        expect(matchingActions[0].payload).toEqual({
+          locale
+        });
       });
 
       it("defines pageProps correctly", async () => {
@@ -136,6 +148,7 @@ describe("[connected] <App />", () => {
       const locale = "en-US";
 
       beforeAll(() => {
+        context.resetReduxHistory();
         defineGlobals(false, locale);
       });
 
@@ -159,6 +172,17 @@ describe("[connected] <App />", () => {
 
       it("calls getInitialProps method", async () => {
         props = await App.getInitialProps(appContext);
+      });
+
+      it("dispatches actions.initApp.started with expected payload", () => {
+        const matchingActions = context.reduxHistory.filter(
+          actions.initApp.started.match
+        );
+
+        expect(matchingActions).toHaveLength(1);
+        expect(matchingActions[0].payload).toEqual({
+          locale
+        });
       });
 
       it("defines pageProps correctly", async () => {
@@ -227,17 +251,6 @@ describe("[connected] <App />", () => {
       expect(
         context.reduxHistory.filter(actions.setCurrentRoute.match)
       ).toHaveLength(1);
-    });
-
-    it("dispatches actions.initApp.started with expected payload", () => {
-      const matchingActions = context.reduxHistory.filter(
-        actions.initApp.started.match
-      );
-
-      expect(matchingActions).toHaveLength(1);
-      expect(matchingActions[0].payload).toEqual({
-        locale
-      });
     });
 
     describe("routing events", () => {

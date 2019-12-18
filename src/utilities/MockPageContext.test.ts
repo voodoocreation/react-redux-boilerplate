@@ -108,5 +108,13 @@ describe("[utilities] Mock page context", () => {
     it("adds the action to the Redux history", () => {
       expect(context.reduxHistory).toEqual([{ type: "ANY" }]);
     });
+
+    it("calls resetReduxHistory", () => {
+      context.resetReduxHistory();
+    });
+
+    it("resets the Redux history", () => {
+      expect(context.reduxHistory).toEqual([]);
+    });
   });
 });

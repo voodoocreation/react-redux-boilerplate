@@ -24,11 +24,11 @@ export default class MockPageContext {
   private reduxState: DeepPartial<TStoreState> = {};
   private response: {} | undefined = undefined;
 
-  private actions: AnyAction[] = [];
+  private dispatchedActions: AnyAction[] = [];
   private store?: TStore;
 
   get reduxHistory() {
-    return this.actions;
+    return this.dispatchedActions;
   }
 
   get storeState() {
@@ -84,14 +84,14 @@ export default class MockPageContext {
   };
 
   public toObject = (isServer = false) => {
-    this.actions = [];
+    this.dispatchedActions = [];
     this.store = configureStore(
-      merge(rootInitialState, this.defaultReduxState, this.reduxState),
+      merge({}, rootInitialState, this.defaultReduxState, this.reduxState),
       configureTestPorts({}),
       [this.reduxHistoryMiddleware]
     );
     const err = this.error || this.defaultError;
-    const query = merge(this.defaultQuery, this.query);
+    const query = merge({}, this.defaultQuery, this.query);
     const res = this.response || this.defaultResponse;
 
     this.error = undefined;
@@ -108,8 +108,12 @@ export default class MockPageContext {
     } as any;
   };
 
+  public resetReduxHistory = () => {
+    this.dispatchedActions = [];
+  };
+
   protected reduxHistoryMiddleware: Middleware = () => next => action => {
-    this.actions.push(action);
+    this.dispatchedActions.push(action);
     return next(action);
   };
 }
