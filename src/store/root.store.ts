@@ -7,13 +7,17 @@ import {
   Store
 } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
+import merge from "ts-deepmerge";
 
 import { isServer } from "../helpers/dom";
 import { configureApi } from "../services/configureApi";
 import { configureHttpClient } from "../services/configureHttpClient";
 import { configurePorts, IPorts } from "../services/configurePorts";
 
-import rootReducer, { TStoreState } from "../reducers/root.reducers";
+import rootReducer, {
+  initialState as rootInitialState,
+  TStoreState
+} from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 
 export type TStore = Store<TStoreState> & {
@@ -46,7 +50,7 @@ export const configureStore = (
   // Redux store
   const store: TStore = reduxStore(
     rootReducer,
-    initialState,
+    merge(rootInitialState, initialState),
     composeEnhancers(applyMiddleware(...middleware))
   );
 
