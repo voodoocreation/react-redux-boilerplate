@@ -25,7 +25,7 @@ The following scripts can be used:
 - `build`: Builds prod bundle ready for deployment
 - `build:export`: Builds and exports static HTML prod bundle ready for deployment
 - `start`: Start prod environment (requires `build` script to have been run first)
-- `fmt`: Run `prettier` code formatting
+- `format`: Run `prettier` code formatting
 - `lint:js`: Run JS linter, rules defined in [`/.eslintrc`](./.eslintrc)
 - `lint:ts`: Run TS linter, rules defined in [`/tslint.json`](./tslint.json)
 - `lint:scss`: Run SCSS linter, rules defined in [`/.stylelintrc`](./.stylelintrc)
