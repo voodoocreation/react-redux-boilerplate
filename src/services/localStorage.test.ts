@@ -3,7 +3,7 @@ import {
   isLocalStorageAvailable,
   removeLocalStorage,
   setLocalStorage
-} from "./configureLocalStorage";
+} from "./localStorage";
 
 import { failure, success } from "../models/root.models";
 
