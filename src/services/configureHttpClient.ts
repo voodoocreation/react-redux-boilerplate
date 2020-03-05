@@ -16,7 +16,7 @@ export interface IHttpClientConfig {
 export interface IRequestOptions {
   body?: any;
   method?: THttpMethod;
-  params?: Record<string, string>;
+  params?: Record<string, string | number | undefined>;
   headers?: Record<string, string>;
 }
 
@@ -31,6 +31,15 @@ export class ServerError extends Error {
     super(message);
   }
 }
+
+const parseParams = (params: Record<string, string | number | undefined>) =>
+  Object.keys(params).reduce<Record<string, string>>(
+    (result, key) =>
+      params![key] !== undefined
+        ? { ...result, [key]: `${params![key]}` }
+        : result,
+    {}
+  );
 
 export const configureHttpClient = (
   config: IHttpClientConfig
@@ -47,7 +56,7 @@ export const configureHttpClient = (
 
   let query = "";
   if (params) {
-    query = `?${new URLSearchParams(params).toString()}`;
+    query = `?${new URLSearchParams(parseParams(params)).toString()}`;
   }
 
   if (body) {

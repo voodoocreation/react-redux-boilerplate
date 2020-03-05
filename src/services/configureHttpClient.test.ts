@@ -37,6 +37,7 @@ describe("[services] HTTP client", () => {
       },
       method: "POST",
       params: {
+        invalid: undefined,
         test: "test"
       }
     };
