@@ -1,3 +1,4 @@
+import axios from "axios";
 import { camelizeKeys } from "humps";
 
 type THttpMethod =
@@ -9,12 +10,8 @@ type THttpMethod =
   | "POST"
   | "PUT";
 
-export interface IHttpClientConfig {
-  fetch: typeof window.fetch;
-}
-
 export interface IRequestOptions {
-  body?: any;
+  data?: any;
   method?: THttpMethod;
   params?: Record<string, string | number | undefined>;
   headers?: Record<string, string>;
@@ -32,57 +29,41 @@ export class ServerError extends Error {
   }
 }
 
-const parseParams = (params: Record<string, string | number | undefined>) =>
-  Object.keys(params).reduce<Record<string, string>>(
-    (result, key) =>
-      params![key] !== undefined
-        ? { ...result, [key]: `${params![key]}` }
-        : result,
-    {}
-  );
-
-export const configureHttpClient = (
-  config: IHttpClientConfig
-): TRequest => async (url, options = {}) => {
-  const { body, headers, method = "GET", params } = options;
-
-  const requestOptions: RequestInit = {
-    headers: {
-      "Content-Type": "application/json",
-      ...headers
-    },
-    method
-  };
-
-  let query = "";
-  if (params) {
-    query = `?${new URLSearchParams(parseParams(params)).toString()}`;
-  }
-
-  if (body) {
-    requestOptions.body = JSON.stringify(body);
-  }
-  const response = await config.fetch(`${url}${query}`, requestOptions);
-
-  // Get the response as text first, because if it's a server error it may not be JSON
-  const textData = await response.text();
-  let data: any;
+export const configureHttpClient = (): TRequest => async (
+  url,
+  options = {}
+) => {
+  const { data, headers, method = "GET", params } = options;
 
   try {
-    data = JSON.parse(textData);
+    const response = await axios({
+      data,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        ...headers
+      },
+      method,
+      params,
+      url
+    });
+
+    return camelizeKeys(response.data);
   } catch (error) {
-    data = textData;
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      throw new ServerError(
+        `Request failed with status code ${error.response.status}.`,
+        error.response,
+        camelizeKeys(error.response.data)
+      );
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `err.request` is an instance of XMLHttpRequest in the browser
+      throw new Error(error.request.statusText);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      throw new Error(error.message);
+    }
   }
-
-  data = camelizeKeys(data);
-
-  if (response.ok) {
-    return data;
-  }
-
-  throw new ServerError(
-    `Request failed with status code ${response.status}.`,
-    response,
-    data
-  );
 };

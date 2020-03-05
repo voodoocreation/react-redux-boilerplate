@@ -11,7 +11,6 @@ export interface IPorts {
 export interface IPortsConfig {
   dataLayer?: any[];
   features?: string[];
-  fetch: typeof window.fetch;
 }
 
 export interface ITestPorts {
@@ -26,16 +25,11 @@ export interface ITestPortsParam {
   features?: string[];
 }
 
-export const configurePorts = (config: IPortsConfig): IPorts => {
+export const configurePorts = (config: IPortsConfig = {}): IPorts => {
   const dataLayer: any[] = config.dataLayer || [];
   dataLayer.push = dataLayer.push.bind(dataLayer);
 
-  const api = configureApi(
-    configureHttpClient({
-      fetch: config.fetch
-    }),
-    configureLocalStorage()
-  );
+  const api = configureApi(configureHttpClient(), configureLocalStorage());
 
   return {
     api,

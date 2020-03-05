@@ -61,8 +61,12 @@ export const configureStore = (
 };
 
 export const createStore = (initialState: DeepPartial<TStoreState> = {}) => {
+  const dataLayer = !isServer() ? window.dataLayer : [];
+  const features = !isServer() ? window.features : [];
+
   const ports = configurePorts({
-    fetch: isServer() ? fetch : fetch.bind(window)
+    dataLayer,
+    features
   });
 
   return configureStore(initialState, ports);

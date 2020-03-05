@@ -1,5 +1,3 @@
-import { mockWithResolvedPromise } from "jest-mocks";
-
 import { failure } from "../models/root.models";
 import { mockWithFailure } from "../utilities/mocks";
 import * as apiMethods from "./api/root.api";
@@ -7,9 +5,7 @@ import { configurePorts, configureTestPorts } from "./configurePorts";
 
 describe("[services] Ports", () => {
   describe("when creating the ports object", () => {
-    const ports = configurePorts({
-      fetch: mockWithResolvedPromise({}) as any
-    });
+    const ports = configurePorts();
 
     it("has all ports defined", () => {
       expect(ports).toHaveProperty("api");
