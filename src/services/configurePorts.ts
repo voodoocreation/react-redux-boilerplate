@@ -1,4 +1,6 @@
-import { configureMockApi, TApi, TMockApi } from "./configureApi";
+import { configureApi, configureMockApi, TApi, TMockApi } from "./configureApi";
+import { configureHttpClient } from "./configureHttpClient";
+import { configureLocalStorage } from "./configureLocalStorage";
 
 export interface IPorts {
   api: TApi;
@@ -6,9 +8,11 @@ export interface IPorts {
   features: string[];
 }
 
-type TPortsParam = Partial<IPorts> & {
-  api: TApi;
-};
+export interface IPortsConfig {
+  dataLayer?: any[];
+  features?: string[];
+  fetch: typeof window.fetch;
+}
 
 export interface ITestPorts {
   api: TMockApi;
@@ -22,18 +26,25 @@ export interface ITestPortsParam {
   features?: string[];
 }
 
-export const configurePorts = (ports: TPortsParam): IPorts => {
-  const dataLayer: any[] = ports.dataLayer || [];
+export const configurePorts = (config: IPortsConfig): IPorts => {
+  const dataLayer: any[] = config.dataLayer || [];
   dataLayer.push = dataLayer.push.bind(dataLayer);
 
+  const api = configureApi(
+    configureHttpClient({
+      fetch: config.fetch
+    }),
+    configureLocalStorage()
+  );
+
   return {
-    api: ports.api,
+    api,
     dataLayer,
-    features: ports.features || []
+    features: config.features || []
   };
 };
 
-export const configureTestPorts = (ports: ITestPortsParam): ITestPorts => {
+export const configureTestPorts = (ports: ITestPortsParam = {}): ITestPorts => {
   const dataLayer: any[] = ports.dataLayer ? ports.dataLayer : [];
   const api: TMockApi = { ...configureMockApi(), ...(ports.api as any) };
 

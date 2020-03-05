@@ -14,9 +14,9 @@ describe("[helpers] injectIntlIntoPage", () => {
     class WithInitialProps extends React.Component<{ test: string }> {
       public static defaultProps = { test: "From defaultProps" };
 
-      public static async getInitialProps() {
+      public static getInitialProps = async () => {
         return { test };
-      }
+      };
 
       public render() {
         return <div>{this.props.test}</div>;
@@ -48,14 +48,10 @@ describe("[helpers] injectIntlIntoPage", () => {
     let initialProps: any;
     const test = "From getInitialProps()";
 
-    // tslint:disable-next-line
-    class WithoutInitialProps extends React.Component<{ test: string }> {
-      public static defaultProps = { test };
-
-      public render() {
-        return <div>{this.props.test}</div>;
-      }
-    }
+    const WithoutInitialProps: React.FC<{ test: string }> = props => (
+      <div>{props.test}</div>
+    );
+    WithoutInitialProps.defaultProps = { test };
 
     it("wraps component correctly", async () => {
       const WithoutInitialPropsWrapped = injectIntlIntoPage(

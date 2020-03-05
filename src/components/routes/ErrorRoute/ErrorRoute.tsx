@@ -12,15 +12,15 @@ interface IProps extends WrappedComponentProps {
 }
 
 class ErrorRoute extends React.Component<IProps> {
-  public static getInitialProps(context: IPageContext) {
-    const res = context.res;
-    const err = context.err;
+  public static getInitialProps = (context: IPageContext) => {
+    const { res } = context;
+    const { err } = context;
 
     const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
     const message = err && err.message ? err.message : undefined;
 
     return { message, statusCode };
-  }
+  };
 
   public render() {
     return (

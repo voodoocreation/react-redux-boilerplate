@@ -68,7 +68,7 @@ export const lockScroll = () => {
     );
     const scrollbarWidth = getScrollbarWidth();
     const newPadding =
-      isNaN(existingPadding) || !isFinite(existingPadding)
+      Number.isNaN(existingPadding) || !Number.isFinite(existingPadding)
         ? scrollbarWidth
         : scrollbarWidth + existingPadding;
     const scrollElement =

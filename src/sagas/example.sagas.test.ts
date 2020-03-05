@@ -1,7 +1,6 @@
-import SagaTester from "../utilities/SagaTester";
-
 import * as actions from "../actions/root.actions";
 import { mockWithFailure, mockWithSuccess } from "../utilities/mocks";
+import SagaTester from "../utilities/SagaTester";
 
 describe("[sagas] Example", () => {
   describe("fetchApiDataSaga", () => {

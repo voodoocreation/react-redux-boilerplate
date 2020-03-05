@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const withSass = require("@zeit/next-sass");
 const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 
@@ -7,10 +8,10 @@ const getPages = () => ({
 
 module.exports = withSass({
   distDir: "dist",
+  exportPathMap: async () => getPages(),
   exportTrailingSlash: true,
   poweredByHeader: false,
-  exportPathMap: async () => getPages(),
-  webpack: (config, { dev }) => {
+  webpack: config => {
     config.module.rules.push(
       {
         test: /\.(svg)$/,

@@ -2,6 +2,8 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import MockDate from "mockdate";
 
+import "./polyfills";
+
 Enzyme.configure({ adapter: new Adapter() });
 
 MockDate.set("2018-01-01T00:00:00", -780);
@@ -12,7 +14,7 @@ Object.defineProperties(global, {
     writable: true
   },
   requestAnimationFrame: {
-    value: callback => setTimeout(callback, 0),
+    value: callback => setTimeout(() => callback(), 0),
     writable: true
   },
   scrollTo: {

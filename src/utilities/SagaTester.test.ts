@@ -38,7 +38,7 @@ describe("[utilities] SagaTester", () => {
 
     it("has default mock ports defined", async () => {
       expect(await saga.ports.api.fetchApiData()).toEqual(
-        failure(`API method 'fetchApiData' not implemented.`)
+        failure(`API method 'fetchApiData' not implemented in test.`)
       );
     });
   });

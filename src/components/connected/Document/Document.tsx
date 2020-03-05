@@ -1,5 +1,7 @@
+/* eslint-disable react/no-danger */
 // istanbul ignore file
 import { IncomingMessage } from "http";
+
 import Document, {
   DocumentContext,
   DocumentProps,
@@ -15,7 +17,7 @@ interface IProps extends DocumentProps {
 }
 
 export default class<P extends IProps> extends Document<P> {
-  public static async getInitialProps(context: DocumentContext) {
+  public static getInitialProps = async (context: DocumentContext) => {
     const initialProps = await Document.getInitialProps(context);
     const props = await context.renderPage();
     const req = context.req as IncomingMessage & {
@@ -27,7 +29,7 @@ export default class<P extends IProps> extends Document<P> {
       ...props,
       locale: req.locale || "en-NZ"
     };
-  }
+  };
 
   public render() {
     const { locale } = this.props as P;

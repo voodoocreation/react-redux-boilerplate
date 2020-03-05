@@ -1,14 +1,13 @@
 import Head from "next/head";
-import Link from "next/link";
 import * as React from "react";
 import { FormattedMessage, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
 
-import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
-
 import * as actions from "../../../actions/root.actions";
+import injectIntlIntoPage from "../../../helpers/injectIntlIntoPage";
 import { TStoreState } from "../../../reducers/root.reducers";
 import * as selectors from "../../../selectors/root.selectors";
+import Link from "../../presentation/Link/Link";
 
 interface IProps extends WrappedComponentProps {
   apiData: {};
@@ -44,9 +43,7 @@ class IndexRoute extends React.Component<IProps> {
 
         <h1>
           <Link href="/">
-            <a>
-              <FormattedMessage id="INDEX_TITLE" />
-            </a>
+            <FormattedMessage id="INDEX_TITLE" />
           </Link>
         </h1>
         <p>
@@ -69,6 +66,7 @@ class IndexRoute extends React.Component<IProps> {
 
             <button
               className="Index--apiData--fetchButton btn btn-primary"
+              type="button"
               onClick={this.onFetchApiDataClick}
             >
               <FormattedMessage id="FETCH_API_DATA" />
@@ -84,9 +82,9 @@ class IndexRoute extends React.Component<IProps> {
             <div className="input-group">
               <input
                 className="form-control"
+                type="text"
                 value={localData.inputValue}
                 onChange={this.onInputChange}
-                type="text"
               />
             </div>
           </section>

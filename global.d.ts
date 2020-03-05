@@ -4,7 +4,7 @@ declare module "*.jpeg";
 declare module "*.png";
 declare module "*.svg";
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 interface Window {
   __NEXT_DATA__: {
     initialProps: any;

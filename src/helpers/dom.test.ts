@@ -1,5 +1,4 @@
 import { createMockElement } from "../utilities/mocks";
-
 import * as dom from "./dom";
 
 const g: any = global;

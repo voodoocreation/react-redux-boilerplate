@@ -25,8 +25,8 @@ class ErrorPage extends React.Component<IProps> {
         <Head>
           <title>{pageTitle}</title>
           <meta content={pageDescription} name="description" />
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
+          <meta content={pageTitle} property="og:title" />
+          <meta content={pageDescription} property="og:description" />
         </Head>
 
         <article className="ErrorPage">
@@ -59,7 +59,7 @@ class ErrorPage extends React.Component<IProps> {
 
     switch (status) {
       default:
-        return message ? message : formatMessage({ id: "ERROR_MESSAGE" });
+        return message || formatMessage({ id: "ERROR_MESSAGE" });
 
       case 404:
         return formatMessage({ id: "ERROR_404_MESSAGE" });

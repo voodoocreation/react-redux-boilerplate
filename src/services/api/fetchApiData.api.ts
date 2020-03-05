@@ -1,3 +1,4 @@
+import { API } from "../../constants/url.constants";
 import { failure, success } from "../../models/root.models";
 import { TRequest } from "../configureHttpClient";
 
@@ -7,7 +8,7 @@ interface IResponse {
 
 export const fetchApiData = (request: TRequest) => async () => {
   try {
-    const response: IResponse = await request({ url: "/example" });
+    const response: IResponse = await request(API.EXAMPLE);
 
     return success(response);
   } catch (error) {

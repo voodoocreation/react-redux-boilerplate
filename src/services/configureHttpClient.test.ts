@@ -1,219 +1,168 @@
-import axios from "axios";
+import { mockWithRejectedPromise, mockWithResolvedPromise } from "jest-mocks";
 
-import { configureHttpClient, ServerError } from "./configureHttpClient";
-
-jest.mock("axios", () => ({
-  __esModule: true,
-  default: jest.fn((options: any) => {
-    switch (options.url) {
-      case "/success":
-        return Promise.resolve({
-          data: {
-            IsSuccessful: true
-          }
-        });
-
-      case "/server-error":
-        return Promise.reject({
-          response: {
-            data: {
-              IsSuccessful: false
-            },
-            status: 500
-          }
-        });
-
-      case "/no-response":
-        return Promise.reject({
-          request: {
-            statusText: "No response"
-          }
-        });
-
-      default:
-      case "/client-error":
-        throw new Error("Client error");
-    }
-  })
-}));
+import { configureHttpClient, IRequestOptions } from "./configureHttpClient";
 
 describe("[services] HTTP client", () => {
-  const baseURL = "http://localhost/api";
-  const method = "POST";
-  const headers = {
-    "Content-Type": "application/json; charset=utf-8"
+  let response: any;
+
+  const createFetch = (ok: boolean, status: number, body?: any) =>
+    mockWithResolvedPromise({
+      ok,
+      status,
+      text: () => JSON.stringify(body)
+    }) as any;
+
+  const url = "http://api.test.com/test-endpoint";
+  const mockResponse = {
+    NumberResponse: 1,
+    StringResponse: "Test"
   };
-  const data = {
-    query: "Test"
-  };
 
-  describe("when making a request, and the options and method are not provided", () => {
-    const url = "/success";
+  describe("when making a request with all options defined, regardless of the response", () => {
+    const fetch = createFetch(true, 200);
+    const request = configureHttpClient({ fetch });
 
-    const request = configureHttpClient();
-
-    it("makes the request", async () => {
-      await request({
-        url
-      });
+    beforeAll(() => {
+      jest.clearAllMocks();
     });
 
-    it("sends the request with the correct options", () => {
-      expect(axios).toHaveBeenCalledWith({
-        baseURL: "",
-        data: undefined,
-        headers,
-        method: "GET",
-        url
-      });
-    });
-  });
-
-  describe("when making a request, with a successful response", () => {
-    let response: any;
-    const url = "/success";
-
-    const request = configureHttpClient({
-      apiUrl: baseURL
-    });
-
-    it("makes the request", async () => {
-      response = await request({
-        data,
-        method,
-        url
-      });
-    });
-
-    it("sends the request with the correct options", () => {
-      expect(axios).toHaveBeenCalledWith({
-        baseURL,
-        data,
-        headers,
-        method,
-        url
-      });
-    });
-
-    it("has the expected response", () => {
-      expect(response).toEqual({
-        isSuccessful: true
-      });
-    });
-  });
-
-  describe("when making a request, with a failed response from the server", () => {
-    let response: any;
-    const url = "/server-error";
-
-    const request = configureHttpClient({
-      apiUrl: baseURL
-    });
-
-    it("makes the request", async () => {
-      try {
-        response = await request({
-          data,
-          method,
-          url
-        });
-      } catch (error) {
-        response = error;
+    const requestOptions = {
+      body: {
+        numberParam: 1,
+        stringParam: "Test"
+      },
+      headers: {
+        "X-Test-Header": "test"
+      },
+      method: "POST",
+      params: {
+        test: "test"
       }
+    };
+
+    it("makes the request", async () => {
+      response = await request(url, requestOptions as IRequestOptions);
     });
 
-    it("sends the request with the correct options", () => {
-      expect(axios).toHaveBeenCalledWith({
-        baseURL,
-        data,
-        headers,
-        method,
-        url
-      });
-    });
-
-    it("has the expected response", () => {
-      const mockError = new ServerError(
-        "Request failed with status code 500.",
-        { status: 500 } as any,
+    it("makes the fetch request correctly with all provided options defined", () => {
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(
+        `${url}?test=${requestOptions.params.test}`,
         {
-          isSuccessful: false
+          body: JSON.stringify(requestOptions.body),
+          headers: {
+            "Content-Type": "application/json",
+            ...requestOptions.headers
+          },
+          method: requestOptions.method
         }
       );
-
-      expect(response.data).toEqual(mockError.data);
-      expect(response.message).toBe(mockError.message);
-      expect(response.response).toMatchObject(mockError.response);
     });
   });
 
-  describe("when making a request, with a no response from the server", () => {
-    let response: any;
-    const url = "/no-response";
+  describe("when making a request with no options defined, regardless of the response", () => {
+    const fetch = createFetch(true, 200);
+    const request = configureHttpClient({ fetch });
 
-    const request = configureHttpClient({
-      apiUrl: baseURL
+    beforeAll(() => {
+      jest.clearAllMocks();
     });
 
     it("makes the request", async () => {
-      try {
-        response = await request({
-          data,
-          method,
-          url
-        });
-      } catch (error) {
-        response = error.message;
-      }
+      response = await request(url);
     });
 
-    it("sends the request with the correct options", () => {
-      expect(axios).toHaveBeenCalledWith({
-        baseURL,
-        data,
-        headers,
-        method,
-        url
+    it("makes the fetch request correctly with all default options defined", () => {
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(url, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "GET"
       });
-    });
-
-    it("has the expected response", () => {
-      expect(response).toBe("No response");
     });
   });
 
-  describe("when making a request, when the client fails before making the request", () => {
-    let response: any;
-    const url = "/client-error";
+  describe("when making a request, with a successful reponse", () => {
+    const fetch = createFetch(true, 200, mockResponse);
+    const request = configureHttpClient({ fetch });
 
-    const request = configureHttpClient({
-      apiUrl: baseURL
+    beforeAll(() => {
+      jest.clearAllMocks();
     });
 
     it("makes the request", async () => {
+      response = await request(url);
+    });
+
+    it("returns the JSON-parsed response data", () => {
+      expect(response).toEqual(mockResponse);
+    });
+  });
+
+  describe("when making a request when the response isn't a 200 status code, but contains JSON data", () => {
+    const fetch = createFetch(false, 500, mockResponse);
+    const request = configureHttpClient({ fetch });
+
+    beforeAll(() => {
+      jest.clearAllMocks();
+    });
+
+    it("throws an error that includes the JSON-parsed response data", async () => {
+      let thrownError: any;
+
       try {
-        response = await request({
-          data,
-          method,
-          url
-        });
+        await request(url);
       } catch (error) {
-        response = error.message;
+        thrownError = error;
       }
+
+      expect(thrownError.message).toBe("Request failed with status code 500.");
+      expect(thrownError.data).toEqual(mockResponse);
+    });
+  });
+
+  describe("when making a request when the response isn't a 200 status code, but contains text data", () => {
+    const fetch = createFetch(false, 500, "Text message");
+    const request = configureHttpClient({ fetch });
+
+    beforeAll(() => {
+      jest.clearAllMocks();
     });
 
-    it("sends the request with the correct options", () => {
-      expect(axios).toHaveBeenCalledWith({
-        baseURL,
-        data,
-        headers,
-        method,
-        url
-      });
+    it("throws an error that includes the text message data", async () => {
+      let thrownError: any;
+
+      try {
+        await request(url);
+      } catch (error) {
+        thrownError = error;
+      }
+
+      expect(thrownError.message).toBe("Request failed with status code 500.");
+      expect(thrownError.data).toBe("Text message");
+    });
+  });
+
+  describe("when making a request, when the request fails before sending", () => {
+    const request = configureHttpClient({
+      fetch: mockWithRejectedPromise("Bad request") as any
     });
 
-    it("has the expected response", () => {
-      expect(response).toBe("Client error");
+    beforeAll(() => {
+      jest.clearAllMocks();
+    });
+
+    it("throws an error with the expected message", async () => {
+      let thrownError;
+
+      try {
+        await request(url);
+      } catch (error) {
+        thrownError = error;
+      }
+
+      expect(thrownError).toEqual(new Error("Bad request"));
     });
   });
 });

@@ -1,29 +1,7 @@
-import { mockWithRejectedPromise } from "jest-mocks";
-
 import * as apiMethods from "./api/root.api";
-import { configureApi, configureMockApi } from "./configureApi";
-import { TRequest } from "./configureHttpClient";
+import { configureMockApi } from "./configureApi";
 
 describe("[services] API", () => {
-  const httpClient: TRequest = mockWithRejectedPromise("Failed");
-
-  describe("when creating the API instance", () => {
-    const api = configureApi(httpClient);
-
-    it("has all API methods in the resulting object", () => {
-      expect(Object.keys(api)).toEqual(Object.keys(apiMethods));
-    });
-
-    it("binds the methods correctly", async () => {
-      for (const method of Object.values(api) as any) {
-        const response = await method();
-
-        expect(response).toHaveProperty("message");
-        expect(response).toHaveProperty("ok");
-      }
-    });
-  });
-
   describe("when creating the mock API instance", () => {
     const api = configureMockApi();
 
@@ -32,10 +10,15 @@ describe("[services] API", () => {
     });
 
     it("binds the methods as Jest mock functions correctly", async () => {
+      const promises = [];
       for (const method of Object.values(api)) {
-        const response = await method();
-
+        promises.push(method());
         expect(method).toHaveBeenCalledTimes(1);
+      }
+
+      const responses = await Promise.all(promises);
+
+      for (const response of responses) {
         expect(response).toHaveProperty("message");
         expect(response).toHaveProperty("ok");
       }

@@ -2,7 +2,6 @@ import { intlReducer, IntlState } from "react-intl-redux";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 import * as actions from "../actions/root.actions";
-
 import enNZ from "../locales/en-NZ";
 
 export const initialState: IntlState = {

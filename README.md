@@ -26,8 +26,7 @@ The following scripts can be used:
 - `build:export`: Builds and exports static HTML prod bundle ready for deployment
 - `start`: Start prod environment (requires `build` script to have been run first)
 - `format`: Run `prettier` code formatting
-- `lint:js`: Run JS linter, rules defined in [`/.eslintrc`](./.eslintrc)
-- `lint:ts`: Run TS linter, rules defined in [`/tslint.json`](./tslint.json)
+- `lint:ts`: Run TS linter, rules defined in [`/.eslintrc`](./.eslintrc)
 - `lint:scss`: Run SCSS linter, rules defined in [`/.stylelintrc`](./.stylelintrc)
-- `lint`: Run `lint:js`, `lint:ts`, and `lint:scss` consecutively
+- `lint`: Run all linting
 - `test`: Run unit tests for project (using [Jest](https://facebook.github.io/jest/))

@@ -36,6 +36,7 @@ exports[`<IndexRoute /> when interacting with the controls matches snapshot 1`] 
       </pre>
       <button
         class="Index--apiData--fetchButton btn btn-primary"
+        type="button"
       >
         Fetch API data
       </button>

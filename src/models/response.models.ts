@@ -13,7 +13,7 @@ export interface IFailure {
 
 export type TResponse<Data> = ISuccess<Data> & IFailure;
 
-export const success = <T>(data: T): ISuccess<T> => ({ ok: true, data });
+export const success = <T>(data: T): ISuccess<T> => ({ data, ok: true });
 
 export const failure = (error: ServerError | Error | string): IFailure => {
   const response: any = { ok: false };

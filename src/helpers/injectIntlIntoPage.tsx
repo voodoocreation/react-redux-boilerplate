@@ -10,7 +10,7 @@ export default <T extends NextComponentType<IPageContext, any, any>>(
   const IntlPage = injectIntl(Component);
 
   class ComponentWithIntl extends React.Component<{}> {
-    public static async getInitialProps(context: IPageContext) {
+    public static getInitialProps = async (context: IPageContext) => {
       let props;
 
       if (typeof Component.getInitialProps === "function") {
@@ -18,7 +18,7 @@ export default <T extends NextComponentType<IPageContext, any, any>>(
       }
 
       return { ...props };
-    }
+    };
 
     public render() {
       return <IntlPage {...this.props} />;

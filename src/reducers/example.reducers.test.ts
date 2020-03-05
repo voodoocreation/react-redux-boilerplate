@@ -1,6 +1,5 @@
-import reducer, { initialState } from "./example.reducers";
-
 import * as actions from "../actions/root.actions";
+import reducer, { initialState } from "./example.reducers";
 
 describe("[reducers] Example", () => {
   it("actions.setLocalData is handled", () => {

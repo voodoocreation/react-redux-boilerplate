@@ -15,27 +15,20 @@ interface IProps extends WrappedComponentProps {
   isLoading: boolean;
 }
 
-class Page extends React.Component<IProps> {
-  public render() {
-    const { children, className, isLoading } = this.props;
-    const { formatMessage } = this.props.intl;
+const Page: React.FC<IProps> = ({ children, className, intl, isLoading }) => (
+  <article className={cn("Page", className, { isLoading })}>
+    <Head>
+      <meta
+        content={intl.formatMessage({ id: "BRAND_NAME" })}
+        property="og:site_name"
+      />
+    </Head>
 
-    return (
-      <article className={cn("Page", className, { isLoading })}>
-        <Head>
-          <meta
-            property="og:site_name"
-            content={formatMessage({ id: "BRAND_NAME" })}
-          />
-        </Head>
-
-        <main className="Page--body" role="main">
-          {isLoading ? null : children}
-        </main>
-      </article>
-    );
-  }
-}
+    <main className="Page--body" role="main">
+      {isLoading ? null : children}
+    </main>
+  </article>
+);
 
 const mapState = (state: TStoreState) => ({
   isLoading: selectors.isAppLoading(state)

@@ -1,3 +1,3 @@
-import App from "../src/components/connected/App/App";
+import WrappedApp from "../src/components/connected/App/App";
 
-export default App;
+export default WrappedApp;

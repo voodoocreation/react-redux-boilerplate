@@ -1,6 +1,5 @@
-import reducer, { initialState } from "./app.reducers";
-
 import * as actions from "../actions/root.actions";
+import reducer, { initialState } from "./app.reducers";
 
 describe("[reducers] App", () => {
   it("reduces actions.setCurrentRoute correctly", () => {

@@ -4,7 +4,6 @@ import { NextPageContext } from "next";
 import withReduxSaga from "next-redux-saga";
 import withRedux from "next-redux-wrapper";
 import NextApp, { AppContext, AppProps } from "next/app";
-
 import * as React from "react";
 import { IntlProvider } from "react-intl-redux";
 import { Provider } from "react-redux";
@@ -46,7 +45,15 @@ const getIntlProps = (ctx: NextPageContext) => {
 
 // @ts-ignore-next-line
 export class App extends NextApp<IProps> {
-  public static async getInitialProps({ ctx, Component }: IAppContext) {
+  constructor(props: IProps) {
+    super(props);
+
+    routes.Router.onRouteChangeStart = this.onRouteChangeStart;
+    routes.Router.onRouteChangeComplete = this.onRouteChangeComplete;
+    routes.Router.onRouteChangeError = this.onRouteChangeError;
+  }
+
+  public static getInitialProps = async ({ ctx, Component }: IAppContext) => {
     let pageProps = {};
 
     const unsubscribe = ctx.store.subscribe(() => {
@@ -70,16 +77,8 @@ export class App extends NextApp<IProps> {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return { pageProps, intlProps };
-  }
-
-  constructor(props: IProps) {
-    super(props);
-
-    routes.Router.onRouteChangeStart = this.onRouteChangeStart;
-    routes.Router.onRouteChangeComplete = this.onRouteChangeComplete;
-    routes.Router.onRouteChangeError = this.onRouteChangeError;
-  }
+    return { intlProps, pageProps };
+  };
 
   public componentDidMount() {
     const { store } = this.props;
