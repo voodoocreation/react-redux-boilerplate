@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "voodoocreation"
-  ],
+  "extends": ["voodoocreation"],
   "parserOptions": {
     "project": "tsconfig.json"
   }
