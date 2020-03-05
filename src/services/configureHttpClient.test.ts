@@ -1,3 +1,4 @@
+import { camelizeKeys } from "humps";
 import { mockWithRejectedPromise, mockWithResolvedPromise } from "jest-mocks";
 
 import { configureHttpClient, IRequestOptions } from "./configureHttpClient";
@@ -96,7 +97,7 @@ describe("[services] HTTP client", () => {
     });
 
     it("returns the JSON-parsed response data", () => {
-      expect(response).toEqual(mockResponse);
+      expect(response).toEqual(camelizeKeys(mockResponse));
     });
   });
 
@@ -118,7 +119,7 @@ describe("[services] HTTP client", () => {
       }
 
       expect(thrownError.message).toBe("Request failed with status code 500.");
-      expect(thrownError.data).toEqual(mockResponse);
+      expect(thrownError.data).toEqual(camelizeKeys(mockResponse));
     });
   });
 

@@ -1,3 +1,5 @@
+import { camelizeKeys } from "humps";
+
 type THttpMethod =
   | "DELETE"
   | "GET"
@@ -62,6 +64,8 @@ export const configureHttpClient = (
   } catch (error) {
     data = textData;
   }
+
+  data = camelizeKeys(data);
 
   if (response.ok) {
     return data;
