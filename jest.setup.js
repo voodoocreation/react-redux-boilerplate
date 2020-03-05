@@ -8,6 +8,21 @@ Enzyme.configure({ adapter: new Adapter() });
 
 MockDate.set("2018-01-01T00:00:00", -780);
 
+delete window.location;
+window.location = {
+  assign: jest.fn(),
+  hash: "",
+  host: "localhost",
+  hostname: "localhost",
+  href: "http://localhost",
+  origin: "http://localhost",
+  pathname: "",
+  port: 80,
+  protocol: "http:",
+  reload: jest.fn(),
+  search: ""
+};
+
 Object.defineProperties(global, {
   dataLayer: {
     value: [],

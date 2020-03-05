@@ -7190,10 +7190,10 @@ jest-mock@^25.1.0:
   dependencies:
     "@jest/types" "^25.1.0"
 
-jest-mocks@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jest-mocks/-/jest-mocks-1.0.1.tgz#f5180156ff413b6a407e6016d5b2ea55b28b658f"
-  integrity sha512-E9xEFcA1N4lzMZzjOwWZ6pF39oWXQ22CWuKfSYTPdtWpZJAy164aBREqn6ijk99Gv0h23izwEcLPrntHmybZjA==
+jest-mocks@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/jest-mocks/-/jest-mocks-1.0.3.tgz#11814a34d41ebc026466858c53dffb61bbc66d03"
+  integrity sha512-cvYlq6Bhu2Fc1q5zWbl8ibyweMW0KAs2RDXQR2DCnqolee/0pXWqhRlcxTXF+J3aqfMfksgPRbi0wK0g62XWmQ==
 
 jest-pnp-resolver@^1.2.1:
   version "1.2.1"
