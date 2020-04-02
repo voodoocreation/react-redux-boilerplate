@@ -3,7 +3,7 @@ import {
   createMockElement,
   mockWithFailure,
   mockWithSuccess,
-  mockWithSuccessPayload
+  mockWithSuccessPayload,
 } from "./mocks";
 
 describe("[utilities] Mock response", () => {
@@ -13,7 +13,7 @@ describe("[utilities] Mock response", () => {
         bottom: 0,
         left: 0,
         right: 0,
-        top: 0
+        top: 0,
       });
     });
 
@@ -24,7 +24,7 @@ describe("[utilities] Mock response", () => {
         bottom: 110,
         left: 10,
         right: 110,
-        top: 10
+        top: 10,
       });
     });
   });

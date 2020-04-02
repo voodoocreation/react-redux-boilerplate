@@ -4,7 +4,7 @@ import {
   createStore as reduxStore,
   DeepPartial,
   Middleware,
-  Store
+  Store,
 } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 import merge from "ts-deepmerge";
@@ -12,7 +12,7 @@ import merge from "ts-deepmerge";
 import { isServer } from "../helpers/dom";
 import rootReducer, {
   initialState as rootInitialState,
-  TStoreState
+  TStoreState,
 } from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 import { configurePorts, IPorts } from "../services/configurePorts";
@@ -66,7 +66,7 @@ export const createStore = (initialState: DeepPartial<TStoreState> = {}) => {
 
   const ports = configurePorts({
     dataLayer,
-    features
+    features,
   });
 
   return configureStore(initialState, ports);

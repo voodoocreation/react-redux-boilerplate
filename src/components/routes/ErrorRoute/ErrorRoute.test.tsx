@@ -27,7 +27,7 @@ describe("[routes] <ErrorRoute />", () => {
         context
           .withError({
             message: "Error",
-            statusCode: 500
+            statusCode: 500,
           })
           .toObject()
       );
@@ -40,7 +40,7 @@ describe("[routes] <ErrorRoute />", () => {
       const props = await ErrorRoute.getInitialProps(
         context
           .withError({
-            message: "Error"
+            message: "Error",
           })
           .toObject()
       );

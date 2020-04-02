@@ -7,7 +7,7 @@ import { fetchApiData } from "./fetchApiData.api";
 describe("[api] fetchApiData", () => {
   describe("when the API call succeeds", () => {
     const data = {
-      serverTest: true
+      serverTest: true,
     };
     const request = mockWithResolvedPromise(data);
     const method = fetchApiData(request);

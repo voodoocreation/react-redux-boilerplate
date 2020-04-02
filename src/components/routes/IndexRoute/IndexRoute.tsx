@@ -23,8 +23,8 @@ class IndexRoute extends React.Component<IProps> {
   public static defaultProps: Partial<IProps> = {
     apiData: {},
     localData: {
-      inputValue: ""
-    }
+      inputValue: "",
+    },
   };
 
   public render() {
@@ -95,7 +95,7 @@ class IndexRoute extends React.Component<IProps> {
 
   private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.setLocalData({
-      inputValue: event.target.value
+      inputValue: event.target.value,
     });
   };
 
@@ -107,12 +107,12 @@ class IndexRoute extends React.Component<IProps> {
 const mapState = (state: TStoreState) => ({
   apiData: selectors.getApiData(state),
   currentRoute: selectors.getCurrentRoute(state),
-  localData: selectors.getLocalData(state)
+  localData: selectors.getLocalData(state),
 });
 
 const mapActions = {
   fetchApiData: actions.fetchApiData.started,
-  setLocalData: actions.setLocalData
+  setLocalData: actions.setLocalData,
 };
 
 export default injectIntlIntoPage(connect(mapState, mapActions)(IndexRoute));

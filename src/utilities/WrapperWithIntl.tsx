@@ -9,6 +9,6 @@ export default class WrapperWithIntl<
   P extends React.ComponentProps<C> = React.ComponentProps<C>
 > extends BaseWrapper<C, P> {
   protected intlProviderProps: Partial<IntlConfig> = {
-    messages
+    messages,
   };
 }

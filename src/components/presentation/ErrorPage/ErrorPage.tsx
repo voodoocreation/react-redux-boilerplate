@@ -9,14 +9,14 @@ interface IProps extends WrappedComponentProps {
 
 class ErrorPage extends React.Component<IProps> {
   public static defaultProps = {
-    status: 500
+    status: 500,
   };
 
   public render() {
     const { formatMessage } = this.props.intl;
 
     const pageTitle = `${this.getTitle()} · ${formatMessage({
-      id: "BRAND_NAME"
+      id: "BRAND_NAME",
     })}`;
     const pageDescription = this.getMessage();
 

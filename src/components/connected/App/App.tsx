@@ -39,7 +39,7 @@ const getIntlProps = (ctx: NextPageContext) => {
   const { locale } = requestProps;
 
   return {
-    locale
+    locale,
   };
 };
 
@@ -69,7 +69,7 @@ export class App extends NextApp<IProps> {
 
     ctx.store.dispatch(
       actions.initApp.started({
-        locale: intlProps.locale
+        locale: intlProps.locale,
       })
     );
 
@@ -118,7 +118,7 @@ export class App extends NextApp<IProps> {
     store.dispatch(
       actions.changeRoute.failed({
         error: error.message,
-        params: path
+        params: path,
       })
     );
   };

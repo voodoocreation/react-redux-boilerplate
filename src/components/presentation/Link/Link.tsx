@@ -67,7 +67,7 @@ const Link: React.FC<IProps & { router: any }> = ({
 Link.displayName = "Link";
 Link.defaultProps = {
   isExternal: false,
-  prefetch: false
+  prefetch: false,
 };
 
 export default withRouter(Link);

@@ -10,8 +10,8 @@ describe("[utilities] WrapperWithRedux", () => {
   describe("when using the ports API", () => {
     const component = new WrapperWithRedux(Dummy).withDefaultPorts({
       api: {
-        fetchApiData: mockWithFailure("Default port")
-      }
+        fetchApiData: mockWithFailure("Default port"),
+      },
     });
 
     it("mounts with default ports correctly", async () => {
@@ -26,8 +26,8 @@ describe("[utilities] WrapperWithRedux", () => {
       component
         .withPorts({
           api: {
-            fetchApiData: mockWithFailure("Test port")
-          }
+            fetchApiData: mockWithFailure("Test port"),
+          },
         })
         .mount();
 

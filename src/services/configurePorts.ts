@@ -34,7 +34,7 @@ export const configurePorts = (config: IPortsConfig = {}): IPorts => {
   return {
     api,
     dataLayer,
-    features: config.features || []
+    features: config.features || [],
   };
 };
 
@@ -45,6 +45,6 @@ export const configureTestPorts = (ports: ITestPortsParam = {}): ITestPorts => {
   return {
     api,
     dataLayer,
-    features: ports.features || []
+    features: ports.features || [],
   };
 };

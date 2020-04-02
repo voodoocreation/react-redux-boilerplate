@@ -12,17 +12,17 @@ export interface IState {
 export const initialState: IState = {
   apiData: {},
   localData: {
-    inputValue: ""
-  }
+    inputValue: "",
+  },
 };
 
 export default reducerWithInitialState(initialState)
   .case(actions.fetchApiData.done, (state, { result }) => ({
     ...state,
-    apiData: result
+    apiData: result,
   }))
 
   .case(actions.setLocalData, (state, payload) => ({
     ...state,
-    localData: payload
+    localData: payload,
   }));

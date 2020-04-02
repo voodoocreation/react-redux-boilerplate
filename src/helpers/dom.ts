@@ -11,7 +11,7 @@ export const isInViewport = (element?: HTMLElement | null) => {
   const bounds = element.getBoundingClientRect();
   const viewport = {
     height: window.innerHeight || html.clientHeight,
-    width: window.innerWidth || html.clientWidth
+    width: window.innerWidth || html.clientWidth,
   };
 
   return (
@@ -34,7 +34,7 @@ export const isAlmostInViewport = (
   const bounds = element.getBoundingClientRect();
   const viewport = {
     height: window.innerHeight || html.clientHeight,
-    width: window.innerWidth || html.clientWidth
+    width: window.innerWidth || html.clientWidth,
   };
 
   return (
@@ -48,7 +48,7 @@ export const isAlmostInViewport = (
 export const scrollState = {
   count: 0,
   left: 0,
-  top: 0
+  top: 0,
 };
 
 export const lockScroll = () => {

@@ -60,7 +60,7 @@ describe("[store] Root store", () => {
 
   it("merges in initial state correctly", () => {
     const store = createStore({
-      app: { isLoading: true }
+      app: { isLoading: true },
     });
     expect(store.getState().app.isLoading).toBe(true);
   });

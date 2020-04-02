@@ -3,7 +3,7 @@ import merge from "ts-deepmerge";
 
 import {
   initialState as rootInitialState,
-  TStoreState
+  TStoreState,
 } from "../reducers/root.reducers";
 import { configureTestPorts } from "../services/configurePorts";
 import { configureStore, TStore } from "../store/root.store";
@@ -104,7 +104,7 @@ export default class MockPageContext {
       isServer,
       query,
       res,
-      store: this.store
+      store: this.store,
     } as any;
   };
 
@@ -112,7 +112,7 @@ export default class MockPageContext {
     this.dispatchedActions = [];
   };
 
-  protected reduxHistoryMiddleware: Middleware = () => next => action => {
+  protected reduxHistoryMiddleware: Middleware = () => (next) => (action) => {
     this.dispatchedActions.push(action);
     return next(action);
   };

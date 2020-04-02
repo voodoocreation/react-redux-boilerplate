@@ -31,7 +31,7 @@ const Page: React.FC<IProps> = ({ children, className, intl, isLoading }) => (
 );
 
 const mapState = (state: TStoreState) => ({
-  isLoading: selectors.isAppLoading(state)
+  isLoading: selectors.isAppLoading(state),
 });
 
 export default injectIntl(connect(mapState)(Page));

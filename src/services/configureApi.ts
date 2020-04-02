@@ -15,7 +15,7 @@ export const configureApi = (
   Object.keys(apiMethods).reduce<any>(
     (methods, method) => ({
       ...methods,
-      [method]: (apiMethods as any)[method](request, localStorage)
+      [method]: (apiMethods as any)[method](request, localStorage),
     }),
     {}
   );

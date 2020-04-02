@@ -7,13 +7,13 @@ import merge from "ts-deepmerge";
 
 import {
   initialState as rootInitialState,
-  TStoreState
+  TStoreState,
 } from "../reducers/root.reducers";
 import {
   configureTestPorts,
   IPorts,
   ITestPorts,
-  ITestPortsParam
+  ITestPortsParam,
 } from "../services/configurePorts";
 import { configureStore } from "../store/root.store";
 

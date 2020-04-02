@@ -10,5 +10,5 @@ export default {
   INDEX_DESCRIPTION: "Some basic examples of user interaction are shown below.",
   INDEX_TITLE: "Welcome to the React Redux Boilerplate",
   LOCAL_DATA: "Local data",
-  UPDATE_LOCAL_DATA: "Update local data"
+  UPDATE_LOCAL_DATA: "Update local data",
 };

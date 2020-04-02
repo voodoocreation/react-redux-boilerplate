@@ -12,8 +12,8 @@ export const createMockElement = (
     bottom: top + height,
     left,
     right: left + width,
-    top
-  })
+    top,
+  }),
 });
 
 export const mockWithSuccess = <T>(data: T) =>

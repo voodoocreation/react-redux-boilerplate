@@ -3,7 +3,7 @@ import { failure, success } from "../models/root.models";
 import {
   configureLocalStorage,
   configureMockLocalStorage,
-  isLocalStorageAvailable
+  isLocalStorageAvailable,
 } from "./configureLocalStorage";
 
 describe("[services] Local storage", () => {
@@ -18,15 +18,15 @@ describe("[services] Local storage", () => {
       beforeAll(() => {
         Object.defineProperty(global, "localStorage", {
           value: {
-            getItem: jest.fn(key => localStore[key]),
-            removeItem: jest.fn(key => {
+            getItem: jest.fn((key) => localStore[key]),
+            removeItem: jest.fn((key) => {
               localStore[key] = null;
             }),
             setItem: jest.fn((key, value) => {
               localStore[key] = value;
-            })
+            }),
           },
-          writable: true
+          writable: true,
         });
       });
 
@@ -76,7 +76,7 @@ describe("[services] Local storage", () => {
       beforeAll(() => {
         Object.defineProperty(global, "localStorage", {
           value: undefined,
-          writable: true
+          writable: true,
         });
       });
 

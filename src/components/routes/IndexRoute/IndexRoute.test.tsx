@@ -5,8 +5,8 @@ import IndexRoute from "./IndexRoute";
 
 const component = new WrapperWithRedux(IndexRoute).withDefaultPorts({
   api: {
-    fetchApiData: mockWithSuccess({ apiData: true })
-  }
+    fetchApiData: mockWithSuccess({ apiData: true }),
+  },
 });
 
 describe("<IndexRoute />", () => {

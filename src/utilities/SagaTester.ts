@@ -5,14 +5,14 @@ import { ActionCreator } from "typescript-fsa";
 
 import rootReducer, {
   initialState,
-  TStoreState
+  TStoreState,
 } from "../reducers/root.reducers";
 import rootSaga from "../sagas/root.sagas";
 import {
   configureTestPorts,
   IPorts,
   ITestPorts,
-  ITestPortsParam
+  ITestPortsParam,
 } from "../services/configurePorts";
 
 export default class SagaTester {
@@ -26,7 +26,7 @@ export default class SagaTester {
   ) {
     this.tester = new ReduxSagaTester<TStoreState>({
       initialState: merge(initialState, reduxState),
-      reducers: rootReducer
+      reducers: rootReducer,
     });
 
     this.ports = configureTestPorts(ports);

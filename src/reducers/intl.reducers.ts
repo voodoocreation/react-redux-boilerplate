@@ -6,13 +6,13 @@ import enNZ from "../locales/en-NZ";
 
 export const initialState: IntlState = {
   locale: "en-NZ",
-  messages: enNZ
+  messages: enNZ,
 };
 
 export default reducerWithInitialState(initialState)
   .case(actions.initApp.started, (state, payload) => ({
     ...state,
-    locale: payload.locale ? payload.locale : state.locale
+    locale: payload.locale ? payload.locale : state.locale,
   }))
 
   .default(intlReducer);

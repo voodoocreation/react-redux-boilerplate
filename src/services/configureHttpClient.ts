@@ -40,11 +40,11 @@ export const configureHttpClient = (): TRequest => async (
       data,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        ...headers
+        ...headers,
       },
       method,
       params,
-      url
+      url,
     });
 
     return camelizeKeys(response.data);

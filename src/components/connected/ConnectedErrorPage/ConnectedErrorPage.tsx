@@ -15,7 +15,7 @@ const ConnectedErrorPage: React.FC<IProps> = ({ error }) => (
 );
 
 const mapState = (state: TStoreState) => ({
-  error: selectors.getAppError(state)
+  error: selectors.getAppError(state),
 });
 
 export default connect(mapState)(ConnectedErrorPage);

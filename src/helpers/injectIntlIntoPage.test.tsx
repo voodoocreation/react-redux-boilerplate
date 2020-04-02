@@ -48,7 +48,7 @@ describe("[helpers] injectIntlIntoPage", () => {
     let initialProps: any;
     const test = "From getInitialProps()";
 
-    const WithoutInitialProps: React.FC<{ test: string }> = props => (
+    const WithoutInitialProps: React.FC<{ test: string }> = (props) => (
       <div>{props.test}</div>
     );
     WithoutInitialProps.defaultProps = { test };

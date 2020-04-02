@@ -5,9 +5,9 @@ const component = new WrapperWithIntl(Link)
   .withDefaultProps({
     router: {
       components: {
-        test: ""
-      }
-    }
+        test: "",
+      },
+    },
   } as any)
   .withDefaultChildren("Link text");
 
@@ -56,7 +56,7 @@ describe("[presentation] <Link />", () => {
     const wrapper = component
       .withProps({
         href: "/",
-        router: null
+        router: null,
       } as any)
       .mount();
 
@@ -86,14 +86,14 @@ describe("[presentation] <Link />", () => {
       .withProps({
         isExternal: true,
         route: "/",
-        router: null
+        router: null,
       } as any)
       .mount();
 
     it("external attributes are defined on the <a>", () => {
       expect(wrapper.find("a").props()).toMatchObject({
         rel: "noopener noreferrer",
-        target: "_blank"
+        target: "_blank",
       });
     });
 
@@ -106,7 +106,7 @@ describe("[presentation] <Link />", () => {
     const wrapper = component
       .withProps({
         href: undefined,
-        route: undefined
+        route: undefined,
       })
       .mount();
 

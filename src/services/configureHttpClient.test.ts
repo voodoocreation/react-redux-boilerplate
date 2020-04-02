@@ -9,8 +9,8 @@ jest.mock("axios", () => ({
       case "/success":
         return Promise.resolve({
           data: {
-            IsSuccessful: true
-          }
+            IsSuccessful: true,
+          },
         });
 
       case "/server-error":
@@ -18,34 +18,34 @@ jest.mock("axios", () => ({
         return Promise.reject({
           response: {
             data: {
-              IsSuccessful: false
+              IsSuccessful: false,
             },
-            status: 500
-          }
+            status: 500,
+          },
         });
 
       case "/no-response":
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject({
           request: {
-            statusText: "No response"
-          }
+            statusText: "No response",
+          },
         });
 
       default:
       case "/client-error":
         throw new Error("Client error");
     }
-  })
+  }),
 }));
 
 describe("[services] HTTP client", () => {
   const method = "POST";
   const headers = {
-    "Content-Type": "application/json; charset=utf-8"
+    "Content-Type": "application/json; charset=utf-8",
   };
   const data = {
-    query: "Test"
+    query: "Test",
   };
 
   describe("when making a request, and the options and method are not provided", () => {
@@ -62,7 +62,7 @@ describe("[services] HTTP client", () => {
         data: undefined,
         headers,
         method: "GET",
-        url
+        url,
       });
     });
   });
@@ -76,7 +76,7 @@ describe("[services] HTTP client", () => {
     it("makes the request", async () => {
       response = await request(url, {
         data,
-        method
+        method,
       });
     });
 
@@ -85,13 +85,13 @@ describe("[services] HTTP client", () => {
         data,
         headers,
         method,
-        url
+        url,
       });
     });
 
     it("has the expected response", () => {
       expect(response).toEqual({
-        isSuccessful: true
+        isSuccessful: true,
       });
     });
   });
@@ -106,7 +106,7 @@ describe("[services] HTTP client", () => {
       try {
         response = await request(url, {
           data,
-          method
+          method,
         });
       } catch (error) {
         response = error;
@@ -118,7 +118,7 @@ describe("[services] HTTP client", () => {
         data,
         headers,
         method,
-        url
+        url,
       });
     });
 
@@ -127,7 +127,7 @@ describe("[services] HTTP client", () => {
         "Request failed with status code 500.",
         { status: 500 } as any,
         {
-          isSuccessful: false
+          isSuccessful: false,
         }
       );
 
@@ -146,7 +146,7 @@ describe("[services] HTTP client", () => {
       try {
         response = await request(url, {
           data,
-          method
+          method,
         });
       } catch (error) {
         response = error.message;
@@ -158,7 +158,7 @@ describe("[services] HTTP client", () => {
         data,
         headers,
         method,
-        url
+        url,
       });
     });
 
@@ -177,7 +177,7 @@ describe("[services] HTTP client", () => {
       try {
         response = await request(url, {
           data,
-          method
+          method,
         });
       } catch (error) {
         response = error.message;
@@ -189,7 +189,7 @@ describe("[services] HTTP client", () => {
         data,
         headers,
         method,
-        url
+        url,
       });
     });
 

@@ -7,9 +7,9 @@ const component = new WrapperWithRedux(
   app: {
     error: {
       message: "Not found",
-      status: 404
-    }
-  }
+      status: 404,
+    },
+  },
 });
 
 describe("[connected] <ConnectedErrorPage />", () => {
@@ -18,7 +18,7 @@ describe("[connected] <ConnectedErrorPage />", () => {
 
     expect(wrapper.find("ErrorPage").props()).toMatchObject({
       message: "Not found",
-      status: 404
+      status: 404,
     });
   });
 });

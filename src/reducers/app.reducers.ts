@@ -14,32 +14,32 @@ export const initialState: IState = {
   currentRoute: undefined,
   error: undefined,
   isLoading: false,
-  transitioningTo: undefined
+  transitioningTo: undefined,
 };
 
 export default reducerWithInitialState(initialState)
   .case(actions.setCurrentRoute, (state, payload) => ({
     ...state,
-    currentRoute: payload
+    currentRoute: payload,
   }))
 
   .case(actions.changeRoute.started, (state, payload) => ({
     ...state,
     error: undefined,
     isLoading: true,
-    transitioningTo: payload
+    transitioningTo: payload,
   }))
 
   .case(actions.changeRoute.done, (state, { params }) => ({
     ...state,
     currentRoute: params,
     isLoading: false,
-    transitioningTo: undefined
+    transitioningTo: undefined,
   }))
 
   .case(actions.changeRoute.failed, (state, payload) => ({
     ...state,
     error: error(payload.error),
     isLoading: false,
-    transitioningTo: undefined
+    transitioningTo: undefined,
   }));

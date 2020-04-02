@@ -11,8 +11,8 @@ describe("[sagas] Example", () => {
         {},
         {
           api: {
-            fetchApiData: mockWithSuccess(testData)
-          }
+            fetchApiData: mockWithSuccess(testData),
+          },
         }
       );
 
@@ -35,8 +35,8 @@ describe("[sagas] Example", () => {
         {},
         {
           api: {
-            fetchApiData: mockWithFailure("Server error")
-          }
+            fetchApiData: mockWithFailure("Server error"),
+          },
         }
       );
 

@@ -6,14 +6,14 @@ describe("[models] Response", () => {
     it("creates a valid object when a string was provided", () => {
       expect(failure("Error")).toEqual({
         message: "Error",
-        ok: false
+        ok: false,
       });
     });
 
     it("creates a valid object when a regular Error was provided", () => {
       expect(failure(new Error("Error"))).toEqual({
         message: "Error",
-        ok: false
+        ok: false,
       });
     });
 
@@ -25,7 +25,7 @@ describe("[models] Response", () => {
       ).toEqual({
         data: { test: true },
         message: "Error",
-        ok: false
+        ok: false,
       });
     });
   });
@@ -33,12 +33,12 @@ describe("[models] Response", () => {
   describe("success", () => {
     it("creates a valid success object", () => {
       const data = {
-        test: "Success"
+        test: "Success",
       };
 
       expect(success(data)).toEqual({
         data,
-        ok: true
+        ok: true,
       });
     });
   });

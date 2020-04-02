@@ -8,7 +8,7 @@ import Document, {
   Head,
   Html,
   Main,
-  NextScript
+  NextScript,
 } from "next/document";
 import * as React from "react";
 
@@ -27,7 +27,7 @@ export default class<P extends IProps> extends Document<P> {
     return {
       ...initialProps,
       ...props,
-      locale: req.locale || "en-NZ"
+      locale: req.locale || "en-NZ",
     };
   };
 
@@ -45,7 +45,7 @@ export default class<P extends IProps> extends Document<P> {
 
           <script
             dangerouslySetInnerHTML={{
-              __html: `document.documentElement.classList.add("isClientRendered");`
+              __html: `document.documentElement.classList.add("isClientRendered");`,
             }}
           />
           <link

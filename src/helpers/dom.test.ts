@@ -13,13 +13,13 @@ describe("[helpers] DOM", () => {
       bottomLeft: createMockElement(200, 200, sHeight - 200),
       bottomRight: createMockElement(200, 200, sHeight - 200, sWidth - 200),
       topLeft: createMockElement(200, 200),
-      topRight: createMockElement(200, 200, 0, sWidth - 200)
+      topRight: createMockElement(200, 200, 0, sWidth - 200),
     };
     const outside: any = {
       bottomLeft: createMockElement(200, 200, sHeight - 199),
       bottomRight: createMockElement(200, 200, sHeight - 199, sWidth - 199),
       topLeft: createMockElement(200, 200, -1, -1),
-      topRight: createMockElement(200, 200, -1, sWidth - 199)
+      topRight: createMockElement(200, 200, -1, sWidth - 199),
     };
 
     it("returns false when an element isn't provided", () => {
@@ -54,11 +54,11 @@ describe("[helpers] DOM", () => {
 
         Object.defineProperty(html, "clientWidth", {
           value: sWidth,
-          writable: false
+          writable: false,
         });
         Object.defineProperty(html, "clientHeight", {
           value: sHeight,
-          writable: false
+          writable: false,
         });
       });
 
@@ -83,13 +83,13 @@ describe("[helpers] DOM", () => {
       bottomLeft: createMockElement(200, 200, sHeight + 199, -399),
       bottomRight: createMockElement(200, 200, sHeight + 199, sWidth + 199),
       topLeft: createMockElement(200, 200, -399, -399),
-      topRight: createMockElement(200, 200, -399, sWidth + 199)
+      topRight: createMockElement(200, 200, -399, sWidth + 199),
     };
     const outside: any = {
       bottomLeft: createMockElement(200, 200, sHeight + 200, -400),
       bottomRight: createMockElement(200, 200, sHeight + 200, sWidth + 200),
       topLeft: createMockElement(200, 200, -400, -400),
-      topRight: createMockElement(200, 200, -400, sWidth + 200)
+      topRight: createMockElement(200, 200, -400, sWidth + 200),
     };
 
     it("returns false when an element isn't provided", () => {
@@ -124,11 +124,11 @@ describe("[helpers] DOM", () => {
 
         Object.defineProperty(html, "clientWidth", {
           value: sWidth,
-          writable: false
+          writable: false,
         });
         Object.defineProperty(html, "clientHeight", {
           value: sHeight,
-          writable: false
+          writable: false,
         });
       });
 

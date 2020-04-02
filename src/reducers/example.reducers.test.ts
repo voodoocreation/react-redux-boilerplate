@@ -4,7 +4,7 @@ import reducer, { initialState } from "./example.reducers";
 describe("[reducers] Example", () => {
   it("actions.setLocalData is handled", () => {
     const testValue = {
-      inputValue: "Test"
+      inputValue: "Test",
     };
 
     const state = reducer(initialState, actions.setLocalData(testValue));
@@ -15,7 +15,7 @@ describe("[reducers] Example", () => {
   describe("actions.fetchApiData", () => {
     it("done is handled", () => {
       const testValue = {
-        apiValue: "Test"
+        apiValue: "Test",
       };
 
       const state = reducer(

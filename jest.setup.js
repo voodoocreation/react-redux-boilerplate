@@ -20,24 +20,24 @@ window.location = {
   port: 80,
   protocol: "http:",
   reload: jest.fn(),
-  search: ""
+  search: "",
 };
 
 Object.defineProperties(global, {
   dataLayer: {
     value: [],
-    writable: true
+    writable: true,
   },
   requestAnimationFrame: {
-    value: callback => setTimeout(() => callback(), 0),
-    writable: true
+    value: (callback) => setTimeout(() => callback(), 0),
+    writable: true,
   },
   scrollTo: {
     value: jest.fn(),
-    writable: true
-  }
+    writable: true,
+  },
 });
 
 Object.defineProperty(navigator, "language", {
-  value: "en-NZ"
+  value: "en-NZ",
 });

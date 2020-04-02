@@ -1,3 +1,3 @@
 module.exports = {
-  example: require("./mocks/example")
+  example: require("./mocks/example"),
 };

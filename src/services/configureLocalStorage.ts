@@ -39,7 +39,7 @@ export const configureLocalStorage = () => ({
     }
 
     return failure("unavailable");
-  }
+  },
 });
 
 export const configureMockLocalStorage = () => {
@@ -58,7 +58,7 @@ export const configureMockLocalStorage = () => {
     set: jest.fn((key: string, data: any) => {
       localStore[`${APP_ID}--${key}`] = JSON.stringify(data);
       return success(data);
-    })
+    }),
   };
 };
 
