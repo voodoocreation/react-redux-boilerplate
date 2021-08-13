@@ -79,7 +79,7 @@
     "jest-mocks": "^1.0.4",
     "json-server": "^0.16.1",
     "mockdate": "^2.0.4",
-    "next": "^9.3.4",
+    "next": "^11.1.0",
     "next-redux-saga": "^4.0.2",
     "next-redux-wrapper": "^5.0.0",
     "next-routes": "^1.4.2",
